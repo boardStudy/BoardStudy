@@ -1,0 +1,7 @@
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: ${sql-server-password}
+        url: jdbc:sqlserver://board-db.database.windows.net:1433;database=board;user=lovi0714@board-db;password=${sql-server-password}};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+        username: lovi0714
+sql-server-password: ${SQL_PASSWORD}

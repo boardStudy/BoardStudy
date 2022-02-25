@@ -1,4 +1,4 @@
-package com.hoin.board.user.dao;
+package com.hoin.boardStudy.user.dao;
 
 import org.springframework.stereotype.Repository;
 

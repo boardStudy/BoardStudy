@@ -1,4 +1,4 @@
-package com.hoin.board.user.controller;
+package com.hoin.boardStudy.user.controller;
 
 import org.springframework.stereotype.Controller;
 

@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/board") // controller의 부모에 해당되는 Mapping. prefix 역할
 public class BoardController {
 
-    @Autowired
-    private BoardService service;
+    // 기존 필드 주입에서 생성자 주입 방식으로 변경 (22.02.27)
+    private final BoardService service;
+
+    public BoardController(BoardService service) {
+        this.service = service;
+    }
 
     /**
      * 게시판 목록 조회

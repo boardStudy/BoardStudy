@@ -3,7 +3,6 @@ package com.hoin.boardStudy.board.mapper;
 import com.hoin.boardStudy.board.dto.Board;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

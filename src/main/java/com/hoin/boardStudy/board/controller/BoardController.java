@@ -1,5 +1,6 @@
 package com.hoin.boardStudy.board.controller;
 
+import com.hoin.boardStudy.board.dto.Board;
 import com.hoin.boardStudy.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/board/*") // controller의 부모에 해당되는 Mapping. prefix 역할
+@RequestMapping("/board") // controller의 부모에 해당되는 Mapping. prefix 역할
 public class BoardController {
 
     @Autowired
@@ -22,7 +23,9 @@ public class BoardController {
      */
     @GetMapping("/list.do")
     public String getBoardList(Model model) {
+
         model.addAttribute("list", service.getBoardList());
+
         return "list";
     }
 

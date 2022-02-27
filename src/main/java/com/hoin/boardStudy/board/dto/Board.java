@@ -1,4 +1,4 @@
-package com.hoin.boardStudy.board.vo;
+package com.hoin.boardStudy.board.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,23 +1,18 @@
 package com.hoin.boardStudy.board.controller;
 
-import com.hoin.boardStudy.board.dto.Board;
 import com.hoin.boardStudy.board.service.BoardService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/board") // controller의 부모에 해당되는 Mapping. prefix 역할
 public class BoardController {
-
-    // 기존 필드 주입에서 생성자 주입 방식으로 변경 (22.02.27)
-    private final BoardService service;
-
-    public BoardController(BoardService service) {
-        this.service = service;
-    }
+    
+    private final BoardService service; // requiredArgsConstrutor 사용
 
     /**
      * 게시판 목록 조회

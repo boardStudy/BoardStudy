@@ -1,4 +1,4 @@
-package com.hoin.board;
+package com.hoin.boardStudy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

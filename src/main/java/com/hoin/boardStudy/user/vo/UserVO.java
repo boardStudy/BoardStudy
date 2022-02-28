@@ -1,4 +1,4 @@
-package com.hoin.board.user.vo;
+package com.hoin.boardStudy.user.vo;
 
 import lombok.Getter;
 import lombok.Setter;

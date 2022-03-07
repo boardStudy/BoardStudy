@@ -7,6 +7,6 @@
         <typeAlias alias="board" type="com.hoin.boardStudy.board.dto.Board"/>
     </typeAliases>
     <mappers>
-        <mapper resource="resources/mapper/BoardMapper.xml"/>
+        <mapper resource="mybatis/mapper/BoardMapper.xml"/>
     </mappers>
 </configuration>

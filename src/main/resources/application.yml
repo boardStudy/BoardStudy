@@ -1,3 +1,4 @@
+# DB 설정
 spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
@@ -6,3 +7,4 @@ spring:
         username: root
 
 sql-server-password: ${SQL_PASSWORD}
+

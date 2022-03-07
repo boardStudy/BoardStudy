@@ -5,6 +5,20 @@
     <title>main</title>
 </head>
 <body>
-    <h2>main 페이지입니다.</h2>
+    <h2>테이블 테스트</h2>
+    <table>
+        <tr>
+            <th>글 번호</th>
+            <th>작성자</th>
+            <th>제목</th>
+            <th>작성일</th>
+        </tr>
+        <tr th:each="list : ${list}">
+            <td th:text="${list.boardId}"></td>
+            <td th:text="${list.writer}"></td>
+            <td th:text="${list.title}"></td>
+            <td th:text="${list.regDate}"></td>
+        </tr>
+    </table>
 </body>
 </html>

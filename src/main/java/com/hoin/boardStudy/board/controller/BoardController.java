@@ -24,8 +24,7 @@ public class BoardController {
     public String getBoardList(Model model) {
 
         model.addAttribute("list", service.getBoardList());
-
-        return "list";
+        return "board/list";
     }
 
 

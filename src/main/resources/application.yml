@@ -1,3 +1,8 @@
+# myBatis
+mybatis:
+    mapper-locations: mapper/*.xml
+    type-aliases-package: com.hoin.boardStudy
+    config-location: classpath:mybatis-config.xml
 # DB 설정
 spring:
     datasource:

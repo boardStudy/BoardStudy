@@ -17,7 +17,7 @@
             </thead>
             <tr>
                 <th style="width:15%" class="table-active text-center">글 번호</th><td style="width:35%" th:text="${detail.boardId}"></td>
-                <th style="width:15%" class="table-active text-center">조회수</th><td style="width:35%" th:text="${detail.views}"></td>
+                <th style="width:15%" class="table-active text-center">조회수</th><td style="width:35%" th:text="${detail.viewCount}"></td>
             </tr>
             <tr>
                 <th style="width:15%" class="table-active text-center">작성자</th><td style="width:35%" th:text="${detail.writer}"></td>
@@ -36,7 +36,7 @@
         <!-- 버튼들은 후에 로그인 작업 후 정리-->
         <button type="button" class="btn btn-primary" style="float: right">수정하기</button>
         <button type="button" class="btn btn-danger" style="float: right">삭제하기</button>
-        <button type="button" class="btn btn-secondary">목록</button>
+        <button type="button" class="btn btn-secondary" onclick="location.href='list.do'">목록</button>
     </div>
 </body>
 </html>

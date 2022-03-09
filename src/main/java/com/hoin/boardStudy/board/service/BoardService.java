@@ -16,7 +16,11 @@ public class BoardService {
 
     private final BoardMapper boardMapper; // RequiredArgsConstructor 사용 (생성자 주입)
 
-    // 읽기 전용 속성
+    /**
+     * 게시판 목록 조회
+     * 기능 : 게시판의 모든 글들을 불러온다.
+     * @return
+     */
     @Transactional(readOnly = true)
     public List<Board> getBoardList() {
 
@@ -27,13 +31,21 @@ public class BoardService {
         return boardMapper.getBoardList();
     }
 
+    /**
+     * 글 상세 페이지
+     * 기능 : 사용자가 선택한 글 상세 페이지를 불러온다. 방문할 때마다 조회수 1 증가시킨다.
+     * @param boardId
+     * @return
+     */
     // 상세 페이지
-    @Transactional(readOnly = true)
     public Board getDetail(int boardId) {
 
         //로그
         Board result = boardMapper.getDetail(boardId);
         log.info("결과 확인" + result.toString());
+
+        // 상세 페이지 이동 시 해당 글 조회 수를 증가시킨다.
+        boardMapper.increaseViewCount(boardId);
 
         return boardMapper.getDetail(boardId);
     }

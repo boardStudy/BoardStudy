@@ -14,27 +14,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BoardController {
     
     private final BoardService service; // requiredArgsConstructor 사용
-
-    /**
-     * 게시판 목록 조회
-     * 기능 : 게시판에 모든 글들을 불러온다.
-     * @param model
-     * @return
-     */
+    
+    // 전체 글 조회
     @GetMapping("/list.do")
     public String getBoardList(Model model) {
 
         model.addAttribute("list", service.getBoardList());
         return "board/list";
     }
-
-    /**
-     * 글 상세 페이지
-     * 기능 : 사용자가 선택한 글 상세 페이지를 불러온다.
-     * @param boardId
-     * @param model
-     * @return
-     */
+    
+    // 상세 페이지
     @GetMapping("/detail.do")
     public String getDetailPage(@RequestParam int boardId, Model model) {
 

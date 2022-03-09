@@ -22,12 +22,15 @@
                     <th scope="col">조회수</th>
                 </tr>
            </thead>
-            <tr th:each="list : ${list}">
+            <tr th:if="${#lists.size(list)} > 0" th:each="list : ${list}">
                 <th scope="row" th:text="${list.boardId}"></th>
                 <td th:text="${list.title}"></td>
                 <td th:text="${list.writer}"></td>
                 <td th:text="${#temporals.format(list.regDate, 'yyyy-MM-dd HH:mm')}"></td>
                 <td th:text="${list.views}"></td>
+            </tr>
+            <tr th:unless="${#lists.size(list)} > 0">
+                <td class="text-center" colspan="5">조회된 결과가 없습니다.</td>
             </tr>
         </table>
         <!--페이지네이션 백엔드 처리 안된 것-->

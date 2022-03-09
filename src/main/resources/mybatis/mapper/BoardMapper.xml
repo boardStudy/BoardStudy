@@ -4,10 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.hoin.boardStudy.board.mapper.BoardMapper">
+    <resultMap id="boardListMap" type="board">
+        <result column="board_id" property="boardId"/>
+        <result column="writer" property="writer"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="views" property="views"/>
+        <result column="reg_date" property="regDate"/>
+        <result column="upd_date" property="updDate"/>
+        <result column="del_date" property="delDate"/>
+    </resultMap>
 
     <!--게시판 목록 전체 조회하기-->
-    <select id="getBoardList" resultType="board">
-        SELECT * FROM TBL_BOARD;
+    <select id="getBoardList" resultMap="boardListMap">
+        SELECT * FROM TBL_BOARD ORDER BY board_Id DESC ;
     </select>
 
 </mapper>

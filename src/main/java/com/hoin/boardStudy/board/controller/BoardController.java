@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/board") // controller의 부모에 해당되는 Mapping. prefix 역할
 public class BoardController {
     
-    private final BoardService service; // requiredArgsConstrutor 사용
+    private final BoardService service; // requiredArgsConstructor 사용
 
     /**
      * 게시판 목록 조회

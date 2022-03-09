@@ -1,6 +1,6 @@
 # myBatis
 mybatis:
-    mapper-locations: mapper/*.xml
+    mapper-locations: mybatis/mapper/*.xml
     type-aliases-package: com.hoin.boardStudy
     config-location: classpath:mybatis-config.xml
 # DB 설정

@@ -11,4 +11,7 @@ public interface BoardMapper {
     // 글 전체 목록 조회
     List<Board> getBoardList();
 
+    // 상세 페이지
+   Board getDetail(int boardId);
+
 }

@@ -20,4 +20,9 @@
         SELECT * FROM TBL_BOARD ORDER BY board_Id DESC ;
     </select>
 
+    <!--게시판 상페 페이지-->
+    <select id="getDetail" resultMap="boardListMap" parameterType="int">
+        SELECT * FROM TBL_BOARD WHERE board_id = #{boardId}
+    </select>
+
 </mapper>

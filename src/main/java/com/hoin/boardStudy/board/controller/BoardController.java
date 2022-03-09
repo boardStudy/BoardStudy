@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +26,20 @@ public class BoardController {
 
         model.addAttribute("list", service.getBoardList());
         return "board/list";
+    }
+
+    /**
+     * 글 상세 페이지
+     * 기능 : 사용자가 선택한 글 상세 페이지를 불러온다.
+     * @param boardId
+     * @param model
+     * @return
+     */
+    @GetMapping("/detail.do")
+    public String getDetailPage(@RequestParam int boardId, Model model) {
+
+        model.addAttribute("detail", service.getDetail(boardId));
+        return "board/detail";
     }
 
 

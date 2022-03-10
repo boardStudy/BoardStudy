@@ -27,9 +27,9 @@
                 <th style="width:15%" class="table-active text-center">제목</th><td th:text="${detail.title}" colspan="3"></td>
             </tr>
             <tr>
-                <td colspan="4">
+                <td colspan="4" style="height:100%">
                     <!-- textarea 색상, 클릭, 수정, 크기 조절 불가-->
-                    <textarea class="form-control" style="border: none; resize: none; background-color:white" th:text="${detail.content}" disabled readonly></textarea>
+                    <textarea class="form-control" rows="30" style="border: none; resize: none; background-color:white" th:text="${detail.content}" disabled></textarea>
                 </td>
             </tr>
         </table>

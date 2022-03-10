@@ -37,15 +37,12 @@ public class BoardService {
      * @param boardId
      * @return
      */
-    // 상세 페이지
+    @Transactional(readOnly = true)
     public Board getDetail(int boardId) {
 
         //로그
         Board result = boardMapper.getDetail(boardId);
         log.info("결과 확인" + result.toString());
-
-        // 상세 페이지 이동 시 해당 글 조회 수를 증가시킨다.
-        boardMapper.increaseViewCount(boardId);
 
         return boardMapper.getDetail(boardId);
     }

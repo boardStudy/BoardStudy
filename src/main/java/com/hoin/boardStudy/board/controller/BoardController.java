@@ -1,7 +1,7 @@
 package com.hoin.boardStudy.board.controller;
 
 import com.hoin.boardStudy.board.service.BoardService;
-import com.hoin.boardStudy.board.service.ViewCountService;
+import com.hoin.boardStudy.board.service.ViewCountUpdater;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BoardController {
     
     private final BoardService Boardservice;
-    private final ViewCountService viewCountService;
+    private final ViewCountUpdater viewCountUpdater;
 
     // 전체 글 조회
     @GetMapping("/list.do")
@@ -28,7 +28,7 @@ public class BoardController {
     @GetMapping("/detail.do")
     public String getDetailPage(@RequestParam int boardId, Model model) {
         model.addAttribute("detail", Boardservice.getDetail(boardId));
-        viewCountService.increaseViewCount(boardId);
+        viewCountUpdater.increaseViewCount(boardId);
         return "board/detail";
     }
 

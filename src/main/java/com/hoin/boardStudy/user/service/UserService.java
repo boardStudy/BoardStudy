@@ -1,5 +1,23 @@
 package com.hoin.boardStudy.user.service;
 
-public interface UserService {
+import com.hoin.boardStudy.user.dto.User;
+import com.hoin.boardStudy.user.mapper.UserMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+     public final UserMapper userMapper;
+
+     @Transactional
+     public void joinUser(User user){
+          BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+          user.setPassword(passwordEncoder.encode(user.getPassword())); // 암호화처리
+          userMapper.saveUser(user);
+     }
 
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<form method="post" action="/user/signUp.do">
+    <div class="container">
+        <h1>회원가입</h1>
+        <div class="form-group">
+            <label for="inputUserId">userId</label>
+            <input type="text" class="form-control" id="inputUserId" name="userId" placeholder="사용자 아이디">
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">email</label>
+            <input type="text" class="form-control" id="inputEmail" name="email" placeholder="사용자 이메일">
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">password</label>
+            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="사용자 비밀번호">
+        </div>
+        <button type="submit" class="btn btn-primary">가입 완료</button>
+    </div>
+</form>
+</body>
+</html>

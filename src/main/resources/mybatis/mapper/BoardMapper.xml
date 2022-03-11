@@ -9,7 +9,7 @@
         <result column="writer" property="writer"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
-        <result column="views" property="views"/>
+        <result column="view_count" property="viewCount"/>
         <result column="reg_date" property="regDate"/>
         <result column="upd_date" property="updDate"/>
         <result column="del_date" property="delDate"/>
@@ -24,5 +24,12 @@
     <select id="getDetail" resultMap="boardListMap" parameterType="int">
         SELECT * FROM TBL_BOARD WHERE board_id = #{boardId}
     </select>
+
+    <!--조회수 기능-->
+    <update id="increaseViewCount" parameterType="int">
+        UPDATE TBL_BOARD
+        SET view_count = view_count + 1
+        WHERE board_id = #{boardId};
+    </update>
 
 </mapper>

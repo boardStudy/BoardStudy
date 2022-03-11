@@ -17,7 +17,7 @@
             </thead>
             <tr>
                 <th style="width:15%" class="table-active text-center">글 번호</th><td style="width:35%" th:text="${detail.boardId}"></td>
-                <th style="width:15%" class="table-active text-center">조회수</th><td style="width:35%" th:text="${detail.views}"></td>
+                <th style="width:15%" class="table-active text-center">조회수</th><td style="width:35%" th:text="${detail.viewCount}"></td>
             </tr>
             <tr>
                 <th style="width:15%" class="table-active text-center">작성자</th><td style="width:35%" th:text="${detail.writer}"></td>
@@ -27,16 +27,16 @@
                 <th style="width:15%" class="table-active text-center">제목</th><td th:text="${detail.title}" colspan="3"></td>
             </tr>
             <tr>
-                <td colspan="4">
+                <td colspan="4" style="height:100%">
                     <!-- textarea 색상, 클릭, 수정, 크기 조절 불가-->
-                    <textarea class="form-control" style="border: none; resize: none; background-color:white" th:text="${detail.content}" disabled readonly></textarea>
+                    <textarea class="form-control" rows="30" style="border: none; resize: none; background-color:white" th:text="${detail.content}" disabled></textarea>
                 </td>
             </tr>
         </table>
         <!-- 버튼들은 후에 로그인 작업 후 정리-->
         <button type="button" class="btn btn-primary" style="float: right">수정하기</button>
         <button type="button" class="btn btn-danger" style="float: right">삭제하기</button>
-        <button type="button" class="btn btn-secondary">목록</button>
+        <button type="button" class="btn btn-secondary" onclick="location.href='list.do'">목록</button>
     </div>
 </body>
 </html>

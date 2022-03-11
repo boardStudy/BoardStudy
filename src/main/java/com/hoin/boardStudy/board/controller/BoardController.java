@@ -1,6 +1,7 @@
 package com.hoin.boardStudy.board.controller;
 
 import com.hoin.boardStudy.board.service.BoardService;
+import com.hoin.boardStudy.board.service.ViewCountUpdater;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,32 +14,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/board") // controller의 부모에 해당되는 Mapping. prefix 역할
 public class BoardController {
     
-    private final BoardService service; // requiredArgsConstructor 사용
+    private final BoardService Boardservice;
+    private final ViewCountUpdater viewCountUpdater;
 
-    /**
-     * 게시판 목록 조회
-     * 기능 : 게시판에 모든 글들을 불러온다.
-     * @param model
-     * @return
-     */
+    // 전체 글 조회
     @GetMapping("/list.do")
     public String getBoardList(Model model) {
-
-        model.addAttribute("list", service.getBoardList());
+        model.addAttribute("list", Boardservice.getBoardList());
         return "board/list";
     }
-
-    /**
-     * 글 상세 페이지
-     * 기능 : 사용자가 선택한 글 상세 페이지를 불러온다.
-     * @param boardId
-     * @param model
-     * @return
-     */
+    
+    // 상세 페이지
     @GetMapping("/detail.do")
     public String getDetailPage(@RequestParam int boardId, Model model) {
-
-        model.addAttribute("detail", service.getDetail(boardId));
+        model.addAttribute("detail", Boardservice.getDetail(boardId));
+        viewCountUpdater.increaseViewCount(boardId);
         return "board/detail";
     }
 

@@ -51,7 +51,7 @@ public class UserController {
         } else {
             session.setAttribute("User", login);
         }
-        return "redirect:/";
+        return "redirect:/board/list.do";
     }
 
     /* 로그아웃 */
@@ -60,7 +60,7 @@ public class UserController {
         System.out.println("logout getController called");
         session.invalidate();
 
-        return "redirect:/home/home";
+        return "redirect:/board/list.do";
     }
 
 }

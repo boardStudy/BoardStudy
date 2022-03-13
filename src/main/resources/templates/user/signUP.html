@@ -7,20 +7,28 @@
 <body>
 <form method="post" action="/user/signUp.do">
     <div class="container">
-        <h1>회원가입</h1>
-        <div class="form-group">
-            <label for="inputUserId">userId</label>
-            <input type="text" class="form-control" id="inputUserId" name="userId" placeholder="사용자 아이디">
+        <h2 align="center">회원가입</h2>
+        <div class="signUpForm" style="display: flex; flex-direction: column; align-items: center;">
+            <div class="signUpLine" style="border: solid 1px #d3d3d3; padding: 50px; border-radius: 20px; margin: 50px; width: 50%">
+                <div class="form-group">
+                    <label for="inputUserId">이름</label>
+                    <input type="text" class="form-control" id="inputUserId" name="userId" placeholder="아이디를 입력해주세요.">
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail">e-mail</label>
+                    <input type="text" class="form-control" id="inputEmail" name="email" placeholder="이메일을 입력해주세요.">
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword">비밀번호</label>
+                    <input type="password" class="form-control" id="inputPassword" name="password" placeholder="비밀번호를 입력해주세요.">
+                </div>
+                <div class="form-group">
+                    <label for="inputCheckPassword">비밀번호 확인</label>
+                    <input type="password" class="form-control" id="inputCheckPassword" name="password" placeholder="비밀번호를 재입력해주세요.">
+                </div>
+                <button type="submit" class="btn btn-secondary">완료</button>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="inputEmail">email</label>
-            <input type="text" class="form-control" id="inputEmail" name="email" placeholder="사용자 이메일">
-        </div>
-        <div class="form-group">
-            <label for="inputPassword">password</label>
-            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="사용자 비밀번호">
-        </div>
-        <button type="submit" class="btn btn-primary">가입 완료</button>
     </div>
 </form>
 </body>

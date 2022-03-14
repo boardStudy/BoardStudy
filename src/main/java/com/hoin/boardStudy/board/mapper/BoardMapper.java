@@ -17,4 +17,7 @@ public interface BoardMapper {
     // 조회수 기능
     void increaseViewCount(int boardId);
 
+    // 글쓰기 기능
+    void insertBoard(Board board);
+
 }

@@ -32,4 +32,9 @@
         WHERE board_id = #{boardId};
     </update>
 
+    <!--글 등록-->
+    <insert id="insertBoard" parameterType="board">
+        insert into TBL_BOARD values (null,#{writer},#{title},#{content},0,sysdate(),sysdate(),null);
+    </insert>
+
 </mapper>

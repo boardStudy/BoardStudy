@@ -33,7 +33,7 @@ public class BoardService {
 
     /**
      * 글 상세 페이지
-     * 기능 : 사용자가 선택한 글 상세 페이지를 불러온다. 방문할 때마다 조회수 1 증가시킨다.
+     * 기능 : 사용자가 선택한 글 상세 페이지를 불러온다.
      * @param boardId
      * @return
      */
@@ -45,5 +45,15 @@ public class BoardService {
         log.info("결과 확인" + result.toString());
 
         return boardMapper.getDetail(boardId);
+    }
+
+    /**
+     * 글 등록하기
+     * 기능 : 사용자가 글을 등록한다.
+     * @param board
+     */
+    @Transactional
+    public void insertBoard(Board board) {
+        boardMapper.insertBoard(board);
     }
 }

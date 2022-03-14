@@ -18,3 +18,4 @@ public class User {
     private LocalDateTime updDate;
 
 }
+

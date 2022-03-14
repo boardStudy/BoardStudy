@@ -6,7 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -31,6 +34,7 @@ public class UserController {
         userService.joinUser(user);
         return "redirect:/user/login.do";
     }
+
 
     /* 로그인 페이지 */
     @GetMapping("/login.do")
@@ -61,6 +65,13 @@ public class UserController {
         session.invalidate();
 
         return "redirect:/board/list.do";
+    }
+
+
+    /* 로그인 */
+    @GetMapping("/login.do")
+    public String login() {
+        return "user/login";
     }
 
 }

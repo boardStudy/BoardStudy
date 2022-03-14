@@ -5,9 +5,12 @@ import org.apache.ibatis.annotations.Mapper;
 
 
 @Mapper
+
 public interface UserMapper {
 
     void saveUser(User user);
+
+    User login(User user) throws Exception;
 
 }
 

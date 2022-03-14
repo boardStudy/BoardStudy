@@ -20,4 +20,11 @@
         VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate());
     </insert>
 
+
+    <select id="login" resultMap="userMap">
+        SELECT *
+        FROM TBL_USER
+        WHERE user_id = #{userId}
+    </select>
+
 </mapper>

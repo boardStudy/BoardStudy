@@ -6,5 +6,7 @@
 </head>
 <body>
 인덱스 페이지
+<h2 th:if="${session.User == null}">없음</h2>
+<h2 th:unless="${session.User == null}">있음!<h2>
 </body>
 </html>

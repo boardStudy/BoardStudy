@@ -13,11 +13,26 @@ public class UserService {
 
      public final UserMapper userMapper;
 
+
+     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+     @Transactional
+     public void joinUser(User user){
+
+          user.setPassword(passwordEncoder.encode(user.getPassword())); // 암호화처리
+          userMapper.saveUser(user);
+     }
+
+     public User login(User user) throws Exception {
+          return userMapper.login(user);
+     }
+
      @Transactional
      public void joinUser(User user){
           BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
           user.setPassword(passwordEncoder.encode(user.getPassword())); // 암호화처리
           userMapper.saveUser(user);
      }
+
 
 }

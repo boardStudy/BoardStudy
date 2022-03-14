@@ -3,11 +3,13 @@ package com.hoin.boardStudy.user.controller;
 import com.hoin.boardStudy.user.dto.User;
 import com.hoin.boardStudy.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,10 +19,12 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
+    // final 초기화를 해줘야하기 때문에 생성자 필요 -> RequiredAG
 
     /* 회원가입 페이지*/
     @GetMapping("/signUp.do")
     public String signUpForm() {
+
         return "user/signUp";
     }
 
@@ -31,10 +35,43 @@ public class UserController {
         return "redirect:/user/login.do";
     }
 
+
+    /* 로그인 페이지 */
+    @GetMapping("/login.do")
+    public String login() {
+        System.out.println("login getController called");
+        return "user/login";
+    }
+
+    /* 로그인 및 세션 */
+    @PostMapping("/login.do")
+    public String login(User user, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+        HttpSession session = req.getSession();
+        User login = userService.login(user);
+
+        if (login == null) {
+            session.setAttribute("User", null);
+            rttr.addFlashAttribute("message", false);
+        } else {
+            session.setAttribute("User", login);
+        }
+        return "redirect:/board/list.do";
+    }
+
+    /* 로그아웃 */
+    @GetMapping("/logout.do")
+    public String logout(HttpSession session) {
+        System.out.println("logout getController called");
+        session.invalidate();
+
+        return "redirect:/board/list.do";
+    }
+
+
     /* 로그인 */
     @GetMapping("/login.do")
     public String login() {
         return "user/login";
     }
-    
+
 }

@@ -1,6 +1,7 @@
 package com.hoin.boardStudy.user.controller;
 
 import com.hoin.boardStudy.user.dto.User;
+import com.hoin.boardStudy.user.service.Password;
 import com.hoin.boardStudy.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
+    private final Password password;
+
     // final 초기화를 해줘야하기 때문에 생성자 필요 -> RequiredAG
 
     /* 회원가입 페이지*/
@@ -27,7 +30,7 @@ public class UserController {
     /* 회원가입 정보 저장 */
     @PostMapping("/signUp.do")
     public String signUp(User user) {
-        userService.joinUser(user);
+        password.joinUser(user);
         return "redirect:/user/login.do";
     }
 

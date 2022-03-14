@@ -27,12 +27,4 @@ public class UserService {
           return userMapper.login(user);
      }
 
-     @Transactional
-     public void joinUser(User user){
-          BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-          user.setPassword(passwordEncoder.encode(user.getPassword())); // 암호화처리
-          userMapper.saveUser(user);
-     }
-
-
 }

@@ -30,7 +30,8 @@ public class UserController {
     /* 회원가입 정보 저장 */
     @PostMapping("/signUp.do")
     public String signUp(User user) {
-        password.joinUser(user);
+        password.encryptPassword(user);
+        userService.joinUser(user);
         return "redirect:/user/login.do";
     }
 

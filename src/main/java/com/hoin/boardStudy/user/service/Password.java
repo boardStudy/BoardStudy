@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class Password {
     public final UserMapper userMapper;
+
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    @Transactional
-    public void joinUser(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // 암호화처리
-        userMapper.saveUser(user);
+    public void encryptPassword(User user) {
+        String rawPassword = user.getPassword();
+        user.setPassword(passwordEncoder.encode(rawPassword));
     }
 }

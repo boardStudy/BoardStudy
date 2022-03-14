@@ -55,9 +55,8 @@ public class BoardController {
 
         // 세션에서 로그인 ID를 가져와서 등록
         String writer = ((User) session.getAttribute("User")).getUserId();
-        board.setWriter(writer);
 
-        boardService.insertBoard(board);
+        boardService.insertBoard(board,writer);
         redirectAttributes.addFlashAttribute("board", board);
         return "redirect:/board/list.do";
     }

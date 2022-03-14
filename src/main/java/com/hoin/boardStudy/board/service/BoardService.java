@@ -53,7 +53,9 @@ public class BoardService {
      * @param board
      */
     @Transactional
-    public void insertBoard(Board board) {
+    public void insertBoard(Board board, String writer) {
+        // 작성자 이름 등록
+        board.setWriter(writer);
         boardMapper.insertBoard(board);
     }
 }

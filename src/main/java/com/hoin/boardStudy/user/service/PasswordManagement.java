@@ -5,11 +5,10 @@ import com.hoin.boardStudy.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class Password {
+public class PasswordManagement {
     public final UserMapper userMapper;
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

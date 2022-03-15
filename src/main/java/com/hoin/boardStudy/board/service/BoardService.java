@@ -48,14 +48,18 @@ public class BoardService {
     }
 
     /**
-     * 글 등록하기
-     * 기능 : 사용자가 글을 등록한다.
+     * 글 저장하기
+     * 기능 : 사용자가 글을 등록, 수정한다.
      * @param board
      */
     @Transactional
-    public void insertBoard(Board board, String writer) {
-        // 작성자 이름 등록
+    public void saveBoard(Board board,String writer) {
         board.setWriter(writer);
-        boardMapper.insertBoard(board);
+        boardMapper.saveBoard(board);
+    }
+
+    @Transactional
+    public void deleteBoard(int boardId) {
+        boardMapper.deleteBoard(boardId);
     }
 }

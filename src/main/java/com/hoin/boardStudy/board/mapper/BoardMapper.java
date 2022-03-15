@@ -17,7 +17,10 @@ public interface BoardMapper {
     // 조회수 기능
     void increaseViewCount(int boardId);
 
-    // 글쓰기 기능
-    void insertBoard(Board board);
+    // 글 저장 기능 (등록, 수정)
+    void saveBoard(Board board);
+
+    // 글 삭제 기능
+    void deleteBoard(int boardId);
 
 }

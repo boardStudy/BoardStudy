@@ -32,9 +32,21 @@
         WHERE board_id = #{boardId};
     </update>
 
-    <!--글 등록-->
-    <insert id="insertBoard" parameterType="board">
-        insert into TBL_BOARD values (null,#{writer},#{title},#{content},0,sysdate(),sysdate(),null);
+    <!--글 저장-->
+    <insert id="saveBoard" parameterType="board">
+        insert into TBL_BOARD
+            (board_id, writer, title, content, view_count, reg_date)
+        values (#{boardId},#{writer},#{title},#{content},0,sysdate())
+            on duplicate key
+        update
+            title = #{title},
+            content = #{content},
+            upd_date = sysdate()
     </insert>
 
+    <!--글 삭제-->
+    <delete id="deleteBoard">
+        DELETE FROM TBL_BOARD
+        WHERE board_id = #{boardId};
+    </delete>
 </mapper>

@@ -42,22 +42,38 @@ public class BoardController {
 
         // 로그인 체크 따로 메서드 만들어서 사용하면 좋을 듯
         HttpSession session = request.getSession();
+
         if (session != null && session.getAttribute("User") != null) {
             return "board/writeForm";
-        }else {
+        } else {
             return "user/login";
         }
     }
 
-    // 글 저장
+    //글 수정 페이지
+    @GetMapping("modify.do")
+    public String modifyBoard(@RequestParam int boardId, Model model) {
+        model.addAttribute("board", boardService.getDetail(boardId));
+        return "board/modify";
+    }
+
+    // 글 저장 (등록, 수정)
     @PostMapping("/saveBoard.do")
     public String saveBoard(@ModelAttribute Board board, RedirectAttributes redirectAttributes, HttpSession session) {
 
         // 세션에서 로그인 ID를 가져와서 등록
         String writer = ((User) session.getAttribute("User")).getUserId();
 
-        boardService.insertBoard(board,writer);
+        boardService.saveBoard(board, writer);
         redirectAttributes.addFlashAttribute("board", board);
+        return "redirect:/board/list.do";
+    }
+
+    // 글 삭제
+    @GetMapping("/delete.do")
+    public String deleteBoard(@RequestParam int boardId) {
+        boardService.deleteBoard(boardId);
+
         return "redirect:/board/list.do";
     }
 }

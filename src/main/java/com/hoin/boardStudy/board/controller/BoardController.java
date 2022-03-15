@@ -43,11 +43,10 @@ public class BoardController {
         // 로그인 체크 따로 메서드 만들어서 사용하면 좋을 듯
         HttpSession session = request.getSession();
 
-        if (session != null && session.getAttribute("User") != null) {
-            return "board/writeForm";
-        } else {
-            return "user/login";
-        }
+        if (session == null) return "user/login";
+        if (session.getAttribute("User") == null)  return "user/login";
+
+        return "board/writeForm";
     }
 
     //글 수정 페이지

@@ -46,10 +46,10 @@ public class UserController {
         User login = userService.login(user);
 
         if (login == null) {
-            session.setAttribute("User", null);
+            session.setAttribute("user", null);
             rttr.addFlashAttribute("message", false);
         } else {
-            session.setAttribute("User", login);
+            session.setAttribute("user", login);
         }
         return "redirect:/board/list.do";
     }

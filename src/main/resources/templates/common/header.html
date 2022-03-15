@@ -16,7 +16,7 @@
           <img src="/images/logo.png" alt="Logo" style="width:40px;" class="rounded-pill">
           StudyBoard
         </a>
-          <ul class="navbar-nav" th:if="${session.User == null}">
+          <ul class="navbar-nav" th:if="${session.user == null}">
             <li class="nav-item">
               <a class="nav-link" href="/user/signUp.do" >회원가입</a>
             </li>
@@ -24,9 +24,9 @@
               <a class="nav-link" href="/user/login.do">로그인</a>
             </li>
           </ul>
-          <ul class="navbar-nav" th:unless="${session.User == null}">
+          <ul class="navbar-nav" th:unless="${session.user == null}">
             <li class="nav-item">
-              <a class="nav-link" href="/user/logout.do" th:text="${session.User.userId}"></a>
+              <a class="nav-link" href="/user/logout.do" th:text="${session.user.userId}"></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/user/logout.do" >로그아웃</a>

@@ -44,7 +44,7 @@ public class BoardController {
         HttpSession session = request.getSession();
 
         if (session == null) return "user/login";
-        if (session.getAttribute("User") == null)  return "user/login";
+        if (session.getAttribute("user") == null)  return "user/login";
 
         return "board/writeForm";
     }

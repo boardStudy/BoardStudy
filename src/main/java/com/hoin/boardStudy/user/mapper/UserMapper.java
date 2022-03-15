@@ -10,7 +10,7 @@ public interface UserMapper {
 
     void saveUser(User user);
 
-    User login(User user) throws Exception;
+    User login(User user);
 
 }
 

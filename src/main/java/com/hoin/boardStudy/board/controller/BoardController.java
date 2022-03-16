@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -40,7 +41,6 @@ public class BoardController {
     @GetMapping("/writeForm.do")
     public String getWriteForm(HttpServletRequest request) {
 
-        // 로그인 체크 따로 메서드 만들어서 사용하면 좋을 듯
         HttpSession session = request.getSession();
 
         if (session == null) return "user/login";
@@ -61,9 +61,11 @@ public class BoardController {
     public String saveBoard(@ModelAttribute Board board, RedirectAttributes redirectAttributes, HttpSession session) {
 
         // 세션에서 로그인 ID를 가져와서 등록
-        String writer = ((User) session.getAttribute("User")).getUserId();
+        String writer = ((User) session.getAttribute("user")).getUserId();
+        // 현재 시간 구하기
+        LocalDateTime currentTime = LocalDateTime.now();
 
-        boardService.saveBoard(board, writer);
+        boardService.saveBoard(board, writer, currentTime);
         redirectAttributes.addFlashAttribute("board", board);
         return "redirect:/board/list.do";
     }

@@ -12,19 +12,37 @@
         <result column="reg_date" property="regDate"/>
         <result column="withd_date" property="withdDate"/>
         <result column="upd_date" property="updDate"/>
+        <result column="withdStatus" property="withdStatus"/>
     </resultMap>
 
+    <!-- 회원가입 -->
     <insert id="saveUser" parameterType="user">
         INSERT INTO TBL_USER
         (user_id, password, email, reg_date, withd_date, upd_date)
         VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate());
     </insert>
 
+    <!-- 유저 정보 조회 -->
+    <select id="userinfo" resultMap="userMap">
+        SELECT *
+        FROM TBL_USER
+        WHERE user_id = #{userId}
+    </select>
 
+    <!-- 탈퇴 -->
+    <update id="withdStatus">
+        UPDATE TBL_USER
+        SET withdStatus = 1, updDate = sysdate()
+        WHERE user_id = #{userId}
+    </update>
+
+    <!-- 로그인
     <select id="login" resultMap="userMap">
         SELECT *
         FROM TBL_USER
         WHERE user_id = #{userId}
     </select>
+    -->
+
 
 </mapper>

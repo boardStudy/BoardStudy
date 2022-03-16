@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,11 +25,6 @@ public class BoardService {
      */
     @Transactional(readOnly = true)
     public List<Board> getBoardList() {
-
-        // 로그
-        List<Board> result = boardMapper.getBoardList();
-        log.info("결과 확인" + result.toString());
-
         return boardMapper.getBoardList();
     }
 
@@ -53,8 +50,9 @@ public class BoardService {
      * @param board
      */
     @Transactional
-    public void saveBoard(Board board,String writer) {
+    public void saveBoard(Board board, String writer, LocalDateTime currentTime) {
         board.setWriter(writer);
+        board.setUpdDate(currentTime);
         boardMapper.saveBoard(board);
     }
 

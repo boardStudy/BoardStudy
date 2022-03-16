@@ -36,12 +36,12 @@
     <insert id="saveBoard" parameterType="board">
         insert into TBL_BOARD
             (board_id, writer, title, content, view_count, reg_date)
-        values (#{boardId},#{writer},#{title},#{content},0,sysdate())
+        values (#{boardId},#{writer},#{title},#{content},0,#{updDate})
             on duplicate key
         update
             title = #{title},
             content = #{content},
-            upd_date = sysdate()
+            upd_date = #{updDate}
     </insert>
 
     <!--글 삭제-->

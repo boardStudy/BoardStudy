@@ -1,5 +1,8 @@
 package com.hoin.boardStudy.board.service;
 
+import com.hoin.boardStudy.board.dto.BoardList;
+import com.hoin.boardStudy.board.dto.BoardResult;
+import com.hoin.boardStudy.board.dto.BoardSaveRequest;
 import com.hoin.boardStudy.board.mapper.BoardMapper;
 import com.hoin.boardStudy.board.dto.Board;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class BoardService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<Board> getBoardList() {
+    public List<BoardList> getBoardList() {
         return boardMapper.getBoardList();
     }
 
@@ -35,12 +37,9 @@ public class BoardService {
      * @return
      */
     @Transactional(readOnly = true)
-    public Board getDetail(int boardId) {
-
-        //로그
-        Board result = boardMapper.getDetail(boardId);
-        log.info("결과 확인" + result.toString());
-
+    public BoardResult getDetail(int boardId) {
+        BoardResult result = boardMapper.getDetail(boardId);
+        log.info(result.toString());
         return boardMapper.getDetail(boardId);
     }
 
@@ -50,10 +49,14 @@ public class BoardService {
      * @param board
      */
     @Transactional
-    public void saveBoard(Board board, String writer, LocalDateTime currentTime) {
-        board.setWriter(writer);
-        board.setUpdDate(currentTime);
-        boardMapper.saveBoard(board);
+    public void saveBoard(BoardSaveRequest board, String writer) {
+        Board saveBoard =
+                new Board(board.getBoardId(),
+                        writer,
+                        board.getTitle(),
+                        board.getContent(),
+                        board.getCurrentTime());
+        boardMapper.saveBoard(saveBoard);
     }
 
     @Transactional

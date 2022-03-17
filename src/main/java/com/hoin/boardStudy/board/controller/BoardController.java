@@ -1,6 +1,7 @@
 package com.hoin.boardStudy.board.controller;
 
 import com.hoin.boardStudy.board.dto.Board;
+import com.hoin.boardStudy.board.dto.BoardSaveRequest;
 import com.hoin.boardStudy.board.service.BoardService;
 import com.hoin.boardStudy.board.service.ViewCountUpdater;
 import com.hoin.boardStudy.user.dto.User;
@@ -12,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -50,7 +50,7 @@ public class BoardController {
     }
 
     //글 수정 페이지
-    @GetMapping("modify.do")
+    @GetMapping("/modify.do")
     public String modifyBoard(@RequestParam int boardId, Model model) {
         model.addAttribute("board", boardService.getDetail(boardId));
         return "board/modify";
@@ -58,14 +58,12 @@ public class BoardController {
 
     // 글 저장 (등록, 수정)
     @PostMapping("/saveBoard.do")
-    public String saveBoard(@ModelAttribute Board board, RedirectAttributes redirectAttributes, HttpSession session) {
+    public String saveBoard(BoardSaveRequest board, RedirectAttributes redirectAttributes, HttpSession session) {
 
         // 세션에서 로그인 ID를 가져와서 등록
         String writer = ((User) session.getAttribute("user")).getUserId();
-        // 현재 시간 구하기
-        LocalDateTime currentTime = LocalDateTime.now();
 
-        boardService.saveBoard(board, writer, currentTime);
+        boardService.saveBoard(board, writer);
         redirectAttributes.addFlashAttribute("board", board);
         return "redirect:/board/list.do";
     }

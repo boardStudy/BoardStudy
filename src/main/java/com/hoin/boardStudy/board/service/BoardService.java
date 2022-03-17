@@ -1,7 +1,5 @@
 package com.hoin.boardStudy.board.service;
 
-import com.hoin.boardStudy.board.dto.BoardList;
-import com.hoin.boardStudy.board.dto.BoardResult;
 import com.hoin.boardStudy.board.dto.BoardSaveRequest;
 import com.hoin.boardStudy.board.mapper.BoardMapper;
 import com.hoin.boardStudy.board.dto.Board;
@@ -10,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,7 +23,8 @@ public class BoardService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<BoardList> getBoardList() {
+    public List<Board> getBoardList() {
+
         return boardMapper.getBoardList();
     }
 
@@ -37,9 +35,8 @@ public class BoardService {
      * @return
      */
     @Transactional(readOnly = true)
-    public BoardResult getDetail(int boardId) {
-        BoardResult result = boardMapper.getDetail(boardId);
-        log.info(result.toString());
+    public Board getDetail(int boardId) {
+
         return boardMapper.getDetail(boardId);
     }
 
@@ -55,7 +52,8 @@ public class BoardService {
                         writer,
                         board.getTitle(),
                         board.getContent(),
-                        board.getCurrentTime());
+                        board.getCurrentTime()
+                );
         boardMapper.saveBoard(saveBoard);
     }
 

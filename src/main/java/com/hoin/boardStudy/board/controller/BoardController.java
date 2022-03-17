@@ -1,6 +1,5 @@
 package com.hoin.boardStudy.board.controller;
 
-import com.hoin.boardStudy.board.dto.Board;
 import com.hoin.boardStudy.board.dto.BoardSaveRequest;
 import com.hoin.boardStudy.board.service.BoardService;
 import com.hoin.boardStudy.board.service.ViewCountUpdater;

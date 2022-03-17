@@ -16,33 +16,13 @@
         <result column="del_date" property="delDate"/>
     </resultMap>
 
-    <resultMap id="boardListMap" type="boardList">
-        <result column="board_id" property="boardId"/>
-        <result column="writer" property="writer"/>
-        <result column="title" property="title"/>
-        <result column="content" property="content"/>
-        <result column="view_count" property="viewCount"/>
-        <result column="reg_date" property="regDate"/>
-    </resultMap>
-
-    <resultMap id="boardResultMap" type="boardResult">
-        <result column="board_id" property="boardId"/>
-        <result column="writer" property="writer"/>
-        <result column="title" property="title"/>
-        <result column="content" property="content"/>
-        <result column="view_count" property="viewCount"/>
-        <result column="reg_date" property="regDate"/>
-        <result column="upd_date" property="updDate"/>
-    </resultMap>
-
-
     <!--게시판 목록 전체 조회하기-->
-    <select id="getBoardList" resultMap="boardListMap">
+    <select id="getBoardList" resultMap="boardMap">
         SELECT * FROM TBL_BOARD ORDER BY board_Id DESC ;
     </select>
 
     <!--게시판 상페 페이지-->
-    <select id="getDetail" resultMap="boardResultMap" parameterType="int">
+    <select id="getDetail" resultMap="boardMap" parameterType="int">
         SELECT board_id,
                writer,
                title,

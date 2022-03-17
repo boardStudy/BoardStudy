@@ -12,7 +12,7 @@ public interface BoardMapper {
     List<Board> getBoardList();
 
     // 상세 페이지
-   Board getDetail(int boardId);
+    Board getDetail(int boardId);
 
     // 조회수 기능
     void increaseViewCount(int boardId);

@@ -18,4 +18,12 @@ public class Board {
     private LocalDateTime regDate;
     private LocalDateTime updDate;
     private LocalDateTime delDate;
+
+    public Board(int boardId, String writer, String title, String content, LocalDateTime currentTime) {
+        this.boardId = boardId;
+        this.writer = writer;
+        this.title = title;
+        this.content = content;
+        this.updDate = currentTime;
+    }
 }

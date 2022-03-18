@@ -54,16 +54,16 @@
         <!--페이지네이션 백엔드 처리 안된 것-->
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                <li class="page-item" th:if="${pageHandler.showPrev}"}>
+                    <a class="page-link" th:href="@{list.do(page=${pageHandler.beginPage}-1, pageSize=${pageHandler.pageSize})}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                <th:block th:each="num: ${#numbers.sequence(pageHandler.beginPage,pageHandler.endPage)}" >
+                    <li class="page-item"><a class="page-link" th:href="@{list.do(page=${num}, pageSize=${pageHandler.pageSize})}" th:text="${num}"></a></li>
+                </th:block>
+                <li class="page-item" th:if="${pageHandler.showNext}"}>
+                    <a class="page-link" th:href="@{list.do(page=${pageHandler.endPage}+1, pageSize=${pageHandler.pageSize})}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

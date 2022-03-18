@@ -17,8 +17,17 @@
     </resultMap>
 
     <!--게시판 목록 전체 조회하기-->
-    <select id="getBoardList" resultMap="boardMap">
-        SELECT * FROM TBL_BOARD ORDER BY board_Id DESC ;
+    <select id="getBoardList" parameterType="map" resultMap="boardMap">
+        SELECT *
+        FROM TBL_BOARD
+        ORDER BY board_Id DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!--게시물 총 개수 조회하기-->
+    <select id="getTotalCount" resultType="int">
+            SELECT count(*)
+            FROM TBL_BOARD
     </select>
 
     <!--게시판 상페 페이지-->
@@ -38,7 +47,7 @@
     <update id="increaseViewCount" parameterType="int">
         UPDATE TBL_BOARD
         SET view_count = view_count + 1
-        WHERE board_id = #{boardId};
+        WHERE board_id = #{boardId}
     </update>
 
     <!--글 저장-->
@@ -56,6 +65,7 @@
     <!--글 삭제-->
     <delete id="deleteBoard">
         DELETE FROM TBL_BOARD
-        WHERE board_id = #{boardId};
+        WHERE board_id = #{boardId}
     </delete>
+
 </mapper>

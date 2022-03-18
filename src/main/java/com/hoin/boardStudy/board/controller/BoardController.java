@@ -1,6 +1,8 @@
 package com.hoin.boardStudy.board.controller;
 
+import com.hoin.boardStudy.board.dto.Board;
 import com.hoin.boardStudy.board.dto.BoardSaveRequest;
+import com.hoin.boardStudy.board.dto.PageHandler;
 import com.hoin.boardStudy.board.service.BoardService;
 import com.hoin.boardStudy.board.service.ViewCountUpdater;
 import com.hoin.boardStudy.user.dto.User;
@@ -12,6 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,8 +28,26 @@ public class BoardController {
 
     // 전체 글 조회
     @GetMapping("/list.do")
-    public String getBoardList(Model model) {
-        model.addAttribute("list", boardService.getBoardList());
+    public String getBoardList(Model model, Integer page, Integer pageSize) {
+
+        // 기본값 설정
+        if (page == null) page = 1;
+        if (pageSize == null) pageSize = 5;
+
+        // 등록된 글 총 개수
+        int totalCount = boardService.getTotalCount();
+        // 총개수, 현재 페이지, 보여줄 글 개수 map으로 전달
+        PageHandler pageHandler = new PageHandler(totalCount, page, pageSize);
+
+        Map map = new HashMap();
+        map.put("offset", (page-1) * pageSize);
+        map.put("pageSize", pageSize);
+
+        List<Board> list = boardService.getBoardList(map);
+
+        // 게시판 정보, 페이징 정보 view단으로 전달
+        model.addAttribute("list", list);
+        model.addAttribute("pageHandler", pageHandler);
         return "board/list";
     }
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -21,11 +22,16 @@ public class BoardService {
      * 게시판 목록 조회
      * 기능 : 게시판의 모든 글들을 불러온다.
      * @return
+     * @param map
      */
     @Transactional(readOnly = true)
-    public List<Board> getBoardList() {
+    public List<Board> getBoardList(Map map) {
 
-        return boardMapper.getBoardList();
+        return boardMapper.getBoardList(map);
+    }
+
+    public int getTotalCount() {
+        return boardMapper.getTotalCount();
     }
 
     /**
@@ -48,7 +54,8 @@ public class BoardService {
     @Transactional
     public void saveBoard(BoardSaveRequest board, String writer) {
         Board saveBoard =
-                new Board(board.getBoardId(),
+                new Board(
+                        board.getBoardId(),
                         writer,
                         board.getTitle(),
                         board.getContent(),
@@ -57,6 +64,11 @@ public class BoardService {
         boardMapper.saveBoard(saveBoard);
     }
 
+    /**
+     * 글 삭제하기
+     * 기능 : 등록된 글을 삭제한다.
+     * @param boardId
+     */
     @Transactional
     public void deleteBoard(int boardId) {
         boardMapper.deleteBoard(boardId);

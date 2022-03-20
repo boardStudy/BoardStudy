@@ -16,6 +16,6 @@ public class User {
     private LocalDateTime regDate;
     private LocalDateTime withdDate;
     private LocalDateTime updDate;
-
+    private int withdStatus;
 }
 

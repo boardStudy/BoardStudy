@@ -26,7 +26,8 @@
                 <th style="width:15%" class="table-active text-center">작성일</th><td style="width:35%" th:text="${#temporals.format(detail.regDate, 'yyyy-MM-dd HH:mm')}"></td>
             </tr>
             <tr>
-                <th style="width:15%" class="table-active text-center">제목</th><td th:text="${detail.title}" colspan="3"></td>
+                <th style="width:15%" class="table-active text-center">제목</th><td th:text="${detail.title}"></td>
+                <th style="width:15%" class="table-active text-center">수정일</th><td th:text="${#temporals.format(detail.updDate, 'yyyy-MM-dd HH:mm')}"></td>
             </tr>
             <tr>
                 <td colspan="4" style="height:100%">
@@ -36,8 +37,10 @@
             </tr>
         </table>
         <!-- 버튼들은 후에 로그인 작업 후 정리-->
-        <button type="button" class="btn btn-primary" style="float: right">수정하기</button>
-        <button type="button" class="btn btn-danger" style="float: right">삭제하기</button>
+        <if th:if="${session.user} != null and ${session.user.userId}==${detail.writer}">
+            <a th:href="@{/board/modify.do(boardId=${detail.boardId})}" class="btn btn-primary" style="float: right">수정하기</a>
+            <a th:href="@{/board/delete.do(boardId=${detail.boardId})}" class="btn btn-danger" style="float: right">삭제하기</a>
+        </if>
         <button type="button" class="btn btn-secondary" onclick="location.href='list.do'">목록</button>
     </div>
 </body>

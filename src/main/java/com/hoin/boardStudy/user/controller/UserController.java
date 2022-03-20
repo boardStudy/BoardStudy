@@ -69,6 +69,7 @@ public class UserController {
         return "redirect:/user/login.do";
     }
 
+
     /* 탈퇴 */
     @GetMapping("/withdraw.do")
     public String withdraw(HttpSession session, Model m) {

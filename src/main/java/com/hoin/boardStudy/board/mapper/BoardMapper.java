@@ -4,20 +4,27 @@ import com.hoin.boardStudy.board.dto.Board;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface BoardMapper {
 
     // 글 전체 목록 조회
-    List<Board> getBoardList();
+    List<Board> getBoardList(Map map);
+
+    // 전체 글 개수 조회
+    int getTotalCount();
 
     // 상세 페이지
-   Board getDetail(int boardId);
+    Board getDetail(int boardId);
 
     // 조회수 기능
     void increaseViewCount(int boardId);
 
-    // 글쓰기 기능
-    void insertBoard(Board board);
+    // 글 저장 기능 (등록, 수정)
+    void saveBoard(Board board);
+
+    // 글 삭제 기능
+    void deleteBoard(int boardId);
 
 }

@@ -30,7 +30,7 @@
     <insert id="saveUser" parameterType="user">
         INSERT INTO TBL_USER
         (user_id, password, email, reg_date, withd_date, upd_date, withd_status)
-        VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate(), 1);
+        VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate(), 0);
     </insert>
 
     <!-- 탈퇴 -->

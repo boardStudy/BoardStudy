@@ -17,6 +17,7 @@ public class UserController {
 
     private final UserService userService;
     private final PasswordManagement passwordManagement;
+
     /* 로그인 화면 */
     @GetMapping("/login.do")
     public String login() {
@@ -25,16 +26,19 @@ public class UserController {
 
     /* 로그인 처리 */
     @PostMapping("/login.do")
-    public String login(User user, HttpServletRequest req) {
+    @ResponseBody
+    public String login(User user, HttpServletRequest req, String result) {
         String rawPassword = user.getPassword();
-        user = userService.userCheck(user.getUserId()); // = null
-        if (user != null) {
-            // 유저 값이 있을 때
-            userService.login(user, rawPassword);
+        user = userService.userCheck(user.getUserId());
+            if(user != null && userService.login(user, rawPassword)) {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
+            result = "success";
+
+        } else {
+            result = "fail";
         }
-        return "/index";
+        return result;
     }
 
     /* 로그아웃 */
@@ -64,8 +68,9 @@ public class UserController {
     /* 회원가입 정보 저장 */
     @PostMapping("/signUp.do")
     public String joinUser(User user) {
-        String encryptPassword = passwordManagement.encryptPassword(user);
-        userService.joinUser(user);
+        String rawPassword = user.getPassword();
+        userService.joinUser(user, rawPassword);
+
         return "redirect:/user/login.do";
     }
 

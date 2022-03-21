@@ -3,6 +3,7 @@ package com.hoin.boardStudy.board.controller;
 import com.hoin.boardStudy.board.dto.Board;
 import com.hoin.boardStudy.board.dto.BoardSaveRequest;
 import com.hoin.boardStudy.board.dto.PageHandler;
+import com.hoin.boardStudy.board.dto.PageInfo;
 import com.hoin.boardStudy.board.service.BoardService;
 import com.hoin.boardStudy.board.service.ViewCountUpdater;
 import com.hoin.boardStudy.user.dto.User;
@@ -28,15 +29,14 @@ public class BoardController {
 
     // 전체 글 조회
     @GetMapping("/list.do")
-    public String getBoardList(Model model, Integer page, Integer pageSize) {
-
-        // 기본값 설정
-        if (page == null) page = 1;
-        if (pageSize == null) pageSize = 5;
+    public String getBoardList(Model model, PageInfo pageInfo) {
 
         // 등록된 글 총 개수
         int totalCount = boardService.getTotalCount();
         // 총개수, 현재 페이지, 보여줄 글 개수 map으로 전달
+        Integer page = Integer.parseInt(pageInfo.getPage());
+        Integer pageSize = Integer.parseInt(pageInfo.getPageSize());
+
         PageHandler pageHandler = new PageHandler(totalCount, page, pageSize);
 
         Map map = new HashMap();

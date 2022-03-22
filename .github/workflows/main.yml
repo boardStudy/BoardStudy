@@ -9,26 +9,26 @@ jobs:
     runs-on: ubuntu-18.04
   
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'    
-      - name: Build with Maven
-        run : mvn -B package --file pom.xml
-        env :
-          SQL_PASSWORD:  ${{ secrets.SQL_PASSWORD }}
-      - name: jar 복사
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: target/board-0.0.1-SNAPSHOT.jar
-          remote: /home/deploy/board/board-0.0.1-SNAPSHOT.jar
-          host: ${{ secrets.REMOTE_IP }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.REMOTE_SSH_PORT }}
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Set up JDK 11
+#         uses: actions/setup-java@v2
+#         with:
+#           java-version: '11'
+#           distribution: 'adopt'    
+#       - name: Build with Maven
+#         run : mvn -B package --file pom.xml
+#         env :
+#           SQL_PASSWORD:  ${{ secrets.SQL_PASSWORD }}
+#       - name: jar 복사
+#         uses: garygrossgarten/github-action-scp@release
+#         with:
+#           local: target/board-0.0.1-SNAPSHOT.jar
+#           remote: /home/deploy/board/board-0.0.1-SNAPSHOT.jar
+#           host: ${{ secrets.REMOTE_IP }}
+#           username: ${{ secrets.USERNAME }}
+#           password: ${{ secrets.PASSWORD }}
+#           port: ${{ secrets.REMOTE_SSH_PORT }}
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:

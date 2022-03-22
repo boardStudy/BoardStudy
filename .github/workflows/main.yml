@@ -17,4 +17,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            echo "테스트 출력"
+            git pull origin master

@@ -36,7 +36,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
-          script: nohup /home/deploy/board/deploy2.sh > /dev/null 2> /dev/null < /dev/null &
-         # script: sh /home/deploy/board/deploy2.sh
+          script: sh /home/deploy/board/deploy2.sh
+             nohup java -jar board-0.0.1-SNAPSHOT.jar  > /dev/null 2> /dev/null < /dev/null &
 
 

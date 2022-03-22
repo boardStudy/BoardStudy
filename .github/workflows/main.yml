@@ -36,5 +36,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
-          script: ls
+          script: | 
+            /home/deploy/board/deploy.sh
 

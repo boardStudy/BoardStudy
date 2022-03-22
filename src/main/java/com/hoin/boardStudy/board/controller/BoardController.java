@@ -34,8 +34,8 @@ public class BoardController {
         // 등록된 글 총 개수
         int totalCount = boardService.getTotalCount();
         // 총개수, 현재 페이지, 보여줄 글 개수 map으로 전달
-        Integer page = Integer.parseInt(pageInfo.getPage());
-        Integer pageSize = Integer.parseInt(pageInfo.getPageSize());
+        Integer page = pageInfo.getPage();
+        Integer pageSize = pageInfo.getPageSize();
 
         PageHandler pageHandler = new PageHandler(totalCount, page, pageSize);
 

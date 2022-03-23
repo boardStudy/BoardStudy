@@ -31,13 +31,17 @@ jobs:
 #           port: ${{ secrets.REMOTE_SSH_PORT }}
       - name: Deploy
         uses: appleboy/ssh-action@master
+        env:
+          SQL_PASSWORD:  ${{ secrets.SQL_PASSWORD }}
         with:
           host: ${{ secrets.REMOTE_IP }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
-          script: sh /home/deploy/board/deploy.sh |
-             nohup java -jar board-0.0.1-SNAPSHOT.jar  > /dev/null 2> /dev/null < /dev/null &
+          script: |
+            export SQL_PASSWORD=$SQL_PASSWORD
+            /home/deploy/board/deploy.sh
+             
 
 
 

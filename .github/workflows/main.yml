@@ -40,7 +40,7 @@ jobs:
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
             export SQL_PASSWORD=${{ secrets.SQL_PASSWORD }}
-            echo SQL_PASSWORD
+            echo $SQL_PASSWORD
             /home/deploy/board/deploy.sh
              
 

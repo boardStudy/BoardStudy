@@ -2,7 +2,7 @@
 <configuration>
     ...
     <appender name="SLACK" class="com.github.maricn.logback.SlackAppender">
-        <webhookUri>https://hooks.slack.com/services/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</webhookUri>
+        <webhookUri>${SLACK_WEBHOOK_URL}</webhookUri>
         <!-- Channel that you want to post - default is #general -->
         <channel>#서버에러</channel>
         <!-- Formatting (you can use Slack formatting - URL links, code formatting, etc.) -->

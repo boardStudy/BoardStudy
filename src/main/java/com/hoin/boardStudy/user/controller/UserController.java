@@ -24,7 +24,7 @@ public class UserController {
     @GetMapping("/signUp.do")
     public String signUpForm() {
 
-        return "user/signUp";
+        return ".user/signUp";
     }
 
     /* 회원가입 정보 저장 */

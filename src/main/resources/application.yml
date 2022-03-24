@@ -13,3 +13,6 @@ spring:
 
 sql-server-password: ${SQL_PASSWORD}
 
+logging:
+    ##    config: classpath:log/logback-${spring.profiles}.xml
+    config: classpath:log/logback.xml

@@ -15,4 +15,6 @@ sql-server-password: ${SQL_PASSWORD}
 
 logging:
     ##    config: classpath:log/logback-${spring.profiles}.xml
+    slack:
+        webhook-uri : ${SLACK_WEBHOOK_URL}
     config: classpath:log/logback.xml

@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -14,9 +17,11 @@ public class UserService {
      private final PasswordManagement passwordManagement;
 
      /* 로그인 */
-     public boolean login(User user, String rawPassword) {
+     public boolean loginVerification(User user, HttpSession session, String rawPassword) {
           String encryptPassword = user.getPassword();
+
           if (passwordEncoder.matches(rawPassword, encryptPassword)) {
+               session.setAttribute("user", user);
                return true;
           }
                return false;

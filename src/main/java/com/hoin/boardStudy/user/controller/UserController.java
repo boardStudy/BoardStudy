@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
-    private final PasswordManagement passwordManagement;
 
     /* 로그인 화면 */
     @GetMapping("/login.do")
@@ -25,20 +24,15 @@ public class UserController {
     }
 
     /* 로그인 처리 */
-    @PostMapping("/login.do")
-    @ResponseBody
-    public String login(User user, HttpServletRequest req, String result) {
+    @PostMapping("/loginCheck.do")
+    public String loginCheck(User user, HttpSession session) {
         String rawPassword = user.getPassword();
         user = userService.userCheck(user.getUserId());
-            if(user != null && userService.login(user, rawPassword)) {
-            HttpSession session = req.getSession();
-            session.setAttribute("user", user);
-            result = "success";
 
-        } else {
-            result = "fail";
+        if(user != null && userService.loginVerification(user, session,rawPassword)) {
+            return "redirect:/board/list.do";
         }
-        return result;
+            return "redirect:/user/login.do";
     }
 
     /* 로그아웃 */
@@ -46,7 +40,7 @@ public class UserController {
     public String logout(HttpSession session) {
         session.invalidate();
 
-        return "redirect:/board/list.do";
+        return "redirect:/user/login.do";
     }
 
     /* 유저정보 체크 */

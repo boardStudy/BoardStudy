@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class PasswordManagement {
-    public final UserMapper userMapper;
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -19,8 +18,5 @@ public class PasswordManagement {
         // 패스워드를 받아와서 rawPassword 변수를 선언.
         return passwordEncoder.encode(rawPassword);
         // 암호화 된 비밀번호를 리턴한다.
-
-        // user.setPassword(passwordEncoder.encode(rawPassword));
-        // (passwordEncoder.encode(rawPassword) = 암호화 된 password
     }
 }

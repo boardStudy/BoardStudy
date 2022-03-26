@@ -1,13 +1,12 @@
 package com.hoin.boardStudy.user.controller;
 
 import com.hoin.boardStudy.user.dto.User;
-import com.hoin.boardStudy.user.service.PasswordManagement;
+import com.hoin.boardStudy.user.service.LoginVerification;
 import com.hoin.boardStudy.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
+    private final LoginVerification loginVerification;
 
     /* 로그인 화면 */
     @GetMapping("/login.do")
@@ -24,12 +24,13 @@ public class UserController {
     }
 
     /* 로그인 처리 */
-    @PostMapping("/loginCheck.do")
-    public String loginCheck(User user, HttpSession session) {
+    @PostMapping("/loginProcess.do")
+    public String loginProcess(User user, HttpSession session) {
         String rawPassword = user.getPassword();
-        user = userService.userCheck(user.getUserId());
+        user = userService.getUserInfo(user.getUserId());
 
-        if(user != null && userService.loginVerification(user, session,rawPassword)) {
+        if(loginVerification.loginVerification(user, rawPassword)) {
+            session.setAttribute("user", user);
             return "redirect:/board/list.do";
         }
             return "redirect:/user/login.do";
@@ -39,18 +40,17 @@ public class UserController {
     @GetMapping("/logout.do")
     public String logout(HttpSession session) {
         session.invalidate();
-
-        return "redirect:/user/login.do";
+        return "redirect:/board/list.do";
     }
 
-    /* 유저정보 체크 */
-    @GetMapping("/userCheck.do")
-    public String userCheck(HttpSession session, Model m) {
-        String userId = ((User) session.getAttribute("user")).getUserId();
-        m.addAttribute("user", userService.userCheck(userId));
-
-        return "/";
-    }
+//    /* 유저정보조회 */ -> 프로필 구현
+//    @GetMapping("/getUserInfo.do")
+//    public String getUserInfo(HttpSession session, Model m) {
+//        String userId = ((User) session.getAttribute("user")).getUserId();
+//        m.addAttribute("user", userService.getUserInfo(userId));
+//
+//        return "/";
+//    }
 
     /* 회원가입 페이지*/
     @GetMapping("/signUp.do")

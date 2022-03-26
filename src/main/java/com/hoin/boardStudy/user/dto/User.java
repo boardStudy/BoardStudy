@@ -17,5 +17,6 @@ public class User {
     private LocalDateTime withdDate;
     private LocalDateTime updDate;
     private int withdStatus;
+    private String name;
 }
 

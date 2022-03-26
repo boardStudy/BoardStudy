@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
 
     /* 유저정보 체크 */
-    User userCheck(String userId);
+    User getUserInfo(String userId);
 
     /* 회원가입 */
     void saveUser(User user);

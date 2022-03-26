@@ -1,4 +1,4 @@
-package com.hoin.board;
+package com.hoin.boardStudy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

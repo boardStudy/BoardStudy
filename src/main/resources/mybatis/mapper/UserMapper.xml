@@ -12,19 +12,33 @@
         <result column="reg_date" property="regDate"/>
         <result column="withd_date" property="withdDate"/>
         <result column="upd_date" property="updDate"/>
+        <result column="withd_status" property="withdStatus"/>
+        <result column="name" property="name"/>
+
     </resultMap>
 
-    <insert id="saveUser" parameterType="user">
-        INSERT INTO TBL_USER
-        (user_id, password, email, reg_date, withd_date, upd_date)
-        VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate());
-    </insert>
-
-
-    <select id="login" resultMap="userMap">
+    <!-- 유저정보 체크 -->
+    <select id="getUserInfo" resultMap="userMap">
         SELECT *
         FROM TBL_USER
         WHERE user_id = #{userId}
+        AND withd_status = 0
+
     </select>
+
+    <!-- 회원가입 -->
+    <insert id="saveUser" parameterType="user">
+        INSERT INTO TBL_USER
+        (user_id, password, email, reg_date, withd_date, upd_date, withd_status, name)
+        VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate(), 0, #{name});
+    </insert>
+
+    <!-- 탈퇴 -->
+    <!-- 로컬데이트타임으로 변경 예정-->
+    <update id="withdrawUser">
+        UPDATE TBL_USER
+        SET withdStatus = 1, withdDate = sysdate()
+        WHERE user_id = #{userId}
+    </update>
 
 </mapper>

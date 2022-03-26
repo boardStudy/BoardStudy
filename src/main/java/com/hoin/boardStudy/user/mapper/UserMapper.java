@@ -1,17 +1,18 @@
 package com.hoin.boardStudy.user.mapper;
-
 import com.hoin.boardStudy.user.dto.User;
 import org.apache.ibatis.annotations.Mapper;
 
 
 @Mapper
-
 public interface UserMapper {
 
+    /* 유저정보 체크 */
+    User getUserInfo(String userId);
+
+    /* 회원가입 */
     void saveUser(User user);
 
-    User login(User user);
+    /* 탈퇴여부 확인 */
+    void withdrawUser(String userId);
 
 }
-
-// mapper.xml 써둔 쿼리문이랑 위에 써둔 매칭되야한다.

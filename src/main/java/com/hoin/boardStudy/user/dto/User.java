@@ -17,9 +17,6 @@ public class User {
     private LocalDateTime withdDate;
     private LocalDateTime updDate;
     private int withdStatus;
-<<<<<<< Updated upstream
     private String name;
-=======
->>>>>>> Stashed changes
 }
 

@@ -33,10 +33,10 @@ public class JustTest {
 
     @Test
     void matchTest() {
-        User 이호인 = userService.userCheck("민동현");
-
-        boolean login = userService.login(이호인, "1234");
-
-        System.out.println("login : " + login);
+//        User 이호인 = userService.userCheck("민동현");
+//
+//        boolean login = userService.login(이호인, "1234");
+//
+//        System.out.println("login : " + login);
     }
 }

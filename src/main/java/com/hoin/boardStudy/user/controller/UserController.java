@@ -43,31 +43,14 @@ public class UserController {
         return "redirect:/board/list.do";
     }
 
-    /* 프로필 */
-    @GetMapping("/profile.do")
-    public String profile(HttpSession session) {
-        String userId = ((User) session.getAttribute("user")).getUserId();
-        return "user/profile";
-    }
-
-    /* 유저정보 조회 */
-    @GetMapping("/getUserInfo.do")
-    public String getUserInfo(HttpSession session, Model m) {
-        String userId = ((User) session.getAttribute("user")).getUserId();
-        m.addAttribute("user", userService.getUserInfo(userId));
-
-        return "user/modify";
-    }
-
-    /* 유저정보 수정 */
-    @PostMapping("/modify.do")
-    public String modify(User user, HttpSession session) {
-        String userId = ((User) session.getAttribute("user")).getUserId();
-        user.setUserId((userId));
-        userService.modifyUserInfo(user);
-
-        return "redirect:/user/getUserInfo.do";
-    }
+//    /* 유저정보조회 */ -> 프로필 구현
+//    @GetMapping("/getUserInfo.do")
+//    public String getUserInfo(HttpSession session, Model m) {
+//        String userId = ((User) session.getAttribute("user")).getUserId();
+//        m.addAttribute("user", userService.getUserInfo(userId));
+//
+//        return "/";
+//    }
 
     /* 회원가입 페이지*/
     @GetMapping("signUp.do")
@@ -95,6 +78,5 @@ public class UserController {
 
         return "redirect:/board/list.do";
     }
-
 
 }

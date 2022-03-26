@@ -18,7 +18,5 @@ public class User {
     private LocalDateTime updDate;
     private int withdStatus;
     private String name;
-    private String phone;
-    private int gender;
 }
 

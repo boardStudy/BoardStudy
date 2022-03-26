@@ -1,18 +1,13 @@
 package com.hoin.boardStudy.user.mapper;
 import com.hoin.boardStudy.user.dto.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Mapper
 public interface UserMapper {
 
-    /* 유저정보 조회 */
-    @Transactional
+    /* 유저정보 체크 */
     User getUserInfo(String userId);
-
-    /* 유저정보 수정 */
-    public void modifyUserInfo(User user);
 
     /* 회원가입 */
     void saveUser(User user);

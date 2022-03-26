@@ -7,7 +7,11 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
 
     /* 유저정보 체크 */
+<<<<<<< Updated upstream
     User getUserInfo(String userId);
+=======
+    User userCheck(String userId);
+>>>>>>> Stashed changes
 
     /* 회원가입 */
     void saveUser(User user);

@@ -13,12 +13,19 @@
         <result column="withd_date" property="withdDate"/>
         <result column="upd_date" property="updDate"/>
         <result column="withd_status" property="withdStatus"/>
+<<<<<<< Updated upstream
         <result column="name" property="name"/>
+=======
+>>>>>>> Stashed changes
 
     </resultMap>
 
     <!-- 유저정보 체크 -->
+<<<<<<< Updated upstream
     <select id="getUserInfo" resultMap="userMap">
+=======
+    <select id="userCheck" resultMap="userMap">
+>>>>>>> Stashed changes
         SELECT *
         FROM TBL_USER
         WHERE user_id = #{userId}
@@ -26,11 +33,20 @@
 
     </select>
 
+<<<<<<< Updated upstream
     <!-- 회원가입 -->
     <insert id="saveUser" parameterType="user">
         INSERT INTO TBL_USER
         (user_id, password, email, reg_date, withd_date, upd_date, withd_status, name)
         VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate(), 0, #{name});
+=======
+
+    <!-- 회원가입 -->
+    <insert id="saveUser" parameterType="user">
+        INSERT INTO TBL_USER
+        (user_id, password, email, reg_date, withd_date, upd_date, withd_status)
+        VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate(), 0);
+>>>>>>> Stashed changes
     </insert>
 
     <!-- 탈퇴 -->
@@ -38,7 +54,21 @@
     <update id="withdrawUser">
         UPDATE TBL_USER
         SET withdStatus = 1, withdDate = sysdate()
+<<<<<<< Updated upstream
         WHERE user_id = #{userId}
     </update>
+=======
+        WHERE user_id = #{userId}
+    </update>
+
+    <!-- 로그인
+    <select id="login" resultMap="userMap">
+        SELECT *
+        FROM TBL_USER
+        WHERE user_id = #{userId}
+    </select>
+    -->
+
+>>>>>>> Stashed changes
 
 </mapper>

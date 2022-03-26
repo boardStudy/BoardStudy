@@ -7,6 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+<<<<<<< Updated upstream
+=======
+import javax.servlet.http.HttpServletRequest;
+>>>>>>> Stashed changes
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -15,7 +19,10 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
+<<<<<<< Updated upstream
     private final LoginVerification loginVerification;
+=======
+>>>>>>> Stashed changes
 
     /* 로그인 화면 */
     @GetMapping("/login.do")
@@ -24,6 +31,7 @@ public class UserController {
     }
 
     /* 로그인 처리 */
+<<<<<<< Updated upstream
     @PostMapping("/loginProcess.do")
     public String loginProcess(User user, HttpSession session) {
         String rawPassword = user.getPassword();
@@ -31,6 +39,14 @@ public class UserController {
 
         if(loginVerification.loginVerification(user, rawPassword)) {
             session.setAttribute("user", user);
+=======
+    @PostMapping("/loginCheck.do")
+    public String loginCheck(User user, HttpSession session) {
+        String rawPassword = user.getPassword();
+        user = userService.userCheck(user.getUserId());
+
+        if(user != null && userService.loginVerification(user, session,rawPassword)) {
+>>>>>>> Stashed changes
             return "redirect:/board/list.do";
         }
             return "redirect:/user/login.do";
@@ -40,6 +56,7 @@ public class UserController {
     @GetMapping("/logout.do")
     public String logout(HttpSession session) {
         session.invalidate();
+<<<<<<< Updated upstream
         return "redirect:/board/list.do";
     }
 
@@ -51,6 +68,20 @@ public class UserController {
 //
 //        return "/";
 //    }
+=======
+
+        return "redirect:/user/login.do";
+    }
+
+    /* 유저정보 체크 */
+    @GetMapping("/userCheck.do")
+    public String userCheck(HttpSession session, Model m) {
+        String userId = ((User) session.getAttribute("user")).getUserId();
+        m.addAttribute("user", userService.userCheck(userId));
+
+        return "/";
+    }
+>>>>>>> Stashed changes
 
     /* 회원가입 페이지*/
     @GetMapping("signUp.do")
@@ -60,6 +91,16 @@ public class UserController {
     }
 
     /* 회원가입 정보 저장 */
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+    @PostMapping("signUp.do")
+    public String signUp(User user) {
+        passwordManagement.encryptPassword(user);
+        userService.joinUser(user);
+        return "redirect:/user/login.do";
+    }
+>>>>>>> Stashed changes
 
     @PostMapping("/signUp.do")
     public String joinUser(User user) {
@@ -69,11 +110,32 @@ public class UserController {
         return "redirect:/user/login.do";
     }
 
+<<<<<<< Updated upstream
+=======
+    /* 로그아웃 */
+    @GetMapping("logout.do")
+    public String logout(HttpSession session) {
+        System.out.println("logout getController called");
+=======
+    @PostMapping("/signUp.do")
+    public String joinUser(User user) {
+        String rawPassword = user.getPassword();
+        userService.joinUser(user, rawPassword);
+
+        return "redirect:/user/login.do";
+    }
+
+
+>>>>>>> Stashed changes
     /* 탈퇴 */
     @GetMapping("/withdraw.do")
     public String withdraw(HttpSession session, Model m) {
         String userId = ((User) session.getAttribute("user")).getUserId();
         userService.withdrawUser(userId);
+<<<<<<< Updated upstream
+=======
+>>>>>>> 35
+>>>>>>> Stashed changes
         session.invalidate();
 
         return "redirect:/board/list.do";

@@ -1,0 +1,10 @@
+# DB 설정
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: ${sql-local-server-password}
+        url: jdbc:mysql://localhost:3306/board
+        username: root
+
+sql-local-server-password: ${SQL_LOCAL_PASSWORD}
+

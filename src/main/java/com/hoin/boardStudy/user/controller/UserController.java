@@ -27,8 +27,6 @@ public class UserController {
     @PostMapping("/loginProcess.do")
     public String loginProcess(User user, HttpSession session) {
         String rawPassword = user.getPassword();
-        user = userService.getUserInfo(user.getUserId());
-
         if(loginVerification.loginVerification(user, rawPassword)) {
             session.setAttribute("user", user);
             return "redirect:/board/list.do";

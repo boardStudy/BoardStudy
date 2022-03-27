@@ -13,8 +13,9 @@
         <result column="withd_date" property="withdDate"/>
         <result column="upd_date" property="updDate"/>
         <result column="withd_status" property="withdStatus"/>
-
         <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="gender" property="gender"/>
     </resultMap>
 
     <!-- 유저정보 체크 -->
@@ -31,10 +32,18 @@
     <!-- 회원가입 -->
     <insert id="saveUser" parameterType="user">
         INSERT INTO TBL_USER
-        (user_id, password, email, reg_date, withd_date, upd_date, withd_status, name)
-        VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate(), 0, #{name});
-
+        (user_id, password, email, reg_date, withd_date, upd_date, withd_status, name, phone, gender)
+        VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate(), 0, #{name}, #{phone}, #{gender});
     </insert>
+
+    <!-- 회원정보수정 -->
+    <update id="updateUserInfo" parameterType="user">
+        UPDATE TBL_USER
+        SET email = #{email},
+                    #{phone},
+                    updDate = sysdate()
+        WHERE user_id = #{userId}
+    </update>
 
     <!-- 탈퇴 -->
     <!-- 로컬데이트타임으로 변경 예정-->

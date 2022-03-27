@@ -3,15 +3,6 @@ mybatis:
     mapper-locations: mybatis/mapper/*.xml
     type-aliases-package: com.hoin.boardStudy
     config-location: classpath:mybatis-config.xml
-# DB 설정
-spring:
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        password: ${sql-server-password}
-        url: jdbc:mysql://dev.donghyeon.dev:3307/board
-        username: root
-
-sql-server-password: ${SQL_PASSWORD}
 
 logging:
     ##    config: classpath:log/logback-${spring.profiles}.xml

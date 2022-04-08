@@ -6,7 +6,7 @@ RUN tar -zxvf pinpoint.tar.gz
 ARG ENVIRONMENT
 
 ENV SPRING_PROFILES_ACTIVE=${ENVIRONMENT}
-ENV JAVA_OPTS="-javaagent:/pinpoint-agent-1.8.5/pinpoint-bootstrap-1.8.5.jar -Dpinpoint.agentId=springboot.board -Dpinpoint.applicationName=board-$SPRING_PROFILES_ACTIVE"
+ENV JAVA_OPTS="-javaagent:/pinpoint-agent-1.8.5/pinpoint-bootstrap-1.8.5.jar -Dpinpoint.agentId=board-$SPRING_PROFILES_ACTIVE -Dpinpoint.applicationName=board-$SPRING_PROFILES_ACTIVE"
 #ENTRYPOINT ["java","-jar","/board.jar"]
 #ENTRYPOINT ["java", "-javaagent:/pinpoint-agent-1.8.5/pinpoint-bootstrap-1.8.5.jar", "-Dpinpoint.agentId=springboot.board" ,"-Dpinpoint.applicationName=board-**$SPRING_PROFILES_ACTIVE**","-jar" ,"/board.jar"]
 ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar /board.jar"]

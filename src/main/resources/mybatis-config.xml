@@ -4,7 +4,8 @@
 
 <configuration>
     <typeAliases>
-        <typeAlias alias="board" type="com.hoin.boardStudy.board.dto.Board"/>
-        <typeAlias alias="user" type="com.hoin.boardStudy.user.dto.User"/>
+        <typeAlias alias="board" type="com.hoin.boardstudy.board.dto.Board"/>
+        <typeAlias alias="file" type="com.hoin.boardstudy.board.dto.FileInfo"/>
+        <typeAlias alias="user" type="com.hoin.boardstudy.user.dto.User"/>
     </typeAliases>
 </configuration>

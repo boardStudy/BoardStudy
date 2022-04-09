@@ -12,13 +12,29 @@
 
     <div class="container" style="margin-top: 100px">
         <h2>글쓰기</h2>
-        <form name="modify" id="modify" role="form" method="post" action="saveBoard.do"/>
+        <form name="modify" id="modify" role="form" method="post" action="saveBoard.do" enctype="multipart/form-data"/>
             <table class="table table-borderless" >
                 <input type="hidden" id="boardId" name="boardId" th:value="${board.boardId}"/>
+                <if th:if="${fileInfo}!=null">
+                    <input type="hidden" id="fileId" name="fileId" th:value="${fileInfo.fileId}"/>
+                </if>
                 <tr><th>제목</th></tr>
                 <tr><td width="90%"><input name="title" id="title" class="form-control" th:value="${board.title}" required="required" ></td></tr>
                 <tr><th>내용</th></tr>
                 <tr><td class="text-center"><textarea class="form-control" name="content" id="content" th:text="${board.content}" maxlength="1500" rows="20" required="required" style="resize: none; background-color:white">내용을 입력하세요.</textarea></td></tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="file" id="file">
+                                <label class="custom-file-label" for="file">Choose file</label>
+                            </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">Button</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
             </table>
             <div  class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="button" class="btn btn-secondary" onclick="location.href='list.do?'">목록</button>

@@ -2,6 +2,7 @@ package com.hoin.boardStudy.board.service;
 
 import com.hoin.boardStudy.board.dto.FileInfo;
 import com.hoin.boardStudy.board.mapper.BoardMapper;
+import com.hoin.boardStudy.util.FileConfig;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,9 +22,7 @@ import java.util.UUID;
 public class FileManager {
 
     private final BoardMapper boardMapper;
-
-    @Value("${uploadPath}")
-    private String uploadPath;
+    private final FileConfig fileConfig;
 
     // 파일 저장
     @Transactional
@@ -39,13 +38,14 @@ public class FileManager {
         // 파일 첨부
         String originalFileName = file.getOriginalFilename();
         String extension = FilenameUtils.getExtension(originalFileName).toLowerCase();
+        String uploadPath = fileConfig.getPath();
         File saveFile;
         String saveFileName;
         long size;
 
         do {
             saveFileName = UUID.randomUUID() + "." + extension; // UUID 는 유일한 값으로 중복을 피할 수 있다.
-            saveFile = new File(uploadPath, saveFileName);
+            saveFile = new File(uploadPath + saveFileName);
             size = file.getSize();
         } while (saveFile.exists());
 
@@ -71,7 +71,7 @@ public class FileManager {
 
         // 파일이 업로드 된 경로로
        try {
-            String savePath = uploadPath + "/";
+            String savePath = fileConfig.getPath() + "/";
             String saveName = fileInfo.getSaveName();
 
             String originalName = fileInfo.getOriginalName();
@@ -142,7 +142,7 @@ public class FileManager {
         FileInfo fileInfo = new FileInfo();
         fileInfo = boardMapper.getFileInfo(boardId);
         String saveName = fileInfo.getSaveName();
-        String path_ = uploadPath+"\\"+saveName;
+        String path_ = fileConfig.getPath() + "\\" + saveName;
         Path path = Paths.get(path_);
 
         Files.delete(path);

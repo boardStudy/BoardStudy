@@ -11,7 +11,8 @@ spring:
             max-file-size: 10MB
             max-request-size: 50MB
 
-uploadPath : C:\Users\hoin\Documents\BoardStudy\src\main\resources\static\uploadFiles
+upload:
+    path: C:/upload/
 
 
 logging:

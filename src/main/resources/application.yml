@@ -3,7 +3,18 @@ mybatis:
     mapper-locations: mybatis/mapper/*.xml
     type-aliases-package: com.hoin.boardStudy
     config-location: classpath:mybatis-config.xml
+    
+## 파일 크기 설정
+spring:
+    servlet:
+        multipart:
+            max-file-size: 10MB
+            max-request-size: 50MB
+
+uploadPath : C:\Users\hoin\Documents\BoardStudy\src\main\resources\static\uploadFiles
+
 
 logging:
     ##    config: classpath:log/logback-${spring.profiles}.xml
     config: classpath:log/logback.xml
+

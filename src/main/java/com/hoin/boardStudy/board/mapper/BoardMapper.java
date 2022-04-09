@@ -1,6 +1,7 @@
 package com.hoin.boardStudy.board.mapper;
 
 import com.hoin.boardStudy.board.dto.Board;
+import com.hoin.boardStudy.board.dto.FileInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -24,7 +25,18 @@ public interface BoardMapper {
     // 글 저장 기능 (등록, 수정)
     void saveBoard(Board board);
 
+    // 파일 업로드
+    void saveFile(FileInfo fileInfo);
+
+    void modifyFile(FileInfo fileInfo);
+
     // 글 삭제 기능
     void deleteBoard(int boardId);
+
+    // 파일 삭제
+    void deleteFile(int boardId);
+
+    // 파일 정보 가져오기
+    FileInfo getFileInfo(int boardId);
 
 }

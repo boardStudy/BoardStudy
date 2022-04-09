@@ -35,6 +35,14 @@
                     <textarea class="form-control" rows="20" style="border: none; resize: none; background-color:white" th:text="${detail.content}" disabled></textarea>
                 </td>
             </tr>
+            <tr><td>
+                    <div class="form-group">
+                        <label for="file">파일</label>
+                        <if th:if="${fileInfo} != null">
+                            <p id="file"><a th:href="@{/board/fileDownload.do(boardId=${fileInfo.boardId})}" th:text="${fileInfo.originalName}"></a></p>
+                        </if>
+                    </div>
+            </td></tr>
         </table>
         <!-- 버튼들은 후에 로그인 작업 후 정리-->
         <if th:if="${session.user} != null and ${session.user.userId}==${detail.writer}">

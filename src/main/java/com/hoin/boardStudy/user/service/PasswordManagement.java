@@ -1,7 +1,6 @@
 package com.hoin.boardStudy.user.service;
 
 import com.hoin.boardStudy.user.dto.User;
-import com.hoin.boardStudy.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

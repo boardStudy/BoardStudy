@@ -75,9 +75,9 @@
     <!--파일 수정-->
     <insert id="modifyFile" parameterType="fileInfo">
         <if test="fileId!=0">
-        insert into TBL_FILE
-            (file_id, board_id, original_name, save_name, size, extension, reg_date)
-        values (#{fileId},#{boardId}, #{originalName}, #{saveName}, #{size}, #{extension}, #{regDate})
+            insert into TBL_FILE
+                (file_id, board_id, original_name, save_name, size, extension, reg_date)
+            values (#{fileId},#{boardId}, #{originalName}, #{saveName}, #{size}, #{extension}, #{regDate})
         </if>
         <if test="fileId==0">
             insert into TBL_FILE

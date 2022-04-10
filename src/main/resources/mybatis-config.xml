@@ -5,6 +5,7 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="board" type="com.hoin.boardStudy.board.dto.Board"/>
+        <typeAlias alias="file" type="com.hoin.boardStudy.board.dto.FileInfo"/>
         <typeAlias alias="user" type="com.hoin.boardStudy.user.dto.User"/>
     </typeAliases>
 </configuration>

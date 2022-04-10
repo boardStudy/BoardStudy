@@ -59,9 +59,14 @@
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <th:block th:each="num: ${#numbers.sequence(pageHandler.beginPage,pageHandler.endPage)}" >
-                    <li class="page-item"><a class="page-link" th:href="@{list.do(page=${num}, pageSize=${pageHandler.pageSize})}" th:text="${num}"></a></li>
-                </th:block>
+                <if th:if="${pageHandler.getEndPage()==0}">
+                    <li class="page-item"><a class="page-link" th:href="@{list.do(page=1, pageSize=${pageHandler.pageSize})}" th:text=1></a></li>
+                </if>
+                <if th:unless="${pageHandler.getEndPage()==0}">
+                    <th:block th:each="num: ${#numbers.sequence(pageHandler.beginPage,pageHandler.endPage)}" >
+                        <li class="page-item" style="display: inline-block; margin:0;"><a class="page-link" th:href="@{list.do(page=${num}, pageSize=${pageHandler.pageSize})}" th:text="${num}"></a></li>
+                    </th:block>
+                </if>
                 <li class="page-item" th:if="${pageHandler.showNext}"}>
                     <a class="page-link" th:href="@{list.do(page=${pageHandler.endPage}+1, pageSize=${pageHandler.pageSize})}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>

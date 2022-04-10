@@ -4,6 +4,7 @@ import com.hoin.boardStudy.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,7 +16,13 @@ public class UserService {
 
      /* 유저정보 조회 */
      public User getUserInfo(String userId) {
+
           return userMapper.getUserInfo(userId);
+     }
+     @Transactional
+     /* 유저정보 수정 */
+     public void modifyUserInfo(User user) {
+          userMapper.modifyUserInfo(user);
      }
 
      /* 회원가입 */

@@ -62,9 +62,53 @@
             upd_date = #{updDate}
     </insert>
 
+    <!-- 파일 업로드 -->
+    <insert id="saveFile" parameterType="fileInfo">
+        <selectKey resultType="int" keyProperty="boardId" order="BEFORE">
+            SELECT MAX(BOARD_ID) FROM TBL_BOARD
+        </selectKey>
+        insert into TBL_FILE
+            (board_id, original_name, save_name, size, extension, reg_date)
+        values (#{boardId}, #{originalName}, #{saveName}, #{size}, #{extension}, #{regDate})
+    </insert>
+
+    <!--파일 수정-->
+    <insert id="modifyFile" parameterType="fileInfo">
+        <if test="fileId!=0">
+            insert into TBL_FILE
+                (file_id, board_id, original_name, save_name, size, extension, reg_date)
+            values (#{fileId},#{boardId}, #{originalName}, #{saveName}, #{size}, #{extension}, #{regDate})
+        </if>
+        <if test="fileId==0">
+            insert into TBL_FILE
+            (board_id, original_name, save_name, size, extension, reg_date)
+            values (#{boardId}, #{originalName}, #{saveName}, #{size}, #{extension}, #{regDate})
+        </if>
+        on duplicate key
+        update
+            original_name = #{originalName},
+            save_name = #{saveName},
+            size = #{size},
+            extension = #{extension},
+            reg_date = #{regDate}
+    </insert>
+
+    <!-- 파일 정보 불러오기 -->
+    <select id="getFileInfo" parameterType="int" resultType="fileInfo">
+        SELECT file_id as fileId, board_id as boardId, original_name as originalName, save_name as saveName, size, extension
+        FROM TBL_FILE
+        WHERE BOARD_ID = #{boardId}
+    </select>
+
     <!--글 삭제-->
     <delete id="deleteBoard">
         DELETE FROM TBL_BOARD
+        WHERE board_id = #{boardId}
+    </delete>
+
+    <!--파일 삭제-->
+    <delete id="deleteFile">
+        DELETE FROM TBL_FILE
         WHERE board_id = #{boardId}
     </delete>
 

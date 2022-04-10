@@ -5,6 +5,8 @@ spring:
         password: ${sql-server-password}
         url: jdbc:mysql://dev.donghyeon.dev:3308/board
         username: root
-
+upload:
+    path: /apps/board/real
+    
 sql-server-password: ${SQL_PASSWORD}
 

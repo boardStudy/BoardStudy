@@ -2,7 +2,7 @@ FROM openjdk:11
 ARG JAR_FILE=target/board-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} board.jar
 COPY pinpoint-agent-1.8.5.tar.gz pinpoint.tar.gz
-
+ENV TZ Asia/Seoul
 RUN tar -zxvf pinpoint.tar.gz
 ARG ENVIRONMENT
 

@@ -5,7 +5,6 @@ import com.hoin.boardStudy.board.mapper.BoardMapper;
 import com.hoin.boardStudy.util.FileConfig;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

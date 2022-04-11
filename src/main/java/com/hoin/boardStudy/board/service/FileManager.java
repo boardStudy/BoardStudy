@@ -141,7 +141,7 @@ public class FileManager {
         FileInfo fileInfo = new FileInfo();
         fileInfo = boardMapper.getFileInfo(boardId);
         String saveName = fileInfo.getSaveName();
-        String path_ = fileConfig.getPath() + "\\" + saveName;
+        String path_ = fileConfig.getPath() + saveName;
         Path path = Paths.get(path_);
 
         Files.delete(path);

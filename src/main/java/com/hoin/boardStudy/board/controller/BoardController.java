@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +52,7 @@ public class BoardController {
         // 게시판 정보, 페이징 정보 view단으로 전달
         model.addAttribute("list", list);
         model.addAttribute("pageHandler", pageHandler);
+        model.addAttribute("now", LocalDateTime.now());
         return "board/list";
     }
 
@@ -121,4 +124,5 @@ public class BoardController {
 
         return "redirect:/board/list.do";
     }
+
 }

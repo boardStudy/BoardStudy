@@ -64,12 +64,7 @@ public class BoardController {
 
     // 글쓰기 페이지
     @GetMapping("writeForm.do")
-    public String getWriteForm(HttpServletRequest request) {
-
-        HttpSession session = request.getSession();
-
-        if (session == null) return "user/login";
-        if (session.getAttribute("user") == null)  return "user/login";
+    public String getWriteForm() {
 
         return "board/writeForm";
     }

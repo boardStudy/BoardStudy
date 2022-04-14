@@ -1,12 +1,13 @@
 package com.hoin.boardStudy.board.config;
 
+import com.hoin.boardStudy.board.config.filter.LoginCheck;
 import com.hoin.boardStudy.board.config.handler.PageRequestHandler;
-import com.hoin.boardStudy.board.config.interceptor.LoginCheck;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.Filter;
 import java.util.List;
 
 @Configuration
@@ -20,11 +21,13 @@ public class WebMvcConfigure implements WebMvcConfigurer {
         return new PageRequestHandler();
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginCheck())
-                .order(1)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/user/login.do","/user/loginProcess.do","/user/logout.do","/board/list.do","/board/detail.do");
+    public FilterRegistrationBean loginCheck() {
+        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(new LoginCheck());
+        filterRegistrationBean.setOrder(1);
+        filterRegistrationBean.addUrlPatterns("/*");
+
+        return filterRegistrationBean;
     }
+
 }

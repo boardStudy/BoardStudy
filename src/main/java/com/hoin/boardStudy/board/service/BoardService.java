@@ -27,7 +27,6 @@ public class BoardService {
      */
     @Transactional(readOnly = true)
     public List<Board> getBoardList(Map map) {
-
         return boardMapper.getBoardList(map);
     }
 

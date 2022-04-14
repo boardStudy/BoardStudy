@@ -3,6 +3,7 @@ package com.hoin.boardStudy.board.controller;
 import com.hoin.boardStudy.board.dto.*;
 import com.hoin.boardStudy.board.service.BoardService;
 import com.hoin.boardStudy.board.service.FileManager;
+import com.hoin.boardStudy.board.service.NewArticleChecker;
 import com.hoin.boardStudy.board.service.ViewCountUpdater;
 import com.hoin.boardStudy.user.dto.User;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class BoardController {
     private final BoardService boardService;
     private final FileManager fileManager;
     private final ViewCountUpdater viewCountUpdater;
+    private final NewArticleChecker newArticleChecker;
 
     // 전체 글 조회
     @GetMapping("list.do")
@@ -43,16 +45,21 @@ public class BoardController {
 
         PageHandler pageHandler = new PageHandler(totalCount, page, pageSize);
 
-        Map map = new HashMap();
+        Map<String, Integer> map = new HashMap();
         map.put("offset", (page-1) * pageSize);
         map.put("pageSize", pageSize);
 
         List<Board> list = boardService.getBoardList(map);
+        
+        // new 유무 확인
+        for(int i = 0; i < list.size(); i ++) {
+            int boardId = list.get(i).getBoardId();
+            list.get(i).setNewCheck(newArticleChecker.isNewArticle(boardId));
+        }
 
         // 게시판 정보, 페이징 정보 view단으로 전달
         model.addAttribute("list", list);
         model.addAttribute("pageHandler", pageHandler);
-        model.addAttribute("now", LocalDateTime.now());
         return "board/list";
     }
 

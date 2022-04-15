@@ -10,28 +10,28 @@
     <div class="container">
         <h2 align="center">프로필</h2>
         <div class="signUpForm" style="display: flex; flex-direction: column; align-items: center;">
-            <div class="signUpLine" style="border: solid 1px #d3d3d3; padding: 50px; border-radius: 20px; margin: 50px; width: 50%">
+            <div class="signUpLine" style="border: solid 1px #d3d3d3; padding: 50px; border-radius: 20px; margin: 50px; width: 30%">
                 <div class="form-group">
                     <table class="profile">
                         <tr>
-                            <td>아이디</td>
-                            <td th:text="${session.user.userId}"></td>
+                            <td style="width: 80px;">아이디</td>
+                            <td th:text="${user.userId}"></td>
                         </tr>
                         <tr>
                             <td>이름</td>
-                            <td th:text="${session.user.name}"></td>
+                            <td th:text="${user.name}"></td>
                         </tr>
                         <tr>
                             <td>이메일</td>
-                            <td th:text="${session.user.email}"></td>
+                            <td th:text="${user.email}"></td>
                         </tr>
                         <tr>
                             <td>전화번호</td>
-                            <td th:text="${session.user.phone}"></td>
+                            <td th:text="${user.phone}"></td>
                         </tr>
                     </table>
                 </div>
-                <button type="submit" class="btn btn-secondary">수정</button>
+                <button type="submit" class="btn btn-secondary">프로필 수정</button>
             </div>
         </div>
     </div>

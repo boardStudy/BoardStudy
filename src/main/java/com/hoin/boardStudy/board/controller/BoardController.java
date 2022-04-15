@@ -50,12 +50,6 @@ public class BoardController {
         map.put("pageSize", pageSize);
 
         List<Board> list = boardService.getBoardList(map);
-        
-        // new 유무 확인
-        for(int i = 0; i < list.size(); i ++) {
-            int boardId = list.get(i).getBoardId();
-            list.get(i).setNewCheck(newArticleChecker.isNewArticle(boardId));
-        }
 
         // 게시판 정보, 페이징 정보 view단으로 전달
         model.addAttribute("list", list);

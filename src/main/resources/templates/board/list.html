@@ -41,6 +41,7 @@
                 <th scope="row" th:text="${list.boardId}"></th>
                 <td>
                     <a href="/board/detail.do?boardId=" th:attrappend="href=${list.boardId}" th:text="${list.title}"></a>
+                    <img src="/images/new.png" alt="new" style="width: 20px; height: 20px" th:if="${list.newCheck} == true">
                 </td>
                 <td th:text="${list.writer}"></td>
                 <td th:text="${#temporals.format(list.regDate, 'yyyy-MM-dd HH:mm')}"></td>

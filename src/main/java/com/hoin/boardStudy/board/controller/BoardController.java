@@ -3,6 +3,7 @@ package com.hoin.boardStudy.board.controller;
 import com.hoin.boardStudy.board.dto.*;
 import com.hoin.boardStudy.board.service.BoardService;
 import com.hoin.boardStudy.board.service.FileManager;
+import com.hoin.boardStudy.board.service.NewArticleChecker;
 import com.hoin.boardStudy.board.service.ViewCountUpdater;
 import com.hoin.boardStudy.user.dto.User;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +31,7 @@ public class BoardController {
     private final BoardService boardService;
     private final FileManager fileManager;
     private final ViewCountUpdater viewCountUpdater;
+    private final NewArticleChecker newArticleChecker;
 
     // 전체 글 조회
     @GetMapping("list.do")
@@ -41,7 +45,7 @@ public class BoardController {
 
         PageHandler pageHandler = new PageHandler(totalCount, page, pageSize);
 
-        Map map = new HashMap();
+        Map<String, Integer> map = new HashMap();
         map.put("offset", (page-1) * pageSize);
         map.put("pageSize", pageSize);
 
@@ -116,4 +120,5 @@ public class BoardController {
 
         return "redirect:/board/list.do";
     }
+
 }

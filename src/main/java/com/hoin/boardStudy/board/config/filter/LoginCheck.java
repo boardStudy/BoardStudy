@@ -27,21 +27,15 @@ public class LoginCheck implements Filter {
         String requestURI = httpRequest.getRequestURI();
 
         HttpSession session = httpRequest.getSession();
-        
-        log.info("인증 필터 시작");
+
         if(isLoginCheckPath(requestURI)) {
-            log.info("인증 필터 실행");
             if (session == null || session.getAttribute("user") == null) {
                 httpResponse.sendRedirect(httpRequest.getContextPath() + LOGIN_URL);
             }
-
-            // 필터를 더는 진행하지 않는다.
-            return;
         }
 
         // 다음 필터가 있으면 필터를 호출, 없으면 서블릿을 호출.
         chain.doFilter(request, response);
-        log.info("인증 필터 종료");
     }
 
     private boolean isLoginCheckPath(String requestURI) {

@@ -63,9 +63,9 @@ public class UserController {
     public String modify(User user, HttpSession session) {
         String userId = ((User) session.getAttribute("user")).getUserId();
         user.setUserId((userId));
-        userService.modifyUserInfo(user);
+        userService.updateUserInfo(user);
 
-        return "redirect:/user/getUserInfo.do";
+        return "redirect:/user/profile.do";
     }
 
     /* 회원가입 페이지*/

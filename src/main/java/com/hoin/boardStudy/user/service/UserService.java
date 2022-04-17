@@ -21,8 +21,8 @@ public class UserService {
      }
      @Transactional
      /* 유저정보 수정 */
-     public void modifyUserInfo(User user) {
-          userMapper.modifyUserInfo(user);
+     public void updateUserInfo(User user) {
+          userMapper.updateUserInfo(user);
      }
 
      /* 회원가입 */

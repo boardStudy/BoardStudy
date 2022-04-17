@@ -12,7 +12,7 @@ public interface UserMapper {
     User getUserInfo(String userId);
 
     /* 유저정보 수정 */
-    public void modifyUserInfo(User user);
+    void updateUserInfo(User user);
 
     /* 회원가입 */
     void saveUser(User user);

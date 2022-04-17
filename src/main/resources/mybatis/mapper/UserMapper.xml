@@ -40,8 +40,8 @@
     <update id="updateUserInfo" parameterType="user">
         UPDATE TBL_USER
         SET email = #{email},
-                    #{phone},
-                    updDate = sysdate()
+            phone = #{phone},
+            upd_date = sysdate()
         WHERE user_id = #{userId}
     </update>
 

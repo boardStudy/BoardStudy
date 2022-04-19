@@ -3,10 +3,10 @@ package com.hoin.boardStudy.board.controller;
 import com.hoin.boardStudy.board.dto.*;
 import com.hoin.boardStudy.board.service.BoardService;
 import com.hoin.boardStudy.board.service.FileManager;
-import com.hoin.boardStudy.board.service.NewArticleChecker;
 import com.hoin.boardStudy.board.service.ViewCountUpdater;
 import com.hoin.boardStudy.user.dto.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +24,12 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board") // controller의 부모에 해당되는 Mapping. prefix 역할
+@Slf4j
 public class BoardController {
 
     private final BoardService boardService;
     private final FileManager fileManager;
     private final ViewCountUpdater viewCountUpdater;
-    private final NewArticleChecker newArticleChecker;
 
     // 전체 글 조회
     @GetMapping("list.do")
@@ -61,7 +59,7 @@ public class BoardController {
     @GetMapping("detail.do")
     public String getDetailPage(@RequestParam int boardId, Model model) {
         model.addAttribute("detail", boardService.getDetail(boardId));
-        model.addAttribute("fileInfo", fileManager.getFileInfo(boardId));
+        model.addAttribute("fileInfo", fileManager.getFiles(boardId));
         viewCountUpdater.increaseViewCount(boardId);
         return "board/detail";
     }
@@ -77,13 +75,13 @@ public class BoardController {
     @GetMapping("modify.do")
     public String modifyBoard(@RequestParam int boardId, Model model) {
         model.addAttribute("board", boardService.getDetail(boardId));
-        model.addAttribute("fileInfo", fileManager.getFileInfo(boardId));
+        model.addAttribute("fileInfo", fileManager.getFiles(boardId));
         return "board/modify";
     }
 
     // 글 저장 (등록, 수정)
     @PostMapping("saveBoard.do")
-    public String saveBoard(BoardSaveRequest board, @RequestParam(required = false) MultipartFile file,
+    public String saveBoard(BoardSaveRequest board, @RequestParam(required = false) MultipartFile[] uploadFiles,
                             FileInfo fileInfo, RedirectAttributes redirectAttributes, HttpSession session) throws IOException {
 
         // 세션에서 로그인 ID를 가져와서 등록
@@ -92,8 +90,8 @@ public class BoardController {
         boardService.saveBoard(board, writer);
 
         // 파일 등록 여부
-        if(file.getSize()!=0){
-            fileManager.saveFile(fileInfo, file);
+        if(uploadFiles != null && fileInfo != null){
+                fileManager.saveFile(fileInfo, uploadFiles);
         }
 
         redirectAttributes.addFlashAttribute("board", board);
@@ -102,18 +100,20 @@ public class BoardController {
 
     // 파일 다운로드
     @RequestMapping("/fileDownload.do")
-    public void fileDownload(@RequestParam int boardId, HttpServletRequest request, HttpServletResponse response) throws IOException{
-        fileManager.fileDownload(boardId, request, response);
+    public void fileDownload(@RequestParam int fileId, HttpServletRequest request, HttpServletResponse response) throws IOException{
+        fileManager.fileDownload(fileId, request, response);
     }
 
     // 글 삭제
     @GetMapping("delete.do")
     public String deleteBoard(@RequestParam int boardId) throws IOException {
 
-        FileInfo fileInfo = fileManager.getFileInfo(boardId);
-        if(fileInfo!=null) {
-            int fileId = fileInfo.getFileId();
-            fileManager.deleteFile(fileId, boardId);
+        List<FileInfo> files = fileManager.getFiles(boardId);
+        if(files!=null) {
+            for(FileInfo FileInfo : files) {
+                int fileId = FileInfo.getFileId();
+                fileManager.deleteFile(fileId, boardId);
+            }
         }
         boardService.deleteBoard(boardId);
 

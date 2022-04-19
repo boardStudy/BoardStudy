@@ -26,21 +26,13 @@
                 <tr><td width="90%"><input name="title" id="title" class="form-control" placeholder="제목을 입력하세요." required="required" ></td></tr>
                 <tr><th>내용</th></tr>
                 <tr><td class="text-center"><textarea class="form-control" name="content" id="content" maxlength="1500" rows="20" style="resize: none; background-color:white" placeholder="내용을 입력하세요." required="required"></textarea></td></tr>
-                <tr><th>파일 첨부</th></tr>
-                <tr>
-                    <td>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="file" id="file" onchange="checkSize(this)">
-                                <label class="custom-file-label" for="file">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button">Button</button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
             </table>
+            <div class="input-group">
+                <div class="custom-file">
+                    <label class="custom-file-label" for="uploadFiles"><b>파일 첨부</b></label><br>
+                    <input type="file" class="custom-file-input" name="uploadFiles" id="uploadFiles" multiple onchange="checkSize(this)">
+                </div>
+            </div>
             <div  class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="button" class="btn btn-secondary" onclick="location.href='list.do'">목록</button>
                 <button type="submit" class="btn btn-primary">등록하기</button>

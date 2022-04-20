@@ -23,7 +23,7 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/board") // controller의 부모에 해당되는 Mapping. prefix 역할
+@RequestMapping("/board")
 @Slf4j
 public class BoardController {
 
@@ -90,7 +90,7 @@ public class BoardController {
         boardService.saveBoard(board, writer);
 
         // 파일 등록 여부
-        if(uploadFiles.length != 0){
+        if(uploadFiles != null){
                 fileManager.saveFile(board,uploadFiles);
         }
 
@@ -108,16 +108,9 @@ public class BoardController {
     @GetMapping("delete.do")
     public String deleteBoard(@RequestParam int boardId) throws IOException {
 
-        List<FileInfo> files = fileManager.getFiles(boardId);
-        if(files!=null) {
-            for(FileInfo FileInfo : files) {
-                int fileId = FileInfo.getFileId();
-                fileManager.deleteFile(fileId);
-            }
-        }
-        boardService.deleteBoard(boardId);
-
-
+        fileManager.clearAllFile(boardId); // 파일 삭제
+        boardService.deleteBoard(boardId); // 글 삭제
+        
         return "redirect:/board/list.do";
     }
 

@@ -33,16 +33,10 @@ public class FileManager {
 
             int boardId = board.getBoardId();
 
-            if (boardId != 0) {
-                List<FileInfo> files = getFiles(boardId);
-                if(files!=null) {
-                    for(FileInfo FileInfo : files) {
-                        int fileId = FileInfo.getFileId();
-                        deleteFile(fileId);
-                    }
-                }
-            }
+            // 수정 시, 모든 파일 삭제 후 추가
+            if (boardId != 0) clearAllFile(boardId);
 
+            // 파일 갯수만큼 반복
             for (MultipartFile uploadFile : uploadFiles) {
                 FileInfo fileInfo = new FileInfo();
                 // 파일 첨부
@@ -69,8 +63,7 @@ public class FileManager {
                 fileInfo.setSize(size);
                 fileInfo.setRegDate(LocalDateTime.now());
 
-                if (boardId != 0) boardMapper.modifyFile(fileInfo);
-                if (boardId == 0) boardMapper.saveFile(fileInfo);
+                boardMapper.saveFile(fileInfo);
             }
     }
 
@@ -153,7 +146,7 @@ public class FileManager {
         return boardMapper.getFileInfo(fileId);
     }
 
-    // 파일 삭제
+    // 파일 삭제 (1개)
     @Transactional
     public void deleteFile(int fileId) throws IOException {
         FileInfo fileInfo = new FileInfo();
@@ -166,6 +159,17 @@ public class FileManager {
 
         boardMapper.deleteFile(fileId);
     }
-
+    
+    // 전체 글 지우기
+    @Transactional
+    public void clearAllFile(int boardId) throws IOException {
+            List<FileInfo> files = getFiles(boardId);
+            if(files!=null) {
+                for(FileInfo FileInfo : files) {
+                    int fileId = FileInfo.getFileId();
+                    deleteFile(fileId);
+                }
+            }
+        }
 
 }

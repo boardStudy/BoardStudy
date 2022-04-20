@@ -33,12 +33,12 @@
                     <td>
                         <div class="input-group">
                             <div class="custom-file">
-                                <label class="custom-file-label" for="file"><b>첨부 파일</b></label>
-                                <input type="file" class="custom-file-input" name="file" id="file" multiple onchange="checkSize(this)">
-                                <p th:if="${fileInfo} != null" th:each="fileInfo : ${fileInfo}" th:text="${fileInfo.originalName}"></p>
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button">Button</button>
+                                <label class="custom-file-label" for="uploadFiles"><b>첨부 파일</b></label><br>
+                                <input type="file" class="custom-file-input" name="uploadFiles" id="uploadFiles" multiple onchange="checkSize(this)">
+                                <div>
+                                    <b>현재 등록된 파일</b>
+                                    <p th:if="${fileInfo} != null" th:each="fileInfo : ${fileInfo}" th:text="${fileInfo.originalName}"></p>
+                                </div>
                             </div>
                         </div>
                     </td>

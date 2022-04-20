@@ -36,18 +36,16 @@
                 </td>
             </tr>
         </table>
-            <if th:if="${fileInfo} != null" th:each="fileInfo : ${fileInfo}">
-                    <div class="form-group">
-                        <label for="file"><b>파일</b></label>
-                        <p id="file"><a th:href="@{/board/fileDownload.do(fileId=${fileInfo.fileId})}" th:text="${fileInfo.originalName}"></a></p>
-                    </div>
-            </if>
-            <if th:unless="${fileInfo} != null">
-                <div class="form-group">
-                    <label for="noFile"><b>파일</b></label>
-                    <p id="noFile">첨부파일 없음.</p>
-                </div>
-            </if>
+        <div class="form-group">
+            <label for="file"><b>파일</b></label>
+            <p id="file" th:if="${fileInfo} != null" th:each="fileInfo : ${fileInfo}"><a th:href="@{/board/fileDownload.do(fileId=${fileInfo.fileId})}" th:text="${fileInfo.originalName}"></a></p>
+        </div>
+        <if th:if="${fileInfo} == null">
+            <div class="form-group">
+                <label for="noFile"><b>파일</b></label>
+                <p id="noFile">첨부파일 없음.</p>
+            </div>
+        </if>
         <if th:if="${session.user} != null and ${session.user.userId}==${detail.writer}">
             <a th:href="@{/board/modify.do(boardId=${detail.boardId})}" class="btn btn-primary" style="float: right">수정하기</a>
             <a th:href="@{/board/delete.do(boardId=${detail.boardId})}" class="btn btn-danger" style="float: right">삭제하기</a>

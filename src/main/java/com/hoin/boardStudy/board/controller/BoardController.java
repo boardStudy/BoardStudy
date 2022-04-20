@@ -82,7 +82,7 @@ public class BoardController {
     // 글 저장 (등록, 수정)
     @PostMapping("saveBoard.do")
     public String saveBoard(BoardSaveRequest board, @RequestParam(required = false) MultipartFile[] uploadFiles,
-                            FileInfo fileInfo, RedirectAttributes redirectAttributes, HttpSession session) throws IOException {
+                            RedirectAttributes redirectAttributes, HttpSession session) throws IOException {
 
         // 세션에서 로그인 ID를 가져와서 등록
         String writer = ((User) session.getAttribute("user")).getUserId();
@@ -90,8 +90,8 @@ public class BoardController {
         boardService.saveBoard(board, writer);
 
         // 파일 등록 여부
-        if(uploadFiles != null && fileInfo != null){
-                fileManager.saveFile(fileInfo, uploadFiles);
+        if(uploadFiles.length != 0){
+                fileManager.saveFile(board,uploadFiles);
         }
 
         redirectAttributes.addFlashAttribute("board", board);
@@ -112,7 +112,7 @@ public class BoardController {
         if(files!=null) {
             for(FileInfo FileInfo : files) {
                 int fileId = FileInfo.getFileId();
-                fileManager.deleteFile(fileId, boardId);
+                fileManager.deleteFile(fileId);
             }
         }
         boardService.deleteBoard(boardId);

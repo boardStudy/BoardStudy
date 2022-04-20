@@ -1,5 +1,6 @@
 package com.hoin.boardStudy.board.service;
 
+import com.hoin.boardStudy.board.dto.BoardSaveRequest;
 import com.hoin.boardStudy.board.dto.FileInfo;
 import com.hoin.boardStudy.board.mapper.BoardMapper;
 import com.hoin.boardStudy.util.FileConfig;
@@ -28,17 +29,22 @@ public class FileManager {
 
     // 파일 저장
     @Transactional
-    public void saveFile(FileInfo fileInfo, MultipartFile[] uploadFiles) throws IOException {
+    public void saveFile(BoardSaveRequest board, MultipartFile[] uploadFiles) throws IOException {
 
-            int fileId = fileInfo.getFileId();
-            int boardId = fileInfo.getBoardId();
+            int boardId = board.getBoardId();
 
-            if (boardId != 0 && fileId != 0) {
-                deleteFile(fileId, boardId);
+            if (boardId != 0) {
+                List<FileInfo> files = getFiles(boardId);
+                if(files!=null) {
+                    for(FileInfo FileInfo : files) {
+                        int fileId = FileInfo.getFileId();
+                        deleteFile(fileId);
+                    }
+                }
             }
 
             for (MultipartFile uploadFile : uploadFiles) {
-
+                FileInfo fileInfo = new FileInfo();
                 // 파일 첨부
                 String originalFileName = uploadFile.getOriginalFilename();
                 String extension = FilenameUtils.getExtension(originalFileName).toLowerCase();
@@ -64,7 +70,7 @@ public class FileManager {
                 fileInfo.setRegDate(LocalDateTime.now());
 
                 if (boardId != 0) boardMapper.modifyFile(fileInfo);
-                if (boardId == 0 && fileId == 0) boardMapper.saveFile(fileInfo);
+                if (boardId == 0) boardMapper.saveFile(fileInfo);
             }
     }
 
@@ -149,7 +155,7 @@ public class FileManager {
 
     // 파일 삭제
     @Transactional
-    public void deleteFile(int fileId, int boardId) throws IOException {
+    public void deleteFile(int fileId) throws IOException {
         FileInfo fileInfo = new FileInfo();
         fileInfo = boardMapper.getFileInfo(fileId);
         String saveName = fileInfo.getSaveName();

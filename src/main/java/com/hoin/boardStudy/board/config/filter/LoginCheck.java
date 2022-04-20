@@ -31,7 +31,9 @@ public class LoginCheck implements Filter {
         if(isLoginCheckPath(requestURI)) {
             if (session == null || session.getAttribute("user") == null) {
                 httpResponse.sendRedirect(httpRequest.getContextPath() + LOGIN_URL);
+                return;
             }
+
         }
 
         // 다음 필터가 있으면 필터를 호출, 없으면 서블릿을 호출.

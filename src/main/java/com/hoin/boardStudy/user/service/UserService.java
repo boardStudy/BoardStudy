@@ -25,6 +25,18 @@ public class UserService {
           userMapper.updateUserInfo(user);
      }
 
+     // 이메일 중복 체크
+     public int emailCheck(String email) {
+          int cnt = userMapper.emailCheck(email);
+          return cnt;
+     }
+
+     // 이메일 중복 체크
+     public int phoneCheck(String phone) {
+          int cnt = userMapper.phoneCheck(phone);
+          return cnt;
+     }
+
      /* 회원가입 */
      public boolean joinUser(User user, String rawPassword) {
           String encryptPassword = passwordManagement.encryptPassword(user);

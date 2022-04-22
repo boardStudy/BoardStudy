@@ -1,9 +1,11 @@
 package com.hoin.boardStudy.board.service;
 
+import com.hoin.boardStudy.board.dto.BoardSaveRequest;
 import com.hoin.boardStudy.board.dto.FileInfo;
 import com.hoin.boardStudy.board.mapper.BoardMapper;
 import com.hoin.boardStudy.util.FileConfig;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class FileManager {
 
     private final BoardMapper boardMapper;
@@ -25,48 +29,49 @@ public class FileManager {
 
     // 파일 저장
     @Transactional
-    public void saveFile(FileInfo fileInfo, MultipartFile file) throws IOException {
+    public void saveFile(BoardSaveRequest board, MultipartFile[] uploadFiles) throws IOException {
 
-        int fileId = fileInfo.getFileId();
-        int boardId = fileInfo.getBoardId();
+            int boardId = board.getBoardId();
 
-        if (boardId != 0 && fileId != 0) {
-            deleteFile(fileId, boardId);
-        }
+            // 수정 시, 모든 파일 삭제 후 추가
+            if (boardId != 0) clearAllFile(boardId);
 
-        // 파일 첨부
-        String originalFileName = file.getOriginalFilename();
-        String extension = FilenameUtils.getExtension(originalFileName).toLowerCase();
-        String uploadPath = fileConfig.getPath();
-        File saveFile;
-        String saveFileName;
-        long size;
+            // 파일 갯수만큼 반복
+            for (MultipartFile uploadFile : uploadFiles) {
+                FileInfo fileInfo = new FileInfo();
+                // 파일 첨부
+                String originalFileName = uploadFile.getOriginalFilename();
+                String extension = FilenameUtils.getExtension(originalFileName).toLowerCase();
+                String uploadPath = fileConfig.getPath();
+                File saveFile;
+                String saveFileName;
+                long size;
 
-        do {
-            saveFileName = UUID.randomUUID() + "." + extension; // UUID 는 유일한 값으로 중복을 피할 수 있다.
-            saveFile = new File(uploadPath + saveFileName);
-            size = file.getSize();
-        } while (saveFile.exists());
+                do {
+                    saveFileName = UUID.randomUUID() + "." + extension; // UUID 는 유일한 값으로 중복을 피할 수 있다.
+                    saveFile = new File(uploadPath + saveFileName);
+                    size = uploadFile.getSize();
+                } while (saveFile.exists());
 
-        saveFile.getParentFile().mkdirs(); // mkdir - 만들고자하는 상위 디렉토리 존재 x 생성 x, mkdirs 상위 디렉토리 존재 x 상위 디렉토리까지 생성
-        file.transferTo(saveFile); // 수신된 파일을 지정된 대상 파일로 전송. 이동, 복사, 저장 가능. 이미 있는 경우 삭제. 1회만 유효하다.
+                saveFile.getParentFile().mkdirs(); // mkdir - 만들고자하는 상위 디렉토리 존재 x 생성 x, mkdirs 상위 디렉토리 존재 x 상위 디렉토리까지 생성
+                uploadFile.transferTo(saveFile); // 수신된 파일을 지정된 대상 파일로 전송. 이동, 복사, 저장 가능. 이미 있는 경우 삭제. 1회만 유효하다.
 
-        fileInfo.setBoardId(fileInfo.getBoardId());
-        fileInfo.setOriginalName(originalFileName);
-        fileInfo.setSaveName(saveFileName);
-        fileInfo.setExtension(extension);
-        fileInfo.setSize(size);
-        fileInfo.setRegDate(LocalDateTime.now());
+                fileInfo.setBoardId(fileInfo.getBoardId());
+                fileInfo.setOriginalName(originalFileName);
+                fileInfo.setSaveName(saveFileName);
+                fileInfo.setExtension(extension);
+                fileInfo.setSize(size);
+                fileInfo.setRegDate(LocalDateTime.now());
 
-        if (boardId != 0)  boardMapper.modifyFile(fileInfo);
-        if (boardId == 0 && fileId == 0)  boardMapper.saveFile(fileInfo);
+                boardMapper.saveFile(fileInfo);
+            }
     }
 
     // 파일 다운로드
     @Transactional
-    public void fileDownload(int boardId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void fileDownload(int fileId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
-        FileInfo fileInfo = getFileInfo(boardId);
+        FileInfo fileInfo = getFileInfo(fileId);
 
         // 파일이 업로드 된 경로로
        try {
@@ -129,25 +134,42 @@ public class FileManager {
        }
     }
 
-    // 파일 정보
+    // 글에 등록된 파일 리스트
     @Transactional
-    public FileInfo getFileInfo(int boardId) {
-       return boardMapper.getFileInfo(boardId);
+    public List<FileInfo> getFiles(int boardId) {
+       return boardMapper.getFiles(boardId);
+    }
+    
+    // 파일 1개 정보
+    @Transactional
+    public FileInfo getFileInfo(int fileId) {
+        return boardMapper.getFileInfo(fileId);
     }
 
-    // 파일 삭제
+    // 파일 삭제 (1개)
     @Transactional
-    public void deleteFile(int fileId, int boardId) throws IOException {
+    public void deleteFile(int fileId) throws IOException {
         FileInfo fileInfo = new FileInfo();
-        fileInfo = boardMapper.getFileInfo(boardId);
+        fileInfo = boardMapper.getFileInfo(fileId);
         String saveName = fileInfo.getSaveName();
         String path_ = fileConfig.getPath() + saveName;
         Path path = Paths.get(path_);
 
         Files.delete(path);
 
-        boardMapper.deleteFile(boardId);
+        boardMapper.deleteFile(fileId);
     }
-
+    
+    // 전체 글 지우기
+    @Transactional
+    public void clearAllFile(int boardId) throws IOException {
+            List<FileInfo> files = getFiles(boardId);
+            if(files!=null) {
+                for(FileInfo FileInfo : files) {
+                    int fileId = FileInfo.getFileId();
+                    deleteFile(fileId);
+                }
+            }
+        }
 
 }

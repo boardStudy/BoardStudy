@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -31,8 +32,19 @@
                     </fieldset>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail">이메일</label>
-                    <input type="text" class="form-control" id="inputEmail" name="email" placeholder="이메일을 입력해주세요.">
+                    <label for="email">이메일</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요." required/>
+
+
+                    <button type="button" id="emailChk" class="doubleChk">인증번호 보내기</button><br/>
+
+
+                    <input type="text" class="form-control" id="CertificationNumber" name="CertificationNumber" placeholder="인증번호를 입력." disabled required/>
+
+                    <button type="button" id="CertificationNumberChk" class="doubleChk">이메일 인증</button><br/>
+
+                    <span class="point successEmailChk">이메일 입력 후 인증번호 보내기를 해주십시오.</span>
+                    <input type="hidden" id="emailDoubleChk"/>
                 </div>
                 <div class="form-group">
                     <label for="inputPhone">전화번호</label>
@@ -51,5 +63,52 @@
         </div>
     </div>
 </form>
+
+<script>
+    //이메일 인증
+    var code = "";
+    $("#emailChk").click(function(){
+        var email = $("#email").val();
+        $.ajax({
+            type:"GET",
+            url:"mailCheck?email=" + email,
+            cache : false,
+            success : function(data){
+                if(data == "error"){
+                    alert("이메일 주소가 올바르지 않습니다. 유효한 이메일 주소를 입력해주세요.");
+                    $("#email").attr("autofocus",true);
+                    $(".successEmailChk").text("유효한 이메일 주소를 입력해주세요.");
+                    $(".successEmailChk").css("color","red");
+                }else{
+                    alert("인증번호 발송이 완료되었습니다.\n입력한 이메일에서 인증번호 확인을 해주십시오.");
+                    $("#CertificationNumber").attr("disabled",false);
+                    $("#CertificationNumberChk").css("display","inline-block");
+
+                    $(".successEmailChk").css("color","green");
+                    code = data;
+                    $(".successEmailChk").text("인증번호를 입력한 뒤 이메일 인증을 눌러주십시오." + data);
+                }
+            }
+        });
+    });
+
+    //이메일 인증번호 대조
+    $("#CertificationNumberChk").click(function(){
+        if($("#CertificationNumber").val() == code){
+            $(".successEmailChk").text("인증번호가 일치합니다.");
+            $(".successEmailChk").css("color","green");
+            $("#emailDoubleChk").val("true");
+            $("#CertificationNumber").attr("disabled",true);
+            //$("#sm_email").attr("disabled",true);
+        }else{
+            $(".successEmailChk").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+            $(".successEmailChk").css("color","red");
+            $("#emailDoubleChk").val("false");
+            $("#CertificationNumber").attr("autofocus",true);
+        }
+    });
+
+
+</script>
 </body>
 </html>

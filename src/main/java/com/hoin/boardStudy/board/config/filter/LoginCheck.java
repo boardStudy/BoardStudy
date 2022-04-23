@@ -15,7 +15,7 @@ import java.io.IOException;
 @Slf4j
 public class LoginCheck implements Filter {
 
-    private static final String[] whitelist = {"/","/images/**","/board/list.do","/board/detail.do","/user/login.do","/user/loginProcess.do","/user/logout.do","/user/signUp.do"};
+    private static final String[] whitelist = {"/","/images/**","/board/list.do","/board/detail.do","/board/fileDownload.do","/user/login.do","/user/loginProcess.do","/user/logout.do","/user/signUp.do"};
     private static final String LOGIN_URL = "/user/login.do";
 
     @Override
@@ -31,7 +31,9 @@ public class LoginCheck implements Filter {
         if(isLoginCheckPath(requestURI)) {
             if (session == null || session.getAttribute("user") == null) {
                 httpResponse.sendRedirect(httpRequest.getContextPath() + LOGIN_URL);
+                return;
             }
+
         }
 
         // 다음 필터가 있으면 필터를 호출, 없으면 서블릿을 호출.

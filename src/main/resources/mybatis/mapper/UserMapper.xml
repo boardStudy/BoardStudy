@@ -19,7 +19,6 @@
     </resultMap>
 
     <!-- 유저정보 체크 -->
-
     <select id="getUserInfo" resultMap="userMap">
         SELECT *
         FROM TBL_USER
@@ -28,6 +27,15 @@
 
     </select>
 
+    <!-- 이메일 중복 체크 -->
+    <select id="emailCheck" parameterType="String" resultType="int">
+        select count(email) from tbl_user where email=#{email}
+    </select>
+
+    <!-- 전화번호 중복 체크 -->
+    <select id="phoneCheck" parameterType="String" resultType="int">
+        select count(phone) from tbl_user where phone=#{phone}
+    </select>
 
     <!-- 회원가입 -->
     <insert id="saveUser" parameterType="user">
@@ -40,8 +48,8 @@
     <update id="updateUserInfo" parameterType="user">
         UPDATE TBL_USER
         SET email = #{email},
-                    #{phone},
-                    updDate = sysdate()
+            phone = #{phone},
+            upd_date = sysdate()
         WHERE user_id = #{userId}
     </update>
 

@@ -16,6 +16,17 @@
         <result column="del_date" property="delDate"/>
     </resultMap>
 
+    <resultMap id="fileMap" type="file">
+        <result column="file_id" property="fileId"/>
+        <result column="board_id" property="boardId"/>
+        <result column="original_name" property="originalName"/>
+        <result column="save_name" property="saveName"/>
+        <result column="size" property="size"/>
+        <result column="extension" property="extension"/>
+        <result column="path" property="path"/>
+    </resultMap>
+
+
     <!--게시판 목록 전체 조회하기-->
     <select id="getBoardList" parameterType="map" resultMap="boardMap">
         SELECT *
@@ -93,11 +104,18 @@
             reg_date = #{regDate}
     </insert>
 
-    <!-- 파일 정보 불러오기 -->
-    <select id="getFileInfo" parameterType="int" resultType="fileInfo">
+    <!-- 전체 파일 정보 불러오기 -->
+    <select id="getFiles" parameterType="int" resultType="fileInfo">
         SELECT file_id as fileId, board_id as boardId, original_name as originalName, save_name as saveName, size, extension
         FROM TBL_FILE
         WHERE BOARD_ID = #{boardId}
+    </select>
+
+    <!-- 선택 파일 정보 불러오기 -->
+    <select id="getFileInfo" parameterType="int" resultType="fileInfo">
+        SELECT file_id as fileId, board_id as boardId, original_name as originalName, save_name as saveName, size, extension
+        FROM TBL_FILE
+        WHERE FILE_ID = #{fileId}
     </select>
 
     <!--글 삭제-->
@@ -109,7 +127,7 @@
     <!--파일 삭제-->
     <delete id="deleteFile">
         DELETE FROM TBL_FILE
-        WHERE board_id = #{boardId}
+        WHERE FILE_ID = #{fileId}
     </delete>
 
 </mapper>

@@ -21,8 +21,20 @@ public class UserService {
      }
      @Transactional
      /* 유저정보 수정 */
-     public void modifyUserInfo(User user) {
-          userMapper.modifyUserInfo(user);
+     public void updateUserInfo(User user) {
+          userMapper.updateUserInfo(user);
+     }
+
+     // 이메일 중복 체크
+     public int emailCheck(String email) {
+          int cnt = userMapper.emailCheck(email);
+          return cnt;
+     }
+
+     // 이메일 중복 체크
+     public int phoneCheck(String phone) {
+          int cnt = userMapper.phoneCheck(phone);
+          return cnt;
      }
 
      /* 회원가입 */

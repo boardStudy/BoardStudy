@@ -63,27 +63,9 @@ public class UserController {
     public String modify(User user, HttpSession session) {
         String userId = ((User) session.getAttribute("user")).getUserId();
         user.setUserId((userId));
-        userService.updateUserInfo(user);
+        userService.modifyUserInfo(user);
 
-        return "redirect:/user/profile.do";
-    }
-
-    // 이메일 체크
-    @PostMapping("/emailCheck")
-    @ResponseBody
-    public int emailCheck(@RequestParam("email") String email){
-
-        int cnt = userService.emailCheck(email);
-        return cnt;
-    }
-
-    // 번호 체크
-    @PostMapping("/phoneCheck")
-    @ResponseBody
-    public int phoneCheck(@RequestParam("phone") String phone){
-
-        int cnt = userService.phoneCheck(phone);
-        return cnt;
+        return "redirect:/user/getUserInfo.do";
     }
 
     /* 회원가입 페이지*/

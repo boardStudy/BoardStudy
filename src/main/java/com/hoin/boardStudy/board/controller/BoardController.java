@@ -6,6 +6,7 @@ import com.hoin.boardStudy.board.service.FileManager;
 import com.hoin.boardStudy.board.service.ViewCountUpdater;
 import com.hoin.boardStudy.user.dto.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,8 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/board") // controller의 부모에 해당되는 Mapping. prefix 역할
+@RequestMapping("/board")
+@Slf4j
 public class BoardController {
 
     private final BoardService boardService;
@@ -41,7 +43,7 @@ public class BoardController {
 
         PageHandler pageHandler = new PageHandler(totalCount, page, pageSize);
 
-        Map map = new HashMap();
+        Map<String, Integer> map = new HashMap();
         map.put("offset", (page-1) * pageSize);
         map.put("pageSize", pageSize);
 
@@ -57,19 +59,14 @@ public class BoardController {
     @GetMapping("detail.do")
     public String getDetailPage(@RequestParam int boardId, Model model) {
         model.addAttribute("detail", boardService.getDetail(boardId));
-        model.addAttribute("fileInfo", fileManager.getFileInfo(boardId));
+        model.addAttribute("fileInfo", fileManager.getFiles(boardId));
         viewCountUpdater.increaseViewCount(boardId);
         return "board/detail";
     }
 
     // 글쓰기 페이지
     @GetMapping("writeForm.do")
-    public String getWriteForm(HttpServletRequest request) {
-
-        HttpSession session = request.getSession();
-
-        if (session == null) return "user/login";
-        if (session.getAttribute("user") == null)  return "user/login";
+    public String getWriteForm() {
 
         return "board/writeForm";
     }
@@ -78,14 +75,14 @@ public class BoardController {
     @GetMapping("modify.do")
     public String modifyBoard(@RequestParam int boardId, Model model) {
         model.addAttribute("board", boardService.getDetail(boardId));
-        model.addAttribute("fileInfo", fileManager.getFileInfo(boardId));
+        model.addAttribute("fileInfo", fileManager.getFiles(boardId));
         return "board/modify";
     }
 
     // 글 저장 (등록, 수정)
     @PostMapping("saveBoard.do")
-    public String saveBoard(BoardSaveRequest board, @RequestParam(required = false) MultipartFile file,
-                            FileInfo fileInfo, RedirectAttributes redirectAttributes, HttpSession session) throws IOException {
+    public String saveBoard(BoardSaveRequest board, @RequestParam(required = false) MultipartFile[] uploadFiles,
+                            RedirectAttributes redirectAttributes, HttpSession session) throws IOException {
 
         // 세션에서 로그인 ID를 가져와서 등록
         String writer = ((User) session.getAttribute("user")).getUserId();
@@ -93,8 +90,8 @@ public class BoardController {
         boardService.saveBoard(board, writer);
 
         // 파일 등록 여부
-        if(file.getSize()!=0){
-            fileManager.saveFile(fileInfo, file);
+        if(uploadFiles != null){
+                fileManager.saveFile(board,uploadFiles);
         }
 
         redirectAttributes.addFlashAttribute("board", board);
@@ -103,22 +100,18 @@ public class BoardController {
 
     // 파일 다운로드
     @RequestMapping("/fileDownload.do")
-    public void fileDownload(@RequestParam int boardId, HttpServletRequest request, HttpServletResponse response) throws IOException{
-        fileManager.fileDownload(boardId, request, response);
+    public void fileDownload(@RequestParam int fileId, HttpServletRequest request, HttpServletResponse response) throws IOException{
+        fileManager.fileDownload(fileId, request, response);
     }
 
     // 글 삭제
     @GetMapping("delete.do")
     public String deleteBoard(@RequestParam int boardId) throws IOException {
 
-        FileInfo fileInfo = fileManager.getFileInfo(boardId);
-        if(fileInfo!=null) {
-            int fileId = fileInfo.getFileId();
-            fileManager.deleteFile(fileId, boardId);
-        }
-        boardService.deleteBoard(boardId);
-
-
+        fileManager.clearAllFile(boardId); // 파일 삭제
+        boardService.deleteBoard(boardId); // 글 삭제
+        
         return "redirect:/board/list.do";
     }
+
 }

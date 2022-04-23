@@ -34,9 +34,12 @@ public interface BoardMapper {
     void deleteBoard(int boardId);
 
     // 파일 삭제
-    void deleteFile(int boardId);
+    void deleteFile(int fileId);
+
+    // 글에 등록된 파일 리스트 가져오기
+    List<FileInfo> getFiles(int boardId);
 
     // 파일 정보 가져오기
-    FileInfo getFileInfo(int boardId);
+    FileInfo getFileInfo(int fileId);
 
 }

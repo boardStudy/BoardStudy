@@ -43,8 +43,9 @@ public class UserController {
 
     /* 프로필 */
     @GetMapping("/profile.do")
-    public String profile(HttpSession session) {
+    public String profile(HttpSession session, Model m) {
         String userId = ((User) session.getAttribute("user")).getUserId();
+        m.addAttribute("user", userService.getUserInfo(userId));
         return "user/profile";
     }
 

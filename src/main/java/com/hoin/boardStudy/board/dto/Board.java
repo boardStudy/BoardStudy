@@ -18,6 +18,7 @@ public class Board {
     private LocalDateTime regDate;
     private LocalDateTime updDate;
     private LocalDateTime delDate;
+    private boolean newCheck;
 
     public Board(int boardId, String writer, String title, String content, LocalDateTime currentTime) {
         this.boardId = boardId;

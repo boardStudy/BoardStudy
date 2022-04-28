@@ -27,7 +27,12 @@
                 input.value = null;
             }
         }
-
+    }
+    // 등록한 파일 없으면 파일 input 없애고 보내기
+    function fileCheck(theForm) {
+        if(theForm.uploadFiles.value==""){
+            theForm.uploadFiles.remove(); // input 삭제
+        }
     }
 </script>
 
@@ -45,12 +50,12 @@
             <div class="input-group">
                 <div class="custom-file">
                     <label class="custom-file-label" for="uploadFiles"><b>파일 첨부</b></label><br>
-                    <input type="file" class="custom-file-input" name="uploadFiles" id="uploadFiles" multiple onchange="checkSize(this)">
+                    <input type="file" class="custom-file-input" name="uploadFiles" id="uploadFiles" multiple="multiple" accept="*/*" onchange="checkSize(this)">
                 </div>
             </div>
             <div  class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="button" class="btn btn-secondary" onclick="location.href='list.do'">목록</button>
-                <button type="submit" class="btn btn-primary">등록하기</button>
+                <button type="submit" class="btn btn-primary" onclick="fileCheck(this.form)">등록하기</button>
             </div>
         </form>
     </div>

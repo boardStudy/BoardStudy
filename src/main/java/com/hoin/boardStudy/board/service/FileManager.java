@@ -171,5 +171,17 @@ public class FileManager {
                 }
             }
         }
+        
+    // 파일 등록 여부 (파일 크기 0 체크)
+    public boolean checkFileListSize(MultipartFile[] uploadFiles) {
+        int size = 0;
+        for (MultipartFile uploadFile : uploadFiles) {
+            size += uploadFile.getSize();
+        }
+        if (size == 0) {
+            return false;
+        }
+        return true;
+    }
 
 }

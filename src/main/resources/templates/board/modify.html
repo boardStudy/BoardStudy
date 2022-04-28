@@ -27,7 +27,12 @@
                 input.value = null;
             }
         }
-
+    }
+    // 등록한 파일 없으면 파일 input 없애고 보내기
+    function fileCheck(theForm) {
+        if(theForm.uploadFiles.value==""){
+            theForm.uploadFiles.remove(); // input 삭제
+        }
     }
 </script>
     <div th:replace="~{common/header :: headerFragment}"></div>
@@ -61,7 +66,7 @@
             </table>
             <div  class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="button" class="btn btn-secondary" onclick="location.href='list.do?'">목록</button>
-                <button type="submit" class="btn btn-primary" onclick="location.href='saveBoard.do'">등록하기</button>
+                <button type="submit" class="btn btn-primary" onclick="fileCheck(this.form)">등록하기</button>
             </div>
         </form>
     </div>

@@ -90,7 +90,7 @@ public class BoardController {
         boardService.saveBoard(board, writer);
 
         // 파일 등록 여부
-        if(fileManager.checkFileListSize(uploadFiles)){
+        if(uploadFiles!= null && fileManager.checkFileListSize(uploadFiles)){
                 fileManager.saveFile(board,uploadFiles);
         }
 

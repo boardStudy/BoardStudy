@@ -15,24 +15,24 @@
 # Stacks
 
 #### 사용 언어
-<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
+![java]("https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white")
 <br>
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
-<img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
-<img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+![html5]("https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white") 
+![javascript]("https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black")
+![jquery]("https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white")
+![bootstrap]("https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white")
 
 #### 개발 환경
-<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
-<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
-<img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white">
-<img src="https://img.shields.io/badge/maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white">
-<img src="https://img.shields.io/badge/thymeleaf-005F0F.svg?style=for-the-badge&logo=thymeleaf&logoColor=white">
-<img src="https://img.shields.io/badge/redis-DC382D.svg?style=for-the-badge&logo=redis&logoColor=white">
+![springboot]("https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white")
+![mysql]("https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white")
+![tomcat]("https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white")
+![maven]("https://img.shields.io/badge/maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white")
+![thymeleaf]("https://img.shields.io/badge/thymeleaf-005F0F.svg?style=for-the-badge&logo=thymeleaf&logoColor=white")
+![redis](https://img.shields.io/badge/redis-DC382D.svg?style=for-the-badge&logo=redis&logoColor=white")
 
-<img src="https://img.shields.io/badge/IntelliJ IDEA-000000.svg?style=for-the-badge&logo=IntelliJ IDEA&logoColor=white">
-<img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white">
-<img src="https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white">
+![intelliJ]https://img.shields.io/badge/IntelliJ IDEA-000000.svg?style=for-the-badge&logo=IntelliJ IDEA&logoColor=white"
+![github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white")
+![git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white")
 
 #### 의사소통
 ![Discord](https://img.shields.io/badge/DISCORD-%237289DA.svg?style=for-the-badge&logo=discord&logoColor=white)
@@ -41,12 +41,14 @@
 ![Jenkins](https://img.shields.io/badge/jenkins-%232C5263.svg?style=for-the-badge&logo=jenkins&logoColor=white)
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 ![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
-<img src="https://img.shields.io/badge/docker-2496ED.svg?style=for-the-badge&logo=docker&logoColor=white">
+![docker](https://img.shields.io/badge/docker-2496ED.svg?style=for-the-badge&logo=docker&logoColor=white")
 
 #### 배포 구조도
-<img src="/images/distribute.png">
+![](https://cdn.discordapp.com/attachments/840489771046273055/970598068175110164/distribute.png)
 
 #### 서버 구조도
-<img src="/images/server.png">
+![](https://cdn.discordapp.com/attachments/840489771046273055/970598068540022795/server.png)
+
+
 
 

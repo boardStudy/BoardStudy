@@ -44,9 +44,9 @@
                     <input type="hidden" id="fileId" name="fileId" th:value="${fileInfo.fileId}"/>
                 </if>
                 <tr><th>제목</th></tr>
-                <tr><td width="90%"><input name="title" id="title" class="form-control" th:value="${board.title}" required="required" ></td></tr>
+                <tr><td width="90%"><textarea name="title" id="title" class="form-control" th:utext="${board.title}" maxlength="30" required="required" style="resize: none; height: 30px; background-color:white"></textarea></td></tr>
                 <tr><th>내용</th></tr>
-                <tr><td class="text-center"><textarea class="form-control" name="content" id="content" th:text="${board.content}" maxlength="1500" rows="20" required="required" style="resize: none; background-color:white">내용을 입력하세요.</textarea></td></tr>
+                <tr><td class="text-center"><textarea class="form-control" name="content" id="content" th:utext="${board.content}" maxlength="1500" rows="20" required="required" style="resize: none; background-color:white">내용을 입력하세요.</textarea></td></tr>
                 <tr>
                     <td>
                         <div class="input-group">

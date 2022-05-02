@@ -43,6 +43,10 @@
 ![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
 <img src="https://img.shields.io/badge/docker-2496ED.svg?style=for-the-badge&logo=docker&logoColor=white">
 
+#### 배포 구조도
+<img src="/images/distribute.png">
 
+#### 서버 구조도
+<img src="/images/server.png">
 
 

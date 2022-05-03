@@ -2,17 +2,23 @@ package com.hoin.boardStudy.user.controller;
 
 import com.hoin.boardStudy.user.dto.User;
 import com.hoin.boardStudy.user.service.LoginVerification;
+import com.hoin.boardStudy.user.service.RandomNumberManagement;
 import com.hoin.boardStudy.user.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.Map;
+import java.util.HashMap;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,6 +29,8 @@ public class UserController {
     private final LoginVerification loginVerification;
 
     private final JavaMailSender javaMailSender;
+
+    private final RandomNumberManagement randomNumberManagement;
 
     /* 로그인 화면 */
     @GetMapping("/login.do")
@@ -77,7 +85,7 @@ public class UserController {
 
     /* 회원가입 페이지*/
     @GetMapping("signUp.do")
-    public String signUpForm() {
+    public String signUpForm(User user) {
 
         return "user/signUp";
     }
@@ -85,10 +93,21 @@ public class UserController {
     /* 회원가입 정보 저장 */
 
     @PostMapping("/signUp.do")
-    public String joinUser(User user) {
+    public String joinUser(@Valid User user, Errors errors, Model m) {
+        if(errors.hasErrors()) {
+            // 회원가입 실패 시, 입력 데이터 유지
+            m.addAttribute("user", user);
+
+            // 유효성을 통과 못한 필드와 메세지를 핸들링
+            Map<String, String> validatorResult = userService.validateHandling(errors);
+            for (String key : validatorResult.keySet()) {
+                m.addAttribute(key, validatorResult.get(key));
+            }
+            return "user/signUp";
+        }
+
         String rawPassword = user.getPassword();
         userService.joinUser(user, rawPassword);
-
         return "redirect:/user/login.do";
     }
 
@@ -104,8 +123,8 @@ public class UserController {
 
     @ResponseBody
     @GetMapping("/mailCheck")
-
     public String mailCheck(@RequestParam("email") String email) throws Exception {
+        // randomNumberManagement.randomNumber();
         int serti = (int)((Math.random() * (99999 - 10000 + 1)) + 10000);
 
         String from = "dahoonemailtest@gmail.com"; //보내는 이 메일주소
@@ -125,7 +144,7 @@ public class UserController {
 
             javaMailSender.send(mail);
             num = Integer.toString(serti);
-
+            System.out.println(serti);
         } catch (Exception e) {
             num = "error";
         }

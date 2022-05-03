@@ -5,6 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +37,17 @@ public class UserService {
           userMapper.saveUser(user);
 
           return true;
+     }
+
+     // 회원가입 유효성 검사
+     public Map<String, String> validateHandling(Errors errors) {
+          Map<String, String> validatorResult = new HashMap<>();
+
+          for (FieldError error : errors.getFieldErrors()) {
+               String validKeyName = String.format("valid_%s", error.getField());
+               validatorResult.put(validKeyName, error.getDefaultMessage());
+          }
+          return validatorResult;
      }
 
      /* 유저 탈퇴 */

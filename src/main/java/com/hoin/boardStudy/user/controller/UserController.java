@@ -4,21 +4,19 @@ import com.hoin.boardStudy.user.dto.User;
 import com.hoin.boardStudy.user.service.LoginVerification;
 import com.hoin.boardStudy.user.service.RandomNumberManagement;
 import com.hoin.boardStudy.user.service.UserService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Map;
-import java.util.HashMap;
+
+import static com.hoin.boardStudy.user.dto.EmailProperties.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,18 +25,16 @@ public class UserController {
 
     private final UserService userService;
     private final LoginVerification loginVerification;
-
     private final JavaMailSender javaMailSender;
-
     private final RandomNumberManagement randomNumberManagement;
 
-    /* 로그인 화면 */
+    // 로그인 화면
     @GetMapping("/login.do")
     public String login() {
         return "user/login";
     }
 
-    /* 로그인 처리 */
+    // 로그인 처리
     @PostMapping("/loginProcess.do")
     public String loginProcess(User user, HttpSession session) {
         String rawPassword = user.getPassword();
@@ -49,14 +45,14 @@ public class UserController {
         return "redirect:/user/login.do";
     }
 
-    /* 로그아웃 */
+    // 로그아웃
     @GetMapping("/logout.do")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/board/list.do";
     }
 
-    /* 프로필 */
+    // 프로필
     @GetMapping("/profile.do")
     public String profile(HttpSession session, Model m) {
         String userId = ((User) session.getAttribute("user")).getUserId();
@@ -64,7 +60,7 @@ public class UserController {
         return "user/profile";
     }
 
-    /* 유저정보 조회 */
+    // 유저정보 조회
     @GetMapping("/getUserInfo.do")
     public String getUserInfo(HttpSession session, Model m) {
         String userId = ((User) session.getAttribute("user")).getUserId();
@@ -73,7 +69,7 @@ public class UserController {
         return "user/modify";
     }
 
-    /* 유저정보 수정 */
+    // 유저정보 수정
     @PostMapping("/modify.do")
     public String modify(User user, HttpSession session) {
         String userId = ((User) session.getAttribute("user")).getUserId();
@@ -83,15 +79,14 @@ public class UserController {
         return "redirect:/user/getUserInfo.do";
     }
 
-    /* 회원가입 페이지*/
+    // 회원가입 페이지
     @GetMapping("signUp.do")
     public String signUpForm(User user) {
 
         return "user/signUp";
     }
 
-    /* 회원가입 정보 저장 */
-
+    // 회원가입 정보 저장
     @PostMapping("/signUp.do")
     public String joinUser(@Valid User user, Errors errors, Model m) {
         if(errors.hasErrors()) {
@@ -106,12 +101,13 @@ public class UserController {
             return "user/signUp";
         }
 
+        // 회원가입 저장
         String rawPassword = user.getPassword();
         userService.joinUser(user, rawPassword);
         return "redirect:/user/login.do";
     }
 
-    /* 탈퇴 */
+    // 회원 탈퇴
     @GetMapping("/withdraw.do")
     public String withdraw(HttpSession session, Model m) {
         String userId = ((User) session.getAttribute("user")).getUserId();
@@ -122,34 +118,27 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/mailCheck")
+    @GetMapping("/mail-check")
     public String mailCheck(@RequestParam("email") String email) throws Exception {
-        // randomNumberManagement.randomNumber();
-        int serti = (int)((Math.random() * (99999 - 10000 + 1)) + 10000);
-
-        String from = "dahoonemailtest@gmail.com"; //보내는 이 메일주소
+        int certi = randomNumberManagement.randomNumber();
         String to = email;
-        String title = "회원가입시 필요한 인증번호 입니다.";
-        String content = "[인증번호] " + serti + " 입니다. <br/> 인증번호 확인란에 기입해주십시오.";
         String num = "";
 
         try {
             MimeMessage mail = javaMailSender.createMimeMessage();
             MimeMessageHelper mailHelper = new MimeMessageHelper(mail, true, "UTF-8");
-
-            mailHelper.setFrom(from);
+            mailHelper.setFrom(FROM);
             mailHelper.setTo(to);
-            mailHelper.setSubject(title);
-            mailHelper.setText(content, true);
-
+            mailHelper.setSubject(TITLE);
+            mailHelper.setText(String.format(CONTENT, certi), true);
             javaMailSender.send(mail);
-            num = Integer.toString(serti);
-            System.out.println(serti);
+            num = Integer.toString(certi);
         } catch (Exception e) {
             num = "error";
         }
-        return num; // 인증번호
+        return num;
     }
 
-
+// 서버사이드 인증번 = 클릭하면 인증되게(O), 세션 이용
+    // ajax -> 서버에서 메세지 html 상태코드도 활용 오류코드도 서버에서 정
 }

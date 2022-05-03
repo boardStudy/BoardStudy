@@ -4,7 +4,7 @@ mybatis:
     type-aliases-package: com.hoin.boardStudy
     config-location: classpath:mybatis-config.xml
     
-## 파일 크기 설정
+# 파일 크기 설정
 spring:
     servlet:
         multipart:
@@ -25,8 +25,12 @@ spring:
                   auth: true
                   starttls:
                       enable: true
-
-
+# redis 설정
+    session:
+      storage-type: redis
+    redis:
+      host: dev.donghyeon.dev
+      port: 6379
 
 logging:
     ##    config: classpath:log/logback-${spring.profiles}.xml

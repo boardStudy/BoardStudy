@@ -1,17 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <title>글 작성</title>
+    <div th:replace="~{common/header :: head}"></div>
 </head>
 <body>
 <script type="text/javascript">
-        function checkSize(input) {
-        if (input.files && input.files[0].size > (10 * 1024 * 1024)) {
-        alert("파일 사이즈가 10MB 를 넘습니다.");
-        input.value = null;
+    function checkSize(input) {
+
+        let filesCount = input.files.length;
+
+        // 파일 개수 검사
+        if(filesCount > 5) {
+            alert('파일은 5개까지만 첨부가 가능합니다.');
+            input.value = null;
+        }
+
+        let i;
+
+        // 파일 사이즈 검사
+        for (i= 0; i < filesCount; i++ ) {
+            if (input.files[i].size > (10 * 1024 * 1024)) {
+                alert(input.files[i].name + "파일 사이즈가 10MB 를 넘습니다.");
+                input.value = null;
+            }
+        }
+    }
+    // 등록한 파일 없으면 파일 input 없애고 보내기
+    function fileCheck(theForm) {
+        if(theForm.uploadFiles.value==""){
+            theForm.uploadFiles.remove(); // input 삭제
         }
     }
 </script>
@@ -26,24 +44,16 @@
                 <tr><td width="90%"><input name="title" id="title" class="form-control" placeholder="제목을 입력하세요." required="required" ></td></tr>
                 <tr><th>내용</th></tr>
                 <tr><td class="text-center"><textarea class="form-control" name="content" id="content" maxlength="1500" rows="20" style="resize: none; background-color:white" placeholder="내용을 입력하세요." required="required"></textarea></td></tr>
-                <tr><th>파일 첨부</th></tr>
-                <tr>
-                    <td>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="file" id="file" onchange="checkSize(this)">
-                                <label class="custom-file-label" for="file">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button">Button</button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
             </table>
+            <div class="input-group">
+                <div class="custom-file">
+                    <label class="custom-file-label" for="uploadFiles"><b>파일 첨부</b></label><br>
+                    <input type="file" class="custom-file-input" name="uploadFiles" id="uploadFiles" multiple="multiple" accept="*/*" onchange="checkSize(this)">
+                </div>
+            </div>
             <div  class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="button" class="btn btn-secondary" onclick="location.href='list.do'">목록</button>
-                <button type="submit" class="btn btn-primary">등록하기</button>
+                <button type="submit" class="btn btn-primary" onclick="fileCheck(this.form)">등록하기</button>
             </div>
         </form>
     </div>

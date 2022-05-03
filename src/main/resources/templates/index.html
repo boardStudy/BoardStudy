@@ -1,12 +1,58 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>반갑습니다</title>
+    <div th:replace="~{common/header :: head}"></div>
+    <style>
+        .version{
+            margin: 20px;
+        }
+        .version h4{
+            color: blue;
+        }
+        #project_info{
+            margin-top: 20px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-인덱스 페이지
-<h2 th:if="${session.User == null}">없음</h2>
-<h2 th:unless="${session.User == null}">있음!<h2>
+
+    <div id="project_info">
+        <h2>게시판 만들기</h2>
+        <h4>참여자 : 이호인, 신다훈/ 코드 리뷰 : 민동현</h4>
+        <h4><a href="/board/list.do">게시판으로 이동</a></h4>
+    </div>
+
+    <!-- 22.03.27 배포 -->
+    <div class="version">
+        <h4>#0.1v</h4>
+        <li>기본적인 게시판 CRUD 구현</li>
+        <li>세션을 활용한 회원가입, 로그인, 로그아웃 구현</li>
+        <li>조회수 기능</li>
+        <li>header 작업</li>
+        <li>페이지네이션</li>
+        <li>CI/ CD 구축하기</li>
+    </div>
+
+    <!-- 22.04.10 배포 -->
+    <div class="version">
+        <h4>#0.2v</h4>
+        <li> 파일 업로드 / 다운로드 / 수정 / 삭제 (단일)</li>
+        <li>프로필 구현 </li>
+        <li>Real, Dev, Local DB 분리하기 </li>
+    </div>
+
+    <!-- 22.04.23 배포 -->
+    <div class="version">
+        <h4>#0.3v</h4>
+        <li>사용자 페이지네이션 선택 기능 (5개, 10개, 20개) </li>
+        <li>새로운 글 new 표시하기 </li>
+        <li>프로필 구현 </li>
+        <li>다중 파일 업로드로 변경 (최대 5개, 파일 당 10MB , 총 50MB 제한) </li>
+        <li>페이지네이션 begin page 구하는 방식 변경 </li>
+        <li>로그인 체크 인터셉터 사용 -> 필터로 변경 </li>
+    </div>
 </body>
 </html>

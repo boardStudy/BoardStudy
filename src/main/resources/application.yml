@@ -17,7 +17,11 @@ spring:
         password: andrprnfma
         properties:
           mail:
+              transport:
+                  protocol: smtp
               smtp:
+                  ssl:
+                      protocols: TLSv1.2
                   auth: true
                   starttls:
                       enable: true

@@ -21,6 +21,10 @@ spring:
                     auth: true
                     starttls:
                         enable: true
+ # thymeleaf (tomcat 재시동 없이 변경 사항 반영하기)
+    thymeleaf:
+        cache: false
+        prefix: file:src/main/resources/templates/
 # redis 설정
     session:
       storage-type: redis

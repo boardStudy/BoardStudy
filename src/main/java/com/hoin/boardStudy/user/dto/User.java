@@ -2,9 +2,7 @@ package com.hoin.boardStudy.user.dto;
 
 import lombok.*;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -15,9 +13,11 @@ import java.time.LocalDateTime;
 public class User implements Serializable {
 
     @NotBlank(message = "아이디를 입력해주세요.")
+    @Size(min = 2, max = 20, message = "아이디는 2자 이상 20자 이하로 입력해주세요.")
     private String userId;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
+    @Size(min = 8, max = 20, message = "비밀번호는 8자 이상 20자 이하로 입력해주세요.")
     private String password;
 
     @NotBlank(message = "이메일을 입력해주세요.")
@@ -33,6 +33,7 @@ public class User implements Serializable {
     private String name;
 
     @NotBlank(message = "전화번호를 입력해주세요.")
+    @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대폰 번호를 입력해주세요.")
     private String phone;
     private int gender;
 

@@ -38,19 +38,25 @@
                     <label for="email">이메일</label>
                     <input type="text" class="form-control" id="email" name="email" th:value="${user.email}" placeholder="이메일을 입력해주세요.">
                     <span th:text="${valid_email}"></span>
+                    <span class="email_success" style="display: none; color: red">사용 가능한 이메일입니다.</span>
+                    <span class="email_fail" style="display: none; color: red">사용중인 이메일입니다.</span>
                     <button type="button" id="emailChk" class="doubleChk">인증번호 보내기</button><br/>
 
                 </div>
                 <div class="form-group">
-                    <label for="inputPhone">전화번호</label>
-                    <input type="text" class="form-control" id="inputPhone" name="phone" th:value="${user.phone}" placeholder="전화번호를 입력해주세요.">
+                    <label for="phone">전화번호</label>
+                    <input type="text" class="form-control" id="phone" name="phone" th:value="${user.phone}" placeholder="전화번호를 입력해주세요.">
                     <span th:text="${valid_phone}"></span>
+                    <span class="phone_success" style="display: none; color: red">사용 가능한 번호입니다.</span>
+                    <span class="phone_fail" style="display: none; color: red">사용중인 번호입니다.</span>
                 </div>
+
                 <div class="form-group">
                     <label for="inputPassword">비밀번호</label>
                     <input type="password" class="form-control" id="inputPassword" name="password" th:value="${user.password}">
                     <span th:text="${valid_password}"></span>
                 </div>
+
                 <div class="form-group">
                     <label for="inputCheckPassword">비밀번호 확인</label>
                     <input type="password" class="form-control" id="inputCheckPassword" name="checkPassword">
@@ -91,6 +97,53 @@
 
 
 
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    function checkEmail(){
+        var email = $('#email').val();
+        $.ajax({
+            url:'/user/emailCheck', //Controller에서 인식할 주소
+            type:'post', //POST 방식으로 전달
+            data:{email:email},
+            success:function(cnt){
+                if(cnt != 1){
+                    $('.email_success').css("display", "inline-block");
+                    $('.email_fail').css("display", "none");
+                } else {
+                    $('.email_fail').css("display", "inline-block");
+                    $('.email_success').css("display", "none");
+                }
+                console.log("처리 성공");
+            },
+            error:function(){
+                alert("에러입니다");
+            }
+        });
+    };
+</script>
+<script type="text/javascript">
+    function checkPhone(){
+        var phone = $('#phone').val();
+        $.ajax({
+            url:'/user/phoneCheck', //Controller에서 인식할 주소
+            type:'post', //POST 방식으로 전달
+            data:{phone:phone},
+            success:function(cnt){
+                if(cnt != 1){
+                    $('.phone_success').css("display", "inline-block");
+                    $('.phone_fail').css("display", "none");
+                } else {
+                    $('.phone_fail').css("display", "inline-block");
+                    $('.phone_success').css("display", "none");
+                }
+                console.log("처리 성공");
+            },
+            error:function(){
+                alert("에러입니다");
+            }
+        });
+    };
 </script>
 </body>
 </html>

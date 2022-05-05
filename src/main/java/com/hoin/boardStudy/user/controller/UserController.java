@@ -86,6 +86,24 @@ public class UserController {
         return "user/signUp";
     }
 
+    // 이메일 체크
+    @PostMapping("/emailCheck")
+    @ResponseBody
+    public int emailCheck(@RequestParam("email") String email){
+
+        int cnt = userService.emailCheck(email);
+        return cnt;
+    }
+
+    // 전화번호 체크
+    @PostMapping("/phoneCheck")
+    @ResponseBody
+    public int phoneCheck(@RequestParam("phone") String phone){
+
+        int cnt = userService.phoneCheck(phone);
+        return cnt;
+    }
+
     // 회원가입 정보 저장
     @PostMapping("/signUp.do")
     public String joinUser(@Valid User user, Errors errors, Model m) {

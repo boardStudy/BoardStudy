@@ -17,6 +17,12 @@ public interface UserMapper {
     /* 회원가입 */
     void saveUser(User user);
 
+    // 이메일 중복 검사
+    int emailCheck(String email);
+
+    // 전화번호 중복 검사
+    int phoneCheck(String phone);
+
     /* 탈퇴여부 확인 */
     void withdrawUser(String userId);
 

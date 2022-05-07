@@ -46,7 +46,7 @@
             type:'post', //POST 방식으로 전달
             data:{email:email},
             success:function(cnt){
-                if(cnt != 1){
+                if(cnt == 1){
                     $('.email_success').css("display", "inline-block");
                     $('.email_fail').css("display", "none");
                 } else {

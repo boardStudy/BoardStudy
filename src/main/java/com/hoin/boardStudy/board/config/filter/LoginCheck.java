@@ -28,7 +28,7 @@ public class LoginCheck implements Filter {
 
         HttpSession session = httpRequest.getSession();
 
-        if (!isLoginRequiredPath(requestURI)) {
+        if (isLoginRequiredPath(requestURI)) {
             if (session == null || session.getAttribute("user") == null) {
                 httpResponse.sendRedirect(httpRequest.getContextPath() + LOGIN_URL);
                 return;
@@ -41,7 +41,7 @@ public class LoginCheck implements Filter {
     }
 
     private boolean isLoginRequiredPath(String requestURI) {
-        return !PatternMatchUtils.simpleMatch(loginRequiredPath, requestURI);
+        return PatternMatchUtils.simpleMatch(loginRequiredPath, requestURI);
     }
 
 }

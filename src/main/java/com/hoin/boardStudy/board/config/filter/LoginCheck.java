@@ -15,7 +15,7 @@ import java.io.IOException;
 @Slf4j
 public class LoginCheck implements Filter {
 
-    private static final String[] whitelist = {"/","/images/**","/board/list.do","/board/detail.do","/board/fileDownload.do","/user/login.do","/user/loginProcess.do","/user/logout.do","/user/signUp.do"};
+    private static final String[] loginRequiredPath = {"/board/writeForm.do","/board/modify.do","/board/saveBoard.do","/board/delete.do","/user/logout.do","/user/profile.do","/user/getUserInfo.do","/user/modify.do","/user/withdraw.do"};
     private static final String LOGIN_URL = "/user/login.do";
 
     @Override
@@ -28,7 +28,7 @@ public class LoginCheck implements Filter {
 
         HttpSession session = httpRequest.getSession();
 
-        if(isLoginCheckPath(requestURI)) {
+        if (isLoginRequiredPath(requestURI)) {
             if (session == null || session.getAttribute("user") == null) {
                 httpResponse.sendRedirect(httpRequest.getContextPath() + LOGIN_URL);
                 return;
@@ -40,8 +40,8 @@ public class LoginCheck implements Filter {
         chain.doFilter(request, response);
     }
 
-    private boolean isLoginCheckPath(String requestURI) {
-        return !PatternMatchUtils.simpleMatch(whitelist, requestURI);
+    private boolean isLoginRequiredPath(String requestURI) {
+        return PatternMatchUtils.simpleMatch(loginRequiredPath, requestURI);
     }
 
 }

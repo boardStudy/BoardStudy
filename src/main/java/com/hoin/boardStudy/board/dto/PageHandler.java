@@ -22,12 +22,18 @@ public class PageHandler {
 
     public PageHandler(int totalCount, int page, int pageSize) {
 
-        // pageSize Max 값 제한
-        if(pageSize > 20) pageSize = 5;
+        // pageSize Min, Max 값 제한
+        if(pageSize > 20 || pageSize < 0) pageSize = 5;
+
         // totalPage 먼저 구하기
         totalPage = (int)Math.ceil(totalCount / (double)pageSize);
-        // 0개 처리
+
+        // 게시물 0개 처리
         if(totalCount == 0) totalPage = 1;
+
+        // page Min값을 첫 페이지로 설정
+        if(page <= 0) page = 1;
+
         // page Max값을 마지막 페이지로 설정
         if(page > totalPage) page = totalPage;
 

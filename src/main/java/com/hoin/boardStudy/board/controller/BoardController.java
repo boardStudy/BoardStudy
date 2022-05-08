@@ -42,6 +42,9 @@ public class BoardController {
         Integer pageSize = pageInfo.getPageSize();
 
         PageHandler pageHandler = new PageHandler(totalCount, page, pageSize);
+        // 사용자에게 입력받은 값이 아닌 pageHandler 로직에 의해 구해진 page, pageSize 사용
+        page = pageHandler.getPage();
+        pageSize = pageHandler.getPageSize();
 
         Map<String, Integer> map = new HashMap();
         map.put("offset", (page-1) * pageSize);

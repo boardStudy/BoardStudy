@@ -15,7 +15,7 @@ import java.io.IOException;
 @Slf4j
 public class LoginCheck implements Filter {
 
-    private static final String[] whitelist = {"/","/images/**","/board/list.do","/board/detail.do","/board/fileDownload.do","/user/login.do","/user/loginProcess.do","/user/logout.do","/user/signUp.do","/user/emailCheck","/user/phoneCheck"};
+    private static final String[] whitelist = {"/","/images/**","/board/list.do","/board/detail.do","/board/fileDownload.do","/user/login.do","/user/loginProcess.do","/user/logout.do","/user/signUp.do","/user/userIdCheck","/user/phoneCheck","/user/mailCheck"};
     private static final String LOGIN_URL = "/user/login.do";
 
     @Override

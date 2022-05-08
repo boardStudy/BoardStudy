@@ -50,9 +50,9 @@ public class UserService {
           return validatorResult;
      }
 
-     // 이메일 중복 체크
-     public int emailCheck(String email) {
-          int cnt = userMapper.emailCheck(email);
+     // 아이디 중복 체크
+     public int userIdCheck(String userId) {
+          int cnt = userMapper.userIdCheck(userId);
           return cnt;
      }
 

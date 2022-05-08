@@ -5,6 +5,10 @@ spring:
         password: ${sql-local-server-password}
         url: jdbc:mysql://localhost:3306/board
         username: root
+# thymeleaf (tomcat 재시동 없이 변경 사항 반영하기)
+    thymeleaf:
+        cache: false
+        prefix: file:src/main/resources/templates/
 
 upload:
     path: C:/upload/

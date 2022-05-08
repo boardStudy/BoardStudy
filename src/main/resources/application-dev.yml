@@ -9,4 +9,3 @@ upload:
     path: /apps/board/dev/
     
 sql-server-password: ${SQL_PASSWORD}
-

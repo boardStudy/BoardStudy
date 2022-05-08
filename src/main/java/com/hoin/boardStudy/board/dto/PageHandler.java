@@ -21,14 +21,24 @@ public class PageHandler {
     private boolean showNext; // 다음 페이지 링크 포함 여부
 
     public PageHandler(int totalCount, int page, int pageSize) {
+
+        // pageSize Max 값 제한
+        if(pageSize > 20) pageSize = 5;
+        // totalPage 먼저 구하기
+        totalPage = (int)Math.ceil(totalCount / (double)pageSize);
+        // page Max값을 마지막 페이지로 설정
+        if(page > totalPage) page = totalPage;
+
         this.totalCount = totalCount;
         this.page = page;
         this.pageSize = pageSize;
 
-        totalPage = (int)Math.ceil(totalCount / (double)pageSize);
         beginPage = (((int)Math.ceil(page / (double)naviSize))-1) * naviSize + 1;
         endPage = Math.min(beginPage + naviSize - 1 , totalPage);
         showPrev = beginPage != 1;
         showNext = endPage != totalPage;
+
+
+
     }
 }

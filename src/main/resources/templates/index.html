@@ -1,11 +1,8 @@
 <!DOCTYPE HTML>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>제목</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <title>반갑습니다</title>
+    <div th:replace="~{common/header :: head}"></div>
     <style>
         .version{
             margin: 20px;
@@ -56,6 +53,16 @@
         <li>다중 파일 업로드로 변경 (최대 5개, 파일 당 10MB , 총 50MB 제한) </li>
         <li>페이지네이션 begin page 구하는 방식 변경 </li>
         <li>로그인 체크 인터셉터 사용 -> 필터로 변경 </li>
+    </div>
+
+    <!-- 22.05.08 배포 -->
+    <div class="version">
+        <h4>#0.4v</h4>
+        <li>Session을 redis를 사용하여 관리</li>
+        <li>인덱스 페이지, 에러 페이지 작성</li>
+        <li>favicon 등록</li>
+        <li>XSS 방어 코드 작성</li>
+        <li>페이지네이션 변경 ( 에러 해결, 최대값 설정)</li>
     </div>
 </body>
 </html>

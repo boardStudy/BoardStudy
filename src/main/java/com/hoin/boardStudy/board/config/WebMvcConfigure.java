@@ -2,7 +2,9 @@ package com.hoin.boardStudy.board.config;
 
 import com.hoin.boardStudy.board.config.filter.LoginCheck;
 import com.hoin.boardStudy.board.config.handler.PageRequestHandler;
+import com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -30,4 +32,13 @@ public class WebMvcConfigure implements WebMvcConfigurer {
         return filterRegistrationBean;
     }
 
+    // xss 방어 코드
+    @Bean
+    public FilterRegistrationBean<XssEscapeServletFilter> filterRegistrationBean() {
+        FilterRegistrationBean<XssEscapeServletFilter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(new XssEscapeServletFilter());
+        filterRegistrationBean.setOrder(2);
+        filterRegistrationBean.addUrlPatterns("/*");
+        return filterRegistrationBean;
+    }
 }

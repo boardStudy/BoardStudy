@@ -10,3 +10,8 @@ upload:
     
 sql-server-password: ${SQL_PASSWORD}
 
+# 에러 페이지 whitelabel 대체
+server:
+    error:
+        whitelabel:
+            enabled: false

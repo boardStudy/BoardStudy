@@ -3,7 +3,6 @@ package com.hoin.boardStudy.util;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.RequestDispatcher;
@@ -16,7 +15,7 @@ public class ErrorHandleController implements ErrorController {
     private final String ERROR_500_PAGE_PATH = "/error/500";
     private final String ERROR_ETC_PAGE_PATH = "/error/error";
 
-    @RequestMapping("/error")
+    @RequestMapping("error")
     public String handleError(HttpServletRequest request) {
 
         // 에러 코드 획득

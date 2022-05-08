@@ -26,6 +26,8 @@ public class PageHandler {
         if(pageSize > 20) pageSize = 5;
         // totalPage 먼저 구하기
         totalPage = (int)Math.ceil(totalCount / (double)pageSize);
+        // 0개 처리
+        if(totalCount == 0) totalPage = 1;
         // page Max값을 마지막 페이지로 설정
         if(page > totalPage) page = totalPage;
 

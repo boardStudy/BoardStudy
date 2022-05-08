@@ -86,12 +86,12 @@ public class UserController {
         return "user/signUp";
     }
 
-    // 이메일 체크
-    @PostMapping("/emailCheck")
+    // 아이디 중복 체크
+    @PostMapping("/userIdCheck")
     @ResponseBody
-    public int emailCheck(@RequestParam("email") String email){
+    public int emailCheck(@RequestParam("userId") String userId){
 
-        int cnt = userService.emailCheck(email);
+        int cnt = userService.userIdCheck(userId);
         return cnt;
     }
 
@@ -136,7 +136,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/mail-check")
+    @GetMapping("/mailCheck")
     public String mailCheck(@RequestParam("email") String email) throws Exception {
         int certi = randomNumberManagement.randomNumber();
         String to = email;

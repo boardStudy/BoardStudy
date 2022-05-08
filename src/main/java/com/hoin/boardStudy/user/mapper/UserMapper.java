@@ -12,13 +12,13 @@ public interface UserMapper {
     User getUserInfo(String userId);
 
     /* 유저정보 수정 */
-    public void modifyUserInfo(User user);
+    void modifyUserInfo(User user);
 
     /* 회원가입 */
     void saveUser(User user);
 
-    // 이메일 중복 검사
-    int emailCheck(String email);
+    // 아이디 중복 검사
+    int userIdCheck(String userId);
 
     // 전화번호 중복 검사
     int phoneCheck(String phone);

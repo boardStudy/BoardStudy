@@ -45,14 +45,14 @@
         WHERE user_id = #{userId}
     </update>
 
-    <!-- 이메일 중복 체크 -->
-    <select id="emailCheck" parameterType="String" resultType="int">
-        select count(email) from tbl_user where email=#{email}
+    <!-- 아이디 중복 체크 -->
+    <select id="userIdCheck" parameterType="String" resultType="int">
+        SELECT COUNT(user_id) FROM TBL_USER WHERE user_id=#{userId}
     </select>
 
     <!-- 전화번호 중복 체크 -->
     <select id="phoneCheck" parameterType="String" resultType="int">
-        select count(phone) from tbl_user where phone=#{phone}
+        SELECT COUNT(phone) FROM TBL_USER WHERE phone=#{phone}
     </select>
 
     <!-- 탈퇴 -->

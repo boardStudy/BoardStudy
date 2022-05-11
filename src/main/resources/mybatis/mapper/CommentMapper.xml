@@ -5,11 +5,45 @@
 
 <mapper namespace="com.hoin.boardStudy.board.mapper.CommentMapper">
 
+    <resultMap id="commentMap" type="comment">
+        <result column="comment_id" property="commentId"/>
+        <result column="board_id" property="boardId"/>
+        <result column="commenter" property="commenter"/>
+        <result column="comment" property="comment"/>
+        <result column="reg_date" property="regDate"/>
+        <result column="upd_date" property="updDate"/>
+        <result column="depth" property="depth"/>
+    </resultMap>
+
+
     <!-- 댓글 개수 구하기 -->
     <select id="getCommentCount" parameterType="int" resultType="int">
         SELECT count(*) FROM TBL_COMMENT
         WHERE board_id = #{boardId}
     </select>
 
+    <!-- 댓글 목록 -->
+    <select id="getCommentList" parameterType="int" resultMap="commentMap">
+        SELECT * FROM TBL_COMMENT
+        WHERE board_id = #{boardId}
+        ORDER BY comment_id
+    </select>
+    <!-- 댓글 입력 -->
+    <insert id="insertComment" parameterType="comment">
+        INSERT INTO TBL_COMMENT (board_id, commenter, comment, reg_date, depth)
+        VALUES (#{boardId}, #{commenter}, #{comment}, #{updDate}, 0)
+    </insert>
+
+    <!-- 댓글 수정 -->
+    <update id="modifyComment" parameterType="comment">
+        INSERT INTO TBL_COMMENT (comment, updDate)
+        VALUES (#{comment}, #{updDate})
+    </update>
+
+    <!-- 댓글 삭제 -->
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM TBL_COMMENT
+        WHERE comment_id = #{commentId}
+    </delete>
 
 </mapper>

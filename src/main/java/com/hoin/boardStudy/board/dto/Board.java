@@ -19,6 +19,7 @@ public class Board {
     private LocalDateTime updDate;
     private LocalDateTime delDate;
     private boolean newCheck;
+    private int commentCount;
 
     public Board(int boardId, String writer, String title, String content, LocalDateTime currentTime) {
         this.boardId = boardId;

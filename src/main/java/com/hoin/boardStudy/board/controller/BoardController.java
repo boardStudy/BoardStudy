@@ -31,7 +31,6 @@ public class BoardController {
     private final BoardService boardService;
     private final FileManager fileManager;
     private final ViewCountUpdater viewCountUpdater;
-    private final CommentMapper commentMapper;
 
     // 전체 글 조회
     @GetMapping("list.do")

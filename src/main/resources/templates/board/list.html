@@ -50,7 +50,7 @@
             <tr th:if="${#lists.size(list)} > 0" th:each="list : ${list}">
                 <th scope="row" th:text="${list.boardId}"></th>
                 <td>
-                    <a href="/board/detail.do?boardId=" th:attrappend="href=${list.boardId}" th:utext="${list.title}"></a>
+                    <a href="/board/detail.do?boardId=" th:attrappend="href=${list.boardId}" th:utext="${list.title}+'&nbsp('+${list.commentCount}+')'"></a>
                     <img src="/images/new.png" alt="new" style="width: 20px; height: 20px" th:if="${list.newCheck} == true">
                 </td>
                 <td th:text="${list.writer}"></td>

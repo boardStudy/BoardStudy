@@ -19,4 +19,11 @@ public class Comment {
     private String comment;
     private LocalDateTime regDate;
     private LocalDateTime updDate;
+
+    public Comment(int boardId, String commenter, String comment, LocalDateTime currentTime){
+        this.boardId = boardId;
+        this.commenter = commenter;
+        this.comment = comment;
+        this.updDate = currentTime;
+    }
 }

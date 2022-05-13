@@ -1,6 +1,7 @@
 package com.hoin.boardStudy.board.service;
 
 import com.hoin.boardStudy.board.dto.Comment;
+import com.hoin.boardStudy.board.dto.ModifyRequest;
 import com.hoin.boardStudy.board.mapper.CommentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ public class CommentManager {
         Comment c = new Comment(
                 comment.getBoardId(),
                 commenter,
+                comment.getParentId(),
                 comment.getComment(),
                 LocalDateTime.now()
         );
@@ -42,13 +44,21 @@ public class CommentManager {
 
     // 댓글 수정
     @Transactional
-    public void modifyComment(Comment comment) {
-
+    public void modifyComment(ModifyRequest modifyRequest) {
+        ModifyRequest request = new ModifyRequest(
+                modifyRequest.getCommentId(),
+                modifyRequest.getCommenter(),
+                modifyRequest.getComment(),
+                LocalDateTime.now()
+        );
+        commentMapper.modifyComment(request);
     }
 
     // 댓글 삭제
     @Transactional
-    public void deleteComment(int commentId){
-
+    public void deleteComment(Comment comment){
+        int commentId = comment.getCommentId();
+        int boardId = comment.getBoardId();
+        commentMapper.deleteComment(commentId, boardId);
     }
 }

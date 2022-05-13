@@ -1,6 +1,7 @@
 package com.hoin.boardStudy.board.mapper;
 
 import com.hoin.boardStudy.board.dto.Comment;
+import com.hoin.boardStudy.board.dto.ModifyRequest;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,9 +19,9 @@ public interface CommentMapper {
     void insertComment(Comment comment);
 
     // 댓글 수정
-    void modifyComment(Comment comment);
+    void modifyComment(ModifyRequest modifyRequest);
 
     // 댓글 삭제
-    void deleteComment(int CommentId);
+    void deleteComment(int commentId, int boardId);
     
 }

@@ -12,7 +12,7 @@
         <result column="comment" property="comment"/>
         <result column="reg_date" property="regDate"/>
         <result column="upd_date" property="updDate"/>
-        <result column="depth" property="depth"/>
+        <result column="parent_id" property="parentId"/>
     </resultMap>
 
 
@@ -24,26 +24,28 @@
 
     <!-- 댓글 목록 -->
     <select id="getCommentList" parameterType="int" resultMap="commentMap">
-        SELECT * FROM TBL_COMMENT
+        SELECT comment_id, board_id, commenter, comment, reg_date, upd_date, ifnull(parent_id, comment_id) as parent_id FROM TBL_COMMENT
         WHERE board_id = #{boardId}
-        ORDER BY comment_id
+        ORDER BY parent_id asc , comment_id asc
     </select>
     <!-- 댓글 입력 -->
     <insert id="insertComment" parameterType="comment">
-        INSERT INTO TBL_COMMENT (board_id, commenter, comment, reg_date, depth)
-        VALUES (#{boardId}, #{commenter}, #{comment}, #{updDate}, 0)
+        INSERT INTO TBL_COMMENT (board_id, commenter, comment, reg_date,upd_date, parent_id)
+        VALUES (#{boardId}, #{commenter}, #{comment}, #{updDate},#{updDate}, #{parentId})
     </insert>
 
     <!-- 댓글 수정 -->
-    <update id="modifyComment" parameterType="comment">
-        INSERT INTO TBL_COMMENT (comment, updDate)
-        VALUES (#{comment}, #{updDate})
+    <update id="modifyComment" parameterType="modifyRequest">
+        update TBL_COMMENT SET
+        comment = #{comment},
+        upd_date = #{updDate}
+        WHERE comment_id = #{commentId}
     </update>
 
     <!-- 댓글 삭제 -->
     <delete id="deleteComment" parameterType="int">
         DELETE FROM TBL_COMMENT
-        WHERE comment_id = #{commentId}
+        WHERE comment_id = #{commentId} AND board_id = #{boardId}
     </delete>
 
 </mapper>

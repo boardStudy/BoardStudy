@@ -1,6 +1,7 @@
 package com.hoin.boardStudy.board.controller;
 
 import com.hoin.boardStudy.board.dto.Comment;
+import com.hoin.boardStudy.board.dto.ModifyRequest;
 import com.hoin.boardStudy.board.service.CommentManager;
 import com.hoin.boardStudy.user.dto.User;
 import lombok.RequiredArgsConstructor;
@@ -35,14 +36,15 @@ public class CommentController {
 
     // 댓글 수정
     @PostMapping("modify.do")
-    public void modifyComment(Comment comment) {
-        commentManager.modifyComment(comment);
+    public void modifyComment(@RequestBody ModifyRequest modifyRequest) {
+        commentManager.modifyComment(modifyRequest);
     }
 
     // 댓글 삭제
-    @RequestMapping("delete.do")
-    public void deleteComment(@RequestParam int commentId){
-        commentManager.deleteComment(commentId);
+    @PostMapping("/delete.do")
+    public void deleteComment(@RequestBody Comment comment){
+
+        commentManager.deleteComment(comment);
     }
 
 }

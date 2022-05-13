@@ -38,8 +38,6 @@
                 <div class="form-group">
                     <label for="email">이메일</label>
                     <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요.">
-                    <button type="button" id="emailChk" class="doubleChk">인증하기</button><br/>
-
                 </div>
                 <div class="form-group">
                     <label for="phone">전화번호</label>
@@ -58,42 +56,11 @@
                     <label for="inputCheckPassword">비밀번호 확인</label>
                     <input type="password" class="form-control" id="inputCheckPassword" name="checkPassword" placeholder="비밀번호를 확인해주세요.">
                 </div>
-                <button type="submit" class="btn btn-secondary">완료</button>
+                <button type="submit" class="btn btn-secondary" onclick="signUp()">가입하기</button>
             </div>
         </div>
     </div>
 </form>
-
-<script>
-    //이메일 인증
-    var code = "";
-    $("#emailChk").click(function(){
-        var email = $("#email").val();
-        $.ajax({
-            type:"GET",
-            url:"mailCheck?email=" + email,
-            cache : false,
-            success : function(data){
-                if(data == "error"){
-                    alert("이메일 주소가 올바르지 않습니다. 유효한 이메일 주소를 입력해주세요.");
-                    $("#email").attr("autofocus",true);
-                    $(".successEmailChk").text("유효한 이메일 주소를 입력해주세요.");
-                    $(".successEmailChk").css("color","red");
-                }else{
-                    alert("인증번호 발송이 완료되었습니다.\n입력한 이메일에서 인증번호 확인을 해주십시오.");
-                    $("#CertificationNumber").attr("disabled",false);
-                    $("#CertificationNumberChk").css("display","inline-block");
-
-                    $(".successEmailChk").css("color","green");
-                    code = data;
-                    $(".successEmailChk").text("인증번호를 입력한 뒤 이메일 인증을 눌러주십시오.");
-                }
-            }
-        });
-    });
-
-
-
 </script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
@@ -111,11 +78,10 @@
                     $('.userId_fail').css("display", "inline-block");
                     $('.userId_success').css("display", "none");
                 }
-                console.log("처리 성공");
             },
             error:function(){
                 console.log(cnt);
-                alert("에러입니다");
+                alert("Error");
             }
         });
     };
@@ -135,13 +101,17 @@
                     $('.phone_fail').css("display", "inline-block");
                     $('.phone_success').css("display", "none");
                 }
-                console.log("처리 성공");
             },
             error:function(){
-                alert("에러입니다");
+                alert("Error");
             }
         });
     };
+</script>
+<script>
+    function signUp(){
+        alert("회원가입을 축하합니다. 이메일 인증을 통해 계정을 활성화 해주세요.");
+    }
 </script>
 </body>
 </html>

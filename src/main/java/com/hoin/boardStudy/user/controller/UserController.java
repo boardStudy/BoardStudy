@@ -1,6 +1,7 @@
 package com.hoin.boardStudy.user.controller;
 
 import com.hoin.boardStudy.user.dto.User;
+import com.hoin.boardStudy.user.service.EmailManagement;
 import com.hoin.boardStudy.user.service.LoginVerification;
 import com.hoin.boardStudy.user.service.RandomNumberManagement;
 import com.hoin.boardStudy.user.service.UserService;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -25,8 +28,7 @@ public class UserController {
 
     private final UserService userService;
     private final LoginVerification loginVerification;
-    private final JavaMailSender javaMailSender;
-    private final RandomNumberManagement randomNumberManagement;
+    // private final EmailManagement emailManagement;
 
     // 로그인 화면
     @GetMapping("/login.do")
@@ -36,12 +38,18 @@ public class UserController {
 
     // 로그인 처리
     @PostMapping("/loginProcess.do")
-    public String loginProcess(User user, HttpSession session) {
+    public String loginProcess(User user, HttpSession session, Model m) {
         String rawPassword = user.getPassword();
+        user = userService.getUserInfo(user.getUserId());
         if(loginVerification.loginVerification(user, rawPassword)) {
             session.setAttribute("user", user);
+            if(user.getUserAuth() == 0) {
+                m.addAttribute("Auth", user.getUserAuth());
+                return "/user/registerNotCertified";
+            }
             return "redirect:/board/list.do";
         }
+
         return "redirect:/user/login.do";
     }
 
@@ -86,6 +94,39 @@ public class UserController {
         return "user/signUp";
     }
 
+    // 회원가입 정보 저장
+    @PostMapping("/signUp.do")
+    public String joinUser(@Valid User user, RedirectAttributes rttr, Errors errors, Model m) throws Exception {
+        if(errors.hasErrors()) {
+            // 회원가입 실패 시, 입력 데이터 유지
+            m.addAttribute("user", user);
+
+            // 유효성을 통과 못한 필드와 메세지를 핸들링
+            Map<String, String> validatorResult = userService.validateHandling(errors);
+            for (String key : validatorResult.keySet()) {
+                m.addAttribute(key, validatorResult.get(key));
+            }
+            return "user/signUp";
+        }
+
+        // 회원가입 저장
+        String rawPassword = user.getPassword();
+        userService.joinUser(user, rawPassword);
+
+        rttr.addFlashAttribute("msg", "가입이 완료되었습니다.");
+        rttr.addAttribute("email", user.getEmail());
+        rttr.addAttribute("userId", user.getUserId());
+
+        return "redirect:/user/registerAuth";
+    }
+
+    @GetMapping("/registerEmail")
+    public String emailConfirm(String email, Model m) throws Exception {
+        userService.userAuth(email);
+        m.addAttribute("email", email);
+        return "/user/registerEmail";
+    }
+
     // 아이디 중복 체크
     @PostMapping("/userIdCheck")
     @ResponseBody
@@ -104,27 +145,6 @@ public class UserController {
         return cnt;
     }
 
-    // 회원가입 정보 저장
-    @PostMapping("/signUp.do")
-    public String joinUser(@Valid User user, Errors errors, Model m) {
-        if(errors.hasErrors()) {
-            // 회원가입 실패 시, 입력 데이터 유지
-            m.addAttribute("user", user);
-
-            // 유효성을 통과 못한 필드와 메세지를 핸들링
-            Map<String, String> validatorResult = userService.validateHandling(errors);
-            for (String key : validatorResult.keySet()) {
-                m.addAttribute(key, validatorResult.get(key));
-            }
-            return "user/signUp";
-        }
-
-        // 회원가입 저장
-        String rawPassword = user.getPassword();
-        userService.joinUser(user, rawPassword);
-        return "redirect:/user/login.do";
-    }
-
     // 회원 탈퇴
     @GetMapping("/withdraw.do")
     public String withdraw(HttpSession session, Model m) {
@@ -135,28 +155,11 @@ public class UserController {
         return "redirect:/board/list.do";
     }
 
-    @ResponseBody
-    @GetMapping("/mailCheck")
-    public String mailCheck(@RequestParam("email") String email) throws Exception {
-        int certi = randomNumberManagement.randomNumber();
-        String to = email;
-        String num = "";
+//    // 이메일 전송
+//    @ResponseBody
+//    @GetMapping("/mailCheck")
+//    public void mailCheck(@RequestParam("email") String email) throws Exception {
+////        emailManagement.sendMail(email);
+//    }
 
-        try {
-            MimeMessage mail = javaMailSender.createMimeMessage();
-            MimeMessageHelper mailHelper = new MimeMessageHelper(mail, true, "UTF-8");
-            mailHelper.setFrom(FROM);
-            mailHelper.setTo(to);
-            mailHelper.setSubject(TITLE);
-            mailHelper.setText(String.format(CONTENT, certi), true);
-            javaMailSender.send(mail);
-            num = Integer.toString(certi);
-        } catch (Exception e) {
-            num = "error";
-        }
-        return num;
-    }
-
-// 서버사이드 인증번 = 클릭하면 인증되게(O), 세션 이용
-    // ajax -> 서버에서 메세지 html 상태코드도 활용 오류코드도 서버에서 정
 }

@@ -18,25 +18,32 @@ public class UserService {
      public final UserMapper userMapper;
      BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
      private final PasswordManagement passwordManagement;
+     private final EmailManagement emailManagement;
 
      /* 유저정보 조회 */
      public User getUserInfo(String userId) {
 
           return userMapper.getUserInfo(userId);
      }
-     @Transactional
+
      /* 유저정보 수정 */
      public void modifyUserInfo(User user) {
           userMapper.modifyUserInfo(user);
      }
 
      /* 회원가입 */
-     public boolean joinUser(User user, String rawPassword) {
+     public void joinUser(User user, String rawPassword) throws Exception{
           String encryptPassword = passwordManagement.encryptPassword(user);
           user.setPassword(encryptPassword);
           userMapper.saveUser(user);
+          String key = new TempKey().getKey(50, false);
+          userMapper.createAuthKey(user.getEmail(), key);
+          emailManagement.sendMail(user.getEmail(), key);
 
-          return true;
+     }
+
+     public void userAuth(String email) throws Exception {
+          userMapper.userAuth(email);
      }
 
      // 회원가입 유효성 검사

@@ -16,24 +16,28 @@
         <result column="name" property="name"/>
         <result column="phone" property="phone"/>
         <result column="gender" property="gender"/>
+        <result column="user_auth" property="userAuth"/>
+    </resultMap>
+
+    <resultMap id="userAuthMap" type="userAuth">
+        <result column="email" property="email"/>
+        <result column="auth_key" property="authKey"/>
     </resultMap>
 
     <!-- 유저정보 체크 -->
-
     <select id="getUserInfo" resultMap="userMap">
         SELECT *
         FROM TBL_USER
         WHERE user_id = #{userId}
         AND withd_status = 0
-
     </select>
 
 
     <!-- 회원가입 -->
     <insert id="saveUser" parameterType="user">
         INSERT INTO TBL_USER
-        (user_id, password, email, reg_date, withd_date, upd_date, withd_status, name, phone, gender)
-        VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate(), 0, #{name}, #{phone}, #{gender});
+        (user_id, password, email, reg_date, withd_date, upd_date, withd_status, name, phone, gender, user_auth)
+        VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate(), 0, #{name}, #{phone}, #{gender}, 0);
     </insert>
 
     <!-- 회원정보수정 -->
@@ -60,9 +64,15 @@
     <update id="withdrawUser">
         UPDATE TBL_USER
         SET withdStatus = 1, withdDate = sysdate()
-
         WHERE user_id = #{userId}
     </update>
 
+    <insert id="createAuthKey">
+        INSERT INTO TBL_USER_AUTH VALUES(#{email}, #{authKey})
+    </insert>
+
+    <update id="userAuth">
+	<![CDATA[UPDATE tbl_user SET user_auth = 1 WHERE (SELECT COUNT(*) FROM tbl_user_auth WHERE email = #{email}) > 0]]>
+    </update>
 
 </mapper>

@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 public class User implements Serializable {
 
     @NotBlank(message = "아이디를 입력해주세요.")
-    @Pattern(regexp = "/^[a-z0-9]{4,20}$/", message = "영문자, 숫자 4자 이상 20자 이하로 조합해주세요.")
-    @Size(min = 4, max = 20, message = "아이디는 4자 이상 20자 이하로 입력해주세요.")
+    @Pattern(regexp = "^([a-z0-9]){4,30}$", message = "영문, 숫자를 조합하여 4자 이상 30자 이하로 입력해주세요.")
     private String userId;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
@@ -25,21 +24,19 @@ public class User implements Serializable {
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "이메일 형식에 맞지 않습니다.")
     private String email;
-
     private LocalDateTime regDate;
     private LocalDateTime withdDate;
     private LocalDateTime updDate;
     private int withdStatus;
-
     @NotBlank(message = "이름을 입력해주세요.")
-    @Pattern(regexp = "/^[가-힣a-z]{2,6}$/", message = "영문, 한글만 가능하며, 2자 ~ 50자여야 합니다.")
+    // @Size(min = 2, message = "이름은 두글자 이상 입력해주세요.")
     private String name;
 
     @NotBlank(message = "휴대폰 번호를 입력해주세요.")
     @Pattern(regexp = "(01[016789])(\\d{3,4})(\\d{4})", message = "올바른 휴대폰 번호를 입력해주세요.")
     private String phone;
-
     private int gender;
+    private int userAuth;
 
     @Builder
     public User(String userId, String password, String email, String name, String phone) {

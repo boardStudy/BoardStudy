@@ -22,6 +22,6 @@ public interface CommentMapper {
     void modifyComment(ModifyRequest modifyRequest);
 
     // 댓글 삭제
-    void deleteComment(int commentId, int boardId);
+    void deleteComment(int commentId, int boardId, Integer parentId);
     
 }

@@ -59,6 +59,7 @@ public class CommentManager {
     public void deleteComment(Comment comment){
         int commentId = comment.getCommentId();
         int boardId = comment.getBoardId();
-        commentMapper.deleteComment(commentId, boardId);
+        Integer parentId = comment.getParentId();
+        commentMapper.deleteComment(commentId, boardId, parentId);
     }
 }

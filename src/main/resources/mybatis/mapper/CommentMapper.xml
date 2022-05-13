@@ -45,7 +45,12 @@
     <!-- 댓글 삭제 -->
     <delete id="deleteComment" parameterType="int">
         DELETE FROM TBL_COMMENT
-        WHERE comment_id = #{commentId} AND board_id = #{boardId}
+        <if test="parentId == null">
+            WHERE parent_id = #{commentId} or comment_id = #{commentId}
+        </if>
+        <if test="parentId != null">
+            WHERE comment_id = #{commentId} AND board_id = #{boardId}
+        </if>
     </delete>
 
 </mapper>

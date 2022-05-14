@@ -28,7 +28,7 @@ public class CommentController {
     }
 
     // 댓글 입력
-    @PostMapping("")
+    @PostMapping
     public void insertComment(@RequestBody Comment comment, HttpSession session) {
         String writer = ((User) session.getAttribute("user")).getUserId();
         comment.setCommenter(writer);
@@ -37,7 +37,7 @@ public class CommentController {
 
 
     // 댓글 수정
-    @PatchMapping("")
+    @PatchMapping
     public void modifyComment(@RequestBody ModifyRequest modifyRequest) {
 
         commentManager.modifyComment(modifyRequest);
@@ -45,7 +45,7 @@ public class CommentController {
     }
 
     // 댓글 삭제
-    @DeleteMapping("")
+    @DeleteMapping
     public void deleteComment(@RequestBody Comment comment){
 
         commentManager.deleteComment(comment);

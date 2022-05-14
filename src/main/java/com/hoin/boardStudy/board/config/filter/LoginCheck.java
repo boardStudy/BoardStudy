@@ -15,7 +15,10 @@ import java.io.IOException;
 @Slf4j
 public class LoginCheck implements Filter {
 
-    private static final String[] loginRequiredPath = {"/board/writeForm.do","/board/modify.do","/board/saveBoard.do","/board/delete.do","/user/logout.do","/user/profile.do","/user/getUserInfo.do","/user/modify.do","/user/withdraw.do"};
+    private static final String[] loginRequiredPath = {"/board/writeForm.do","/board/modify.do","/board/saveBoard.do","/board/delete.do",
+                                                        "/user/logout.do","/user/profile.do","/user/getUserInfo.do","/user/modify.do","/user/withdraw.do",
+                                                        "/comment/insert.do","/comment/modify.do","/comment/delete.do"
+    };
     private static final String LOGIN_URL = "/user/login.do";
 
     @Override

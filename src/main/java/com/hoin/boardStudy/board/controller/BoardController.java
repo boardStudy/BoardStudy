@@ -1,6 +1,7 @@
 package com.hoin.boardStudy.board.controller;
 
 import com.hoin.boardStudy.board.dto.*;
+import com.hoin.boardStudy.board.mapper.CommentMapper;
 import com.hoin.boardStudy.board.service.BoardService;
 import com.hoin.boardStudy.board.service.FileManager;
 import com.hoin.boardStudy.board.service.ViewCountUpdater;

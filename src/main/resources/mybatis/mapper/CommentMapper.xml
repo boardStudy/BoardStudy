@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hoin.boardStudy.board.mapper.CommentMapper">
+
+    <resultMap id="commentMap" type="comment">
+        <result column="comment_id" property="commentId"/>
+        <result column="board_id" property="boardId"/>
+        <result column="commenter" property="commenter"/>
+        <result column="comment" property="comment"/>
+        <result column="reg_date" property="regDate"/>
+        <result column="upd_date" property="updDate"/>
+        <result column="parent_id" property="parentId"/>
+    </resultMap>
+
+
+    <!-- 댓글 개수 구하기 -->
+    <select id="getCommentCount" parameterType="int" resultType="int">
+        SELECT count(*) FROM TBL_COMMENT
+        WHERE board_id = #{boardId}
+    </select>
+
+    <!-- 댓글 목록 -->
+    <select id="getCommentList" parameterType="int" resultMap="commentMap">
+        SELECT comment_id, board_id, commenter, comment, reg_date, upd_date, ifnull(parent_id, comment_id) as parent_id FROM TBL_COMMENT
+        WHERE board_id = #{boardId}
+        ORDER BY parent_id asc , comment_id asc
+    </select>
+    <!-- 댓글 입력 -->
+    <insert id="insertComment" parameterType="comment">
+        INSERT INTO TBL_COMMENT (board_id, commenter, comment, reg_date,upd_date, parent_id)
+        VALUES (#{boardId}, #{commenter}, #{comment}, #{updDate},#{updDate}, #{parentId})
+    </insert>
+
+    <!-- 댓글 수정 -->
+    <update id="modifyComment" parameterType="modifyRequest">
+        update TBL_COMMENT SET
+        comment = #{comment},
+        upd_date = #{updDate}
+        WHERE comment_id = #{commentId}
+    </update>
+
+    <!-- 댓글 삭제 -->
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM TBL_COMMENT
+        <if test="parentId == null">
+            WHERE parent_id = #{commentId} or comment_id = #{commentId}
+        </if>
+        <if test="parentId != null">
+            WHERE comment_id = #{commentId} AND board_id = #{boardId}
+        </if>
+    </delete>
+
+</mapper>

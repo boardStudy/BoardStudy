@@ -2,7 +2,7 @@
 let getCommentList = function commentList(boardId) {
     $.ajax({
         type: 'GET',
-        url: '/comment/list.do?boardId='+boardId,
+        url: '/comments/'+boardId,
         headers : {"content-type": "application/json"},
         success: function (result) {
             $("#commentList").html(toHtml(result));
@@ -27,7 +27,7 @@ let toHtml = function(comments){
         tmp += '<div class="commentInfo" data-commentId="'+ comments[i].commentId
         tmp += '" data-boardId="' + comments[i].boardId
         tmp += '" data-comment="' + comments[i].comment
-        tmp += '" data-commeter="' + comments[i].commenter
+        tmp += '" data-commenter="' + comments[i].commenter
         tmp += '" data-parentId="' +comments[i].parentId
         if(parentId==commentId) {
             tmp += '" style="border-top: 1px solid gray; margin-top:20px;">'
@@ -84,7 +84,7 @@ $(document).ready(function(){
         // 댓글 등록
         $.ajax({
             type: 'POST',
-            url: '/comment/insert.do',
+            url: '/comments',
             headers: {"content-type": "application/json"},
             data : JSON.stringify({boardId:boardId, comment:comment}),
             success : function (result) {
@@ -135,8 +135,8 @@ $(document).ready(function(){
         }
 
         $.ajax({
-            type: 'POST',
-            url: '/comment/modify.do',
+            type: 'PATCH',
+            url: '/comments',
             headers: {"content-type": "application/json"},
             data : JSON.stringify({commentId:commentId, comment:comment, commenter:commenter}),
             success : function (result) {
@@ -161,8 +161,8 @@ $(document).ready(function(){
         }
 
         $.ajax({
-            type: 'POST',
-            url: '/comment/delete.do',
+            type: 'DELETE',
+            url: '/comments',
             headers: {"content-type": "application/json"},
             data : JSON.stringify({boardId:boardId, commentId:commentId}),
             success : function (result) {
@@ -178,13 +178,13 @@ $(document).ready(function(){
     // 대댓글 입력창
     $(".commentList").on("click", ".replyBtn", function (){
         let bId = $("#boardId").val();
-        $('.commentList').children('.replyBox').remove();
         $(this).closest('.commentInfo').append('<div class="replyBox">ㄴ<textarea class="form-control" name="comment" id="comment" style="margin-left: 20px;" placeholder="댓글을 입력하세요."></textarea>' +
             '<div style="margin-left: 20px">' +
             '<button class="cancel" onclick="getCommentList('+bId+')">취소</button>' +
             '<button class="replySend">등록</button>' +
             '</div></div>');
         $(this).attr('disabled', true);
+
 
     });
 
@@ -207,7 +207,7 @@ $(document).ready(function(){
         // 댓글 등록
         $.ajax({
             type: 'POST',
-            url: '/comment/insert.do',
+            url: '/comments',
             headers: {"content-type": "application/json"},
             data : JSON.stringify({boardId:boardId, comment:comment, parentId:parentId}),
             success : function (result) {

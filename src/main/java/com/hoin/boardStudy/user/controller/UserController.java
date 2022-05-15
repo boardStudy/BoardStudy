@@ -125,7 +125,7 @@ public class UserController {
     public String emailConfirm(String email, Model m) throws Exception {
         userService.userAuth(email);
         m.addAttribute("email", email);
-        return "/user/registerEmail";
+        return "user/registerEmail";
     }
 
     // 아이디 중복 체크

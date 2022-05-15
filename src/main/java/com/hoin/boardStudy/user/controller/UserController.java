@@ -53,7 +53,7 @@ public class UserController {
         return "redirect:/user/login.do";
     }
 
-    @GetMapping("/registerNotCertified.do")
+    @GetMapping("registerNotCertified.do")
     public String registerNotCertified() {
         return "user/registerNotCertified";
     }

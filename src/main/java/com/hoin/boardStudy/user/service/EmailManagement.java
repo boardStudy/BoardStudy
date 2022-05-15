@@ -1,5 +1,6 @@
 package com.hoin.boardStudy.user.service;
 
+import com.hoin.boardStudy.user.dto.DomainProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,8 +15,8 @@ import static com.hoin.boardStudy.user.dto.EmailProperties.*;
 @RequiredArgsConstructor
 public class EmailManagement { // 이메일 재사용성을 위해 분리
 
-    @Autowired
-    JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
+    private final DomainProperties domainProperties;
 
     public void sendMail(String to,String key) {
 
@@ -25,8 +26,7 @@ public class EmailManagement { // 이메일 재사용성을 위해 분리
             mailHelper.setFrom(FROM);
             mailHelper.setTo(to);
             mailHelper.setSubject(TITLE);
-            // 이메일을
-            mailHelper.setText(String.format(CONTENT,to,key), true);
+            mailHelper.setText(String.format(CONTENT,domainProperties.getName(),to,key), true);
             javaMailSender.send(mail);
         } catch (Exception e) {
             e.printStackTrace();

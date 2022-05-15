@@ -27,11 +27,14 @@ public class UserService {
      }
 
      /* 유저정보 수정 */
+     @Transactional
      public void modifyUserInfo(User user) {
           userMapper.modifyUserInfo(user);
      }
 
+
      /* 회원가입 */
+     @Transactional
      public void joinUser(User user, String rawPassword) throws Exception{
           String encryptPassword = passwordManagement.encryptPassword(user);
           user.setPassword(encryptPassword);
@@ -42,6 +45,7 @@ public class UserService {
 
      }
 
+     @Transactional
      public void userAuth(String email) throws Exception {
           userMapper.userAuth(email);
      }

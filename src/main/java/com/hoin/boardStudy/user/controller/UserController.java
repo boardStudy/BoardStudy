@@ -45,7 +45,7 @@ public class UserController {
             session.setAttribute("user", user);
             if(user.getUserAuth() == 0) {
                 m.addAttribute("Auth", user.getUserAuth());
-                return "/user/registerNotCertified";
+                return "redirect:/user/registerNotCertified.do";
             }
             return "redirect:/board/list.do";
         }
@@ -53,7 +53,7 @@ public class UserController {
         return "redirect:/user/login.do";
     }
 
-    @GetMapping("registerNotCertified.do")
+    @GetMapping("/registerNotCertified.do")
     public String registerNotCertified() {
         return "user/registerNotCertified";
     }

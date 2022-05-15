@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<html>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>회원가입</title>
     <meta charset="UTF-8">
 </head>
 <body>
-<form method="post" action="/user/signUp.do">
+<form th:action="@{/user/signUp.do}" method="post" modelAttribute="user">
 
     <div class="container">
         <h2 align="center">회원가입</h2>
         <div class="signUpForm" style="display: flex; flex-direction: column; align-items: center;">
             <div class="signUpLine" style="border: solid 1px #d3d3d3; padding: 50px; border-radius: 20px; margin: 50px; width: 50%">
                 <div class="form-group">
-                    <label for="inputUserId">ID</label>
-                    <input type="text" class="form-control" id="inputUserId" name="userId" placeholder="아이디를 입력해주세요.">
+                    <label for="userId">아이디</label>
+                    <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디를 입력해주세요." oninput="checkUserId()" />
+                    <span style="color: blue" >아이디는 2자 이상 20자 이하로 입력해주세요.</span></br>
+                    <span class="userId_success" style="display: none; color: green">사용 가능한 아이디입니다.</span>
+                    <span class="userId_fail" style="display: none; color: red">사용중인 아이디입니다.</span>
                 </div>
                 <div class="form-group">
                     <label for="inputName">이름</label>
                     <input type="text" class="form-control" id="inputName" name="name" placeholder="이름을 입력해주세요.">
                 </div>
                 <div class="form-group">
-                    <label for="gender">성별</label>
+                    <label for="gender">성</label>
                     <fieldset class="form-group">
-                        <select class="form-select" id="gender" name="gender" required>
+                        <select class="form-select" id="gender" name="gender">
                             <option value="">성별을 선택해주세요.</option>
                             <option value="1">남</option>
                             <option value="2">여</option>
@@ -32,25 +36,82 @@
                     </fieldset>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail">이메일</label>
-                    <input type="text" class="form-control" id="inputEmail" name="email" placeholder="이메일을 입력해주세요.">
+                    <label for="email">이메일</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요.">
                 </div>
                 <div class="form-group">
-                    <label for="inputPhone">전화번호</label>
-                    <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="전화번호를 입력해주세요.">
+                    <label for="phone">전화번호</label>
+                    <input type="text" class="form-control" id="phone" name="phone" placeholder="전화번호를 입력해주세요." oninput="checkPhone()" />
+                    <span class="phone_success" style="display: none; color: green">사용 가능한 번호입니다.</span>
+                    <span class="phone_fail" style="display: none; color: red">사용중인 번호입니다.</span>
                 </div>
+
                 <div class="form-group">
                     <label for="inputPassword">비밀번호</label>
-                    <input type="password" class="form-control" id="inputPassword" name="password">
+                    <input type="password" class="form-control" id="inputPassword" name="password" placeholder="비밀번호를 입력해주세요.">
+                    <span style="color: blue">영문 대,소문자와 숫자, 특수기호가 적어도 1개 이상씩 포함해주세요.(8~20자)</span>
                 </div>
+
                 <div class="form-group">
                     <label for="inputCheckPassword">비밀번호 확인</label>
-                    <input type="password" class="form-control" id="inputCheckPassword" name="checkPassword">
+                    <input type="password" class="form-control" id="inputCheckPassword" name="checkPassword" placeholder="비밀번호를 확인해주세요.">
                 </div>
-                <button type="submit" class="btn btn-secondary">완료</button>
+                <button type="submit" class="btn btn-secondary" onclick="signUp()">가입하기</button>
             </div>
         </div>
     </div>
 </form>
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    function checkUserId(){
+        var userId = $('#userId').val();
+        $.ajax({
+            url:'/user/userIdCheck', //Controller에서 인식할 주소
+            type:'post', //POST 방식으로 전달
+            data:{userId:userId},
+            success:function(cnt){
+                if(cnt == 0){
+                    $('.userId_success').css("display", "inline-block");
+                    $('.userId_fail').css("display", "none");
+                } else {
+                    $('.userId_fail').css("display", "inline-block");
+                    $('.userId_success').css("display", "none");
+                }
+            },
+            error:function(){
+                console.log(cnt);
+                alert("Error");
+            }
+        });
+    };
+</script>
+<script type="text/javascript">
+    function checkPhone(){
+        var phone = $('#phone').val();
+        $.ajax({
+            url:'/user/phoneCheck', //Controller에서 인식할 주소
+            type:'post', //POST 방식으로 전달
+            data:{phone:phone},
+            success:function(cnt){
+                if(cnt == 0){
+                    $('.phone_success').css("display", "inline-block");
+                    $('.phone_fail').css("display", "none");
+                } else {
+                    $('.phone_fail').css("display", "inline-block");
+                    $('.phone_success').css("display", "none");
+                }
+            },
+            error:function(){
+                alert("Error");
+            }
+        });
+    };
+</script>
+<script>
+    function signUp(){
+        alert("회원가입을 축하합니다. 이메일 인증을 통해 계정을 활성화 해주세요.");
+    }
+</script>
 </body>
 </html>

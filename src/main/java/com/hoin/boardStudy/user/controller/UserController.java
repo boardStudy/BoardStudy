@@ -96,7 +96,7 @@ public class UserController {
 
     // 회원가입 정보 저장
     @PostMapping("/signUp.do")
-    public String joinUser(@Valid User user, RedirectAttributes rttr, Errors errors, Model m) throws Exception {
+    public String joinUser(@Valid User user, Errors errors, Model m) throws Exception {
         if(errors.hasErrors()) {
             // 회원가입 실패 시, 입력 데이터 유지
             m.addAttribute("user", user);
@@ -113,11 +113,7 @@ public class UserController {
         String rawPassword = user.getPassword();
         userService.joinUser(user, rawPassword);
 
-        rttr.addFlashAttribute("msg", "가입이 완료되었습니다.");
-        rttr.addAttribute("email", user.getEmail());
-        rttr.addAttribute("userId", user.getUserId());
-
-        return "redirect:/user/registerAuth";
+        return "redirect:/user/login.do";
     }
 
     @GetMapping("/registerEmail")

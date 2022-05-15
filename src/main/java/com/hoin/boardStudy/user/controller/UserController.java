@@ -53,6 +53,11 @@ public class UserController {
         return "redirect:/user/login.do";
     }
 
+    @GetMapping("/registerNotCertified.do")
+    public String registerNotCertified() {
+        return "user/registerNotCertified";
+    }
+
     // 로그아웃
     @GetMapping("/logout.do")
     public String logout(HttpSession session) {

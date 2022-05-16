@@ -19,6 +19,7 @@ public class BoardService {
 
     private final BoardMapper boardMapper; // RequiredArgsConstructor 사용 (생성자 주입)
     private final NewArticleChecker newArticleChecker;
+    private final CommentManager commentManager;
 
     /**
      * 게시판 목록 조회
@@ -30,10 +31,11 @@ public class BoardService {
     public List<Board> getBoardList(Map map) {
         // 리스트
         List<Board> list = boardMapper.getBoardList(map);
-        // new 유무 확인
+        // new 유무 확인 , 댓글 개수 확인 --> 후에 메소드 분리 필요
         for(int i = 0; i < list.size(); i ++) {
             int boardId = list.get(i).getBoardId();
             list.get(i).setNewCheck(newArticleChecker.isNewArticle(boardId));
+            list.get(i).setCommentCount(commentManager.getCommentCount(boardId));
         }
         return list;
     }

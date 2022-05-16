@@ -13,5 +13,7 @@ spring:
 upload:
     path: C:/upload/
     
-sql-local-server-password: ${SQL_LOCAL_PASSWORD}
+sql-local-server-password: ${SQL_PASSWORD}
 
+domain:
+    name : localhost:8080

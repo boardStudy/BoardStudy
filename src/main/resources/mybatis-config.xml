@@ -6,6 +6,9 @@
     <typeAliases>
         <typeAlias alias="board" type="com.hoin.boardStudy.board.dto.Board"/>
         <typeAlias alias="file" type="com.hoin.boardStudy.board.dto.FileInfo"/>
+        <typeAlias alias="comment" type="com.hoin.boardStudy.board.dto.Comment"/>
+        <typeAlias alias="modifyRequest" type="com.hoin.boardStudy.board.dto.ModifyRequest"/>
         <typeAlias alias="user" type="com.hoin.boardStudy.user.dto.User"/>
+        <typeAlias alias="userAuth" type="com.hoin.boardStudy.user.dto.UserAuth"/>
     </typeAliases>
 </configuration>

@@ -40,8 +40,8 @@ public class UserController {
     @PostMapping("/loginProcess.do")
     public String loginProcess(User user, HttpSession session, Model m) {
         String rawPassword = user.getPassword();
+        user = userService.getUserInfo(user.getUserId());
         if(loginVerification.loginVerification(user, rawPassword)) {
-            user = userService.getUserInfo(user.getUserId());
             if(user != null && user.getUserAuth() == 0) {
                 m.addAttribute("Auth", user.getUserAuth());
                 return "redirect:/user/registerNotCertified.do";

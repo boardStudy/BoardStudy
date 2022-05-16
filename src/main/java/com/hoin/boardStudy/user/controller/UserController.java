@@ -118,7 +118,12 @@ public class UserController {
         String rawPassword = user.getPassword();
         userService.joinUser(user, rawPassword);
 
-        return "redirect:/user/login.do";
+        return "redirect:/user/successSignUp.do";
+    }
+
+    @GetMapping("/successSignUp.do")
+    public String successSignUp() {
+        return "user/successSignUp";
     }
 
     @GetMapping("/registerEmail")

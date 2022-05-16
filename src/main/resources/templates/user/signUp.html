@@ -16,19 +16,20 @@
                 <div class="form-group">
                     <label for="userId">아이디</label>
                     <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디를 입력해주세요." oninput="checkUserId()" />
-                    <span style="color: blue" >아이디는 2자 이상 20자 이하로 입력해주세요.</span></br>
+                    <span style="color: cornflowerblue">영문 또는 숫자를 조합해야 합니다. (4자 ~ 30자)</span></br>
                     <span class="userId_success" style="display: none; color: green">사용 가능한 아이디입니다.</span>
-                    <span class="userId_fail" style="display: none; color: red">사용중인 아이디입니다.</span>
+                    <span class="userId_fail" style="display: none; color: red">사용 불가능한 아이디입니다.</span>
+                    <span style="color: red" th:text="${valid_userId}"></span>
                 </div>
                 <div class="form-group">
                     <label for="inputName">이름</label>
                     <input type="text" class="form-control" id="inputName" name="name" placeholder="이름을 입력해주세요.">
+                    <span style="color: red" th:text="${valid_name}"></span></br>
                 </div>
                 <div class="form-group">
                     <label for="gender">성</label>
                     <fieldset class="form-group">
                         <select class="form-select" id="gender" name="gender">
-                            <option value="">성별을 선택해주세요.</option>
                             <option value="1">남</option>
                             <option value="2">여</option>
                             <option value="3">공개안함</option>
@@ -38,25 +39,28 @@
                 <div class="form-group">
                     <label for="email">이메일</label>
                     <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요.">
+                    <span style="color: red" th:text="${valid_email}"></span></br>
                 </div>
                 <div class="form-group">
                     <label for="phone">전화번호</label>
                     <input type="text" class="form-control" id="phone" name="phone" placeholder="전화번호를 입력해주세요." oninput="checkPhone()" />
                     <span class="phone_success" style="display: none; color: green">사용 가능한 번호입니다.</span>
-                    <span class="phone_fail" style="display: none; color: red">사용중인 번호입니다.</span>
+                    <span class="phone_fail" style="display: none; color: red">사용 불가능한 번호입니다.</span>
+                    <span style="color: red" th:text="${valid_phone}"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="inputPassword">비밀번호</label>
                     <input type="password" class="form-control" id="inputPassword" name="password" placeholder="비밀번호를 입력해주세요.">
-                    <span style="color: blue">영문 대,소문자와 숫자, 특수기호가 적어도 1개 이상씩 포함해주세요.(8~20자)</span>
+                    <span style="color: cornflowerblue">영문 대소문자, 숫자, 특수기호가 적어도 1개 이상씩 조합해야 합니다. (8자 ~ 20자)</span></br>
+                    <span style="color: red" th:text="${valid_password}"></span></br>
                 </div>
 
                 <div class="form-group">
                     <label for="inputCheckPassword">비밀번호 확인</label>
                     <input type="password" class="form-control" id="inputCheckPassword" name="checkPassword" placeholder="비밀번호를 확인해주세요.">
                 </div>
-                <button type="submit" class="btn btn-secondary" onclick="signUp()">가입하기</button>
+                <button type="submit" class="btn btn-secondary">가입하기</button>
             </div>
         </div>
     </div>
@@ -66,12 +70,13 @@
 <script type="text/javascript">
     function checkUserId(){
         var userId = $('#userId').val();
+        var userIdLength = $('#userId').val().length;
         $.ajax({
             url:'/user/userIdCheck', //Controller에서 인식할 주소
             type:'post', //POST 방식으로 전달
             data:{userId:userId},
             success:function(cnt){
-                if(cnt == 0){
+                if(cnt == 0 && 3 < userIdLength && userIdLength < 31){
                     $('.userId_success').css("display", "inline-block");
                     $('.userId_fail').css("display", "none");
                 } else {
@@ -89,12 +94,13 @@
 <script type="text/javascript">
     function checkPhone(){
         var phone = $('#phone').val();
+        var phoneLength = $('#phone').val().length;
         $.ajax({
             url:'/user/phoneCheck', //Controller에서 인식할 주소
             type:'post', //POST 방식으로 전달
             data:{phone:phone},
             success:function(cnt){
-                if(cnt == 0){
+                if(cnt == 0 && 9 < phoneLength && phoneLength < 12 ){
                     $('.phone_success').css("display", "inline-block");
                     $('.phone_fail').css("display", "none");
                 } else {
@@ -108,10 +114,6 @@
         });
     };
 </script>
-<script>
-    function signUp(){
-        alert("회원가입을 축하합니다. 이메일 인증을 통해 계정을 활성화 해주세요.");
-    }
-</script>
+
 </body>
 </html>

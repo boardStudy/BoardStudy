@@ -13,14 +13,18 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-        username: "dahoonemailtest@gmail.com"
-        password: "andrprnfma"
+        username: dahoonemailtest@gmail.com
+        password: andrprnfma
         properties:
-            mail:
-                smtp:
-                    auth: true
-                    starttls:
-                        enable: true
+          mail:
+              transport:
+                  protocol: smtp
+              smtp:
+                  ssl:
+                      protocols: TLSv1.2
+                  auth: true
+                  starttls:
+                      enable: true
 # redis 설정
     session:
       storage-type: redis

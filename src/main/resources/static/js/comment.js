@@ -68,7 +68,7 @@ $(document).ready(function(){
 
     // 등록 버튼
     $("#sendBtn").click(function(){
-        let comment = $("textarea[name=comment]").val();
+        let comment = $("textarea[name=p_comment]").val();
 
         // 로그인 여부 확인
         if(userId==null){
@@ -78,7 +78,7 @@ $(document).ready(function(){
         // 공백 확인
         if(comment.trim()==''){
             alert('댓글을 입력해주세요.');
-            $("textarea[name=comment]").focus();
+            $("textarea[name=p_comment]").focus();
             return;
         }
         // 댓글 등록
@@ -90,7 +90,7 @@ $(document).ready(function(){
             success : function (result) {
                 alert('댓글이 등록되었습니다.');
                 getCommentList(boardId);
-                $("textarea[name=comment]").val('');
+                $("textarea[name=p_comment]").val('');
             },
             error : function(){
                 alert("error");

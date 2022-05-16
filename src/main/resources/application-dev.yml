@@ -9,3 +9,6 @@ upload:
     path: /apps/board/dev/
     
 sql-server-password: ${SQL_PASSWORD}
+
+domain:
+    name : board.dev.donghyeon.dev

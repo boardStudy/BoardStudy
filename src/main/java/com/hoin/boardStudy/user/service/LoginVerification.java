@@ -17,7 +17,7 @@ public class LoginVerification {
 
     /* 로그인 검증 */
     public boolean loginVerification(User user, String rawPassword) {
-        user = userService.getUserInfo(user.getUserId());
+        // user = userService.getUserInfo(user.getUserId());
         if (user != null &&
                 passwordEncoder.matches(rawPassword, user.getPassword())) {
             return true;

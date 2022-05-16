@@ -16,24 +16,28 @@
         <result column="name" property="name"/>
         <result column="phone" property="phone"/>
         <result column="gender" property="gender"/>
+        <result column="user_auth" property="userAuth"/>
+    </resultMap>
+
+    <resultMap id="userAuthMap" type="userAuth">
+        <result column="email" property="email"/>
+        <result column="auth_key" property="authKey"/>
     </resultMap>
 
     <!-- 유저정보 체크 -->
-
     <select id="getUserInfo" resultMap="userMap">
         SELECT *
         FROM TBL_USER
         WHERE user_id = #{userId}
         AND withd_status = 0
-
     </select>
 
 
     <!-- 회원가입 -->
     <insert id="saveUser" parameterType="user">
         INSERT INTO TBL_USER
-        (user_id, password, email, reg_date, withd_date, upd_date, withd_status, name, phone, gender)
-        VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate(), 0, #{name}, #{phone}, #{gender});
+        (user_id, password, email, reg_date, withd_date, upd_date, withd_status, name, phone, gender, user_auth)
+        VALUES(#{userId}, #{password}, #{email}, sysdate(), null, sysdate(), 0, #{name}, #{phone}, #{gender}, 0);
     </insert>
 
     <!-- 회원정보수정 -->
@@ -45,14 +49,30 @@
         WHERE user_id = #{userId}
     </update>
 
+    <!-- 아이디 중복 체크 -->
+    <select id="userIdCheck" parameterType="String" resultType="int">
+        SELECT COUNT(user_id) FROM TBL_USER WHERE user_id=#{userId}
+    </select>
+
+    <!-- 전화번호 중복 체크 -->
+    <select id="phoneCheck" parameterType="String" resultType="int">
+        SELECT COUNT(phone) FROM TBL_USER WHERE phone=#{phone}
+    </select>
+
     <!-- 탈퇴 -->
     <!-- 로컬데이트타임으로 변경 예정-->
     <update id="withdrawUser">
         UPDATE TBL_USER
         SET withdStatus = 1, withdDate = sysdate()
-
         WHERE user_id = #{userId}
     </update>
 
+    <insert id="createAuthKey">
+        INSERT INTO TBL_USER_AUTH VALUES(#{email}, #{authKey})
+    </insert>
+
+    <update id="userAuth">
+	<![CDATA[UPDATE TBL_USER SET user_auth = 1 WHERE (SELECT COUNT(*) FROM TBL_USER_AUTH WHERE email = #{email}) > 0]]>
+    </update>
 
 </mapper>

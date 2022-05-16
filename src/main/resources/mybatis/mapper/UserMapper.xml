@@ -72,7 +72,7 @@
     </insert>
 
     <update id="userAuth">
-	<![CDATA[UPDATE tbl_user SET user_auth = 1 WHERE (SELECT COUNT(*) FROM tbl_user_auth WHERE email = #{email}) > 0]]>
+	<![CDATA[UPDATE TBL_USER SET user_auth = 1 WHERE (SELECT COUNT(*) FROM TBL_USER_AUTH WHERE email = #{email}) > 0]]>
     </update>
 
 </mapper>

@@ -25,28 +25,7 @@ spring:
                   auth: true
                   starttls:
                       enable: true
-    # 카카오 로그인 설정
-    security:
-      oauth2:
-        client:
-            registration:
-              kakao:
-                  client-id: bcaeaa2648d93dc1efedb21505c3beea
-                  redirect-uri: "http:localhost:8080/user/kakaoLogin/oauth2/code/kakao"
-                  client-authentication-method: POST
-                  authorization-grant-type: authorization_code
-                  scope: account_email
-                  client-name: Kakao
-            provider:
-                kakao:
-                    authorization_uri: https://kauth.kakao.com/oauth/authorize
-                    token-uri: https://kauth.kakao.com/oauth/token
-                    user-info-uri: https://kapi/kakao.com/v2/user/me
-                    user-name-attribute: id
-
-
-
-    # redis 설정
+# redis 설정
     session:
       storage-type: redis
     redis:

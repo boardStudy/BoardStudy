@@ -1,7 +1,10 @@
 package com.hoin.boardStudy.user.controller;
 
 import com.hoin.boardStudy.user.dto.User;
-import com.hoin.boardStudy.user.service.*;
+import com.hoin.boardStudy.user.service.EmailManagement;
+import com.hoin.boardStudy.user.service.LoginVerification;
+import com.hoin.boardStudy.user.service.RandomNumberManagement;
+import com.hoin.boardStudy.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -26,7 +29,6 @@ public class UserController {
     private final UserService userService;
     private final LoginVerification loginVerification;
     // private final EmailManagement emailManagement;
-    private final OAuthManagement oAuthManagement;
 
     // 로그인 화면
     @GetMapping("/login.do")
@@ -54,15 +56,6 @@ public class UserController {
     @GetMapping("/registerNotCertified.do")
     public String registerNotCertified() {
         return "user/registerNotCertified";
-    }
-
-    // 카카오톡 로그인
-    @GetMapping("/kakaoLogin")
-    public String kakaoLogin(@RequestParam("code") String code) {
-        String access_Token = oAuthManagement.getKakaoAccessToken(code);
-        System.out.println("controller access_Token" + access_Token);
-
-        return "user/kakaoLoginPage";
     }
 
     // 로그아웃

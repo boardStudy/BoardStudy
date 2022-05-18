@@ -6,6 +6,7 @@ import com.hoin.boardStudy.board.service.BoardService;
 import com.hoin.boardStudy.board.service.FileManager;
 import com.hoin.boardStudy.board.service.ViewCountUpdater;
 import com.hoin.boardStudy.user.dto.User;
+import com.hoin.boardStudy.user.service.EmailManagement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ public class BoardController {
     private final BoardService boardService;
     private final FileManager fileManager;
     private final ViewCountUpdater viewCountUpdater;
+    private final EmailManagement emailManagement;
 
     // 전체 글 조회
     @GetMapping("list.do")

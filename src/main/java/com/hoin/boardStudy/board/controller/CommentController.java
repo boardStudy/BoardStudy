@@ -2,8 +2,10 @@ package com.hoin.boardStudy.board.controller;
 
 import com.hoin.boardStudy.board.dto.Comment;
 import com.hoin.boardStudy.board.dto.ModifyRequest;
+import com.hoin.boardStudy.board.service.BoardService;
 import com.hoin.boardStudy.board.service.CommentManager;
 import com.hoin.boardStudy.user.dto.User;
+import com.hoin.boardStudy.user.service.EmailManagement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import java.util.List;
 public class CommentController {
 
     private final CommentManager commentManager;
+    private final EmailManagement emailManagement;
+    private final BoardService boardService;
 
     // 댓글 목록
     @GetMapping("/{boardId}")
@@ -30,9 +34,15 @@ public class CommentController {
     // 댓글 입력
     @PostMapping
     public void insertComment(@RequestBody Comment comment, HttpSession session) {
-        String writer = ((User) session.getAttribute("user")).getUserId();
-        comment.setCommenter(writer);
-        commentManager.insertComment(comment, writer);
+        String commenter = ((User) session.getAttribute("user")).getUserId();
+
+        int boardId = comment.getBoardId();
+        User articleWriter = boardService.getWriter(boardId);
+        String to = articleWriter.getEmail();
+
+        comment.setCommenter(commenter);
+        commentManager.insertComment(comment, commenter);
+        emailManagement.sendMail(to,comment);
     }
 
 

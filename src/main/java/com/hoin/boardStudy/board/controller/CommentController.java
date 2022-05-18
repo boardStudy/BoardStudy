@@ -35,14 +35,11 @@ public class CommentController {
     @PostMapping
     public void insertComment(@RequestBody Comment comment, HttpSession session) {
         String commenter = ((User) session.getAttribute("user")).getUserId();
-
-        int boardId = comment.getBoardId();
-        User articleWriter = boardService.getWriter(boardId);
-        String to = articleWriter.getEmail();
-
         comment.setCommenter(commenter);
+
         commentManager.insertComment(comment, commenter);
-        emailManagement.sendMail(to,comment);
+        emailManagement.sendMail(comment);
+
     }
 
 

@@ -43,7 +43,7 @@ public interface BoardMapper {
     // 파일 정보 가져오기
     FileInfo getFileInfo(int fileId);
 
-    // 작성자 정보
+    // 작성자 정보 가져오기
     User getWriter(int boardId);
 
 }

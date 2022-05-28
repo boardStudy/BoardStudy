@@ -1,5 +1,6 @@
 package com.hoin.boardStudy.board.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hoin.boardStudy.board.dto.Comment;
 import com.hoin.boardStudy.board.dto.ModifyRequest;
 import com.hoin.boardStudy.board.service.CommentManager;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -29,10 +29,11 @@ public class CommentController {
 
     // 댓글 입력
     @PostMapping
-    public void insertComment(@RequestBody Comment comment, HttpSession session) {
+    public void insertComment(@RequestBody Comment comment, HttpSession session) throws JsonProcessingException {
         String writer = ((User) session.getAttribute("user")).getUserId();
         comment.setCommenter(writer);
         commentManager.insertComment(comment, writer);
+
     }
 
 

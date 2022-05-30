@@ -21,8 +21,6 @@ import java.util.List;
 public class CommentController {
 
     private final CommentManager commentManager;
-    private final EmailManagement emailManagement;
-    private final BoardService boardService;
 
     // 댓글 목록
     @GetMapping("/{boardId}")
@@ -33,10 +31,11 @@ public class CommentController {
 
     // 댓글 입력
     @PostMapping
-    public void insertComment(@RequestBody Comment comment, HttpSession session) throws JsonProcessingException {
+    public void insertComment(@RequestBody Comment comment, HttpSession session) {
         String writer = ((User) session.getAttribute("user")).getUserId();
         comment.setCommenter(writer);
         commentManager.insertComment(comment, writer);
+        commentManager.alarmByEmail(comment);
 
     }
 

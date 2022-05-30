@@ -2,6 +2,7 @@ package com.hoin.boardStudy.board.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hoin.boardStudy.board.client.AlarmClient;
 import com.hoin.boardStudy.board.dto.AlarmRequest;
 import com.hoin.boardStudy.board.dto.Comment;
 import com.hoin.boardStudy.board.dto.ModifyRequest;
@@ -10,12 +11,8 @@ import com.hoin.boardStudy.board.mapper.CommentMapper;
 import com.hoin.boardStudy.user.dto.DomainProperties;
 import com.hoin.boardStudy.user.dto.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,11 +23,9 @@ public class CommentManager {
 
     private final CommentMapper commentMapper;
     private final BoardMapper boardMapper;
-    private final DomainProperties domainProperties;
+    private final AlarmClient alarmClient;
 
-    private final WebClient webClient = WebClient.builder()
-            .defaultHeader(HttpHeaders.CONTENT_TYPE,"application/json")
-            .build();
+
 
     // 댓글 개수
     @Transactional
@@ -46,7 +41,7 @@ public class CommentManager {
 
     // 댓글 입력
     @Transactional
-    public void insertComment(Comment comment, String commenter) throws JsonProcessingException {
+    public void insertComment(Comment comment, String commenter){
         // 댓글 저장
         Comment commentRequest = new Comment(
                 comment.getBoardId(),
@@ -57,25 +52,22 @@ public class CommentManager {
         );
         commentMapper.insertComment(commentRequest);
 
-        // 알림 서비스 API 호출
+    }
+
+    // 알림 서비스 API 호출
+    @Transactional
+    public void alarmByEmail(Comment comment) {
+
         User articleWriter = boardMapper.getWriter(comment.getBoardId());
 
         AlarmRequest alarmRequest = new AlarmRequest(
                 articleWriter.getEmail(),
                 articleWriter.getUserId(),
-                commentRequest.getCommenter(),
-                commentRequest.getComment()
+                comment.getCommenter(),
+                comment.getComment()
         );
 
-        ObjectMapper mapper  = new ObjectMapper();
-        String requestInfo = mapper.writeValueAsString(alarmRequest);
-
-        webClient.post()
-                .uri(domainProperties.getAlarm()+"/alarm")
-                .bodyValue(requestInfo)
-                .retrieve()
-                .bodyToMono(AlarmRequest.class)
-                .block();
+        alarmClient.alarmByEmail(alarmRequest);
     }
 
     // 댓글 수정

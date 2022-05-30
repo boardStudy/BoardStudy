@@ -3,6 +3,7 @@ package com.hoin.boardStudy.board.service;
 import com.hoin.boardStudy.board.dto.BoardSaveRequest;
 import com.hoin.boardStudy.board.mapper.BoardMapper;
 import com.hoin.boardStudy.board.dto.Board;
+import com.hoin.boardStudy.user.dto.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -82,5 +83,11 @@ public class BoardService {
     @Transactional
     public void deleteBoard(int boardId) {
         boardMapper.deleteBoard(boardId);
+    }
+    
+    // 작성자 정보
+    @Transactional
+    public User getWriter(int boardId) {
+        return boardMapper.getWriter(boardId);
     }
 }

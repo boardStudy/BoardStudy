@@ -1,16 +1,18 @@
 package com.hoin.boardStudy.board.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hoin.boardStudy.board.dto.Comment;
 import com.hoin.boardStudy.board.dto.ModifyRequest;
+import com.hoin.boardStudy.board.service.BoardService;
 import com.hoin.boardStudy.board.service.CommentManager;
 import com.hoin.boardStudy.user.dto.User;
+import com.hoin.boardStudy.user.service.EmailManagement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -33,6 +35,8 @@ public class CommentController {
         String writer = ((User) session.getAttribute("user")).getUserId();
         comment.setCommenter(writer);
         commentManager.insertComment(comment, writer);
+        commentManager.alarmByEmail(comment);
+
     }
 
 

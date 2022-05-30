@@ -17,3 +17,4 @@ server:
             enabled: false
 domain:
     name : board.donghyeon.dev
+    alarm : alarm.donghyeon.dev

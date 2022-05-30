@@ -2,10 +2,10 @@ package com.hoin.boardStudy.user.service;
 
 import com.hoin.boardStudy.user.dto.DomainProperties;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
 
 import javax.mail.internet.MimeMessage;
 
@@ -32,6 +32,5 @@ public class EmailManagement { // 이메일 재사용성을 위해 분리
             e.printStackTrace();
         }
     }
-
 }
 

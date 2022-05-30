@@ -130,4 +130,14 @@
         WHERE FILE_ID = #{fileId}
     </delete>
 
+    <!--작성자 정보 구하기-->
+    <select id="getWriter" parameterType="int" resultType="user">
+        SELECT user_id as userId, email
+        FROM TBL_USER
+        WHERE user_id = (
+            SELECT writer from TBL_BOARD
+            WHERE board_id = #{boardId}
+        )
+    </select>
+
 </mapper>

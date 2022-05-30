@@ -17,3 +17,4 @@ sql-local-server-password: ${SQL_PASSWORD}
 
 domain:
     name : localhost:8080
+    alarm : localhost:8081

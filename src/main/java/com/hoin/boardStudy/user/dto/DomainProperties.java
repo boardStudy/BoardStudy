@@ -13,4 +13,5 @@ import org.springframework.stereotype.Component;
 public class DomainProperties {
 
     private String name;
+    private String alarm;
 }

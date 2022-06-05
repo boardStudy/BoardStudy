@@ -5,7 +5,7 @@ import lombok.Value;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(name="alarm", url = "http://"+"${domain.alarm}")
+@FeignClient(name="alarm", url = "https://"+"${domain.alarm}")
 public interface AlarmClient {
 
 

@@ -1,5 +1,7 @@
 package com.hoin.boardStudy.user.dto;
 
+import org.springframework.context.annotation.Profile;
+
 public class EmailProperties {
 
     public static final String FROM = "dahoonemailtest@gmail.com";

@@ -16,7 +16,6 @@ public class User implements Serializable {
     @Pattern(regexp = "^([a-z0-9]){4,30}$", message = "아이디를 재확인해주세요.")
     private String userId;
 
-
     @NotBlank(message = "비밀번호는 필수 입력값 입니다.")
     @Pattern(regexp="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}", message = "비밀번호를 재확인해주세요.")
     private String password;

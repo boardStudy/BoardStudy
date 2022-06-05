@@ -1,16 +1,14 @@
 package com.hoin.boardStudy.board.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hoin.boardStudy.board.client.AlarmClient;
 import com.hoin.boardStudy.board.dto.AlarmRequest;
 import com.hoin.boardStudy.board.dto.Comment;
 import com.hoin.boardStudy.board.dto.ModifyRequest;
 import com.hoin.boardStudy.board.mapper.BoardMapper;
 import com.hoin.boardStudy.board.mapper.CommentMapper;
-import com.hoin.boardStudy.user.dto.DomainProperties;
 import com.hoin.boardStudy.user.dto.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,11 +49,11 @@ public class CommentManager {
                 LocalDateTime.now()
         );
         commentMapper.insertComment(commentRequest);
-
     }
 
     // 알림 서비스 API 호출
     @Transactional
+    @Async
     public void alarmByEmail(Comment comment) {
 
         User articleWriter = boardMapper.getWriter(comment.getBoardId());
@@ -66,7 +64,6 @@ public class CommentManager {
                 comment.getCommenter(),
                 comment.getComment()
         );
-
         alarmClient.alarmByEmail(alarmRequest);
     }
 

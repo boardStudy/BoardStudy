@@ -11,6 +11,7 @@ import com.hoin.boardStudy.board.mapper.CommentMapper;
 import com.hoin.boardStudy.user.dto.DomainProperties;
 import com.hoin.boardStudy.user.dto.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,6 +57,7 @@ public class CommentManager {
 
     // 알림 서비스 API 호출
     @Transactional
+    @Async
     public void alarmByEmail(Comment comment) {
 
         User articleWriter = boardMapper.getWriter(comment.getBoardId());

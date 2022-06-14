@@ -23,7 +23,7 @@ import static com.hoin.boardStudy.user.dto.EmailProperties.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -31,13 +31,13 @@ public class UserController {
     // private final EmailManagement emailManagement;
 
     // 로그인 화면
-    @GetMapping("/login.do")
+    @GetMapping("/login")
     public String login() {
         return "user/login";
     }
 
     // 로그인 처리
-    @PostMapping("/loginProcess.do")
+    @PostMapping("/loginProcess")
     public String loginProcess(User user, HttpSession session, Model m) {
         String rawPassword = user.getPassword();
         user = userService.getUserInfo(user.getUserId());
@@ -47,10 +47,10 @@ public class UserController {
                 return "redirect:/user/registerNotCertified.do";
             }
             session.setAttribute("user", user);
-            return "redirect:/board/list.do";
+            return "redirect:/board/list";
         }
 
-        return "redirect:/user/login.do";
+        return "redirect:/user/login";
     }
 
     @GetMapping("/registerNotCertified.do")
@@ -59,10 +59,10 @@ public class UserController {
     }
 
     // 로그아웃
-    @GetMapping("/logout.do")
+    @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/board/list.do";
+        return "redirect:/board/list";
     }
 
     // 프로필

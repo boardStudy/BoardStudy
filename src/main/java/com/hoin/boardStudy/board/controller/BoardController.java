@@ -35,7 +35,7 @@ public class BoardController {
     private final EmailManagement emailManagement;
 
     // 전체 글 조회
-    @GetMapping("list.do")
+    @GetMapping("list")
     public String getBoardList(Model model, PageInfo pageInfo) {
 
         // 등록된 글 총 개수
@@ -101,7 +101,7 @@ public class BoardController {
         }
 
         redirectAttributes.addFlashAttribute("board", board);
-        return "redirect:/board/list.do";
+        return "redirect:/board/list";
     }
 
     // 파일 다운로드
@@ -117,7 +117,7 @@ public class BoardController {
         fileManager.clearAllFile(boardId); // 파일 삭제
         boardService.deleteBoard(boardId); // 글 삭제
         
-        return "redirect:/board/list.do";
+        return "redirect:/board/list";
     }
 
 }

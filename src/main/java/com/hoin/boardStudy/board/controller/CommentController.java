@@ -32,7 +32,7 @@ public class CommentController {
     // 댓글 입력
     @PostMapping
     public void insertComment(@RequestBody Comment comment, HttpSession session) {
-        String writer = ((User) session.getAttribute("user")).getUserId();
+        String writer = (String) session.getAttribute("user");
         comment.setCommenter(writer);
         commentManager.insertComment(comment, writer);
         commentManager.alarmByEmail(comment);

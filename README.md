@@ -11,7 +11,10 @@
 + 실제 실무 개발은 어떤 것을 더 고려해야할까? 단순 기능 구현에 멈추지 말고 실제 서비스가 된다고 생각하고 찾아보자.
 + Sonarqube로 한번, PR 시 서로 코드 리뷰를 통해 클린 코드 지향하기.
 + CI/CD 구성을 통한 자동화 구현.
-+ 현재 모놀리스 아키텍처 구조에서 마이크로서비스 아키텍처로 점진적 전환 중 (현재 alarm 서비스 분리 완료, account-api 진행 중)
++ 현재 모놀리스 아키텍처 구조에서 마이크로서비스 아키텍처로 점진적 전환 중 
++ (현재 alarm 서비스 분리 완료
++ [api-gateway](https://github.com/boardStudy/alarm-service), [account-API](https://github.com/boardStudy/account-api) 작업 진행 중
++ board-API 예정
 
 # Stacks
 

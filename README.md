@@ -55,12 +55,5 @@
 ![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
 ![docker](https://img.shields.io/badge/docker-2496ED.svg?style=for-the-badge&logo=docker&logoColor=white")
 
-#### 배포 구조도
-![](https://cdn.discordapp.com/attachments/840489771046273055/970598068175110164/distribute.png)
-
-#### 서버 구조도
-![](https://cdn.discordapp.com/attachments/840489771046273055/970598068540022795/server.png)
-
-
 
 

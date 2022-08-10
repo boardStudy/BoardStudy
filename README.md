@@ -1,5 +1,5 @@
 # BoardStudy <!--[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/boardStudy/BoardStudy%2Fgjbae1212%2Fhit-counter)](https://github.com/boardStudy/BoardStudy)-->
-> 국비 교육을 마치고 조금 더 많은 경험을 해보고자 게시판을 기반으로 개발 중
+> 국비 교육을 마치고 조금 더 많은 경험을 해보고자 게시판을 기반으로 개발 중 - (6월부터 개인 프로젝트로 전환, 7월부터 취업 활동으로 중단)
 
 # 참여 인원
 > <strong>민동현</strong> (코드 리뷰, 데브옵스 역할)

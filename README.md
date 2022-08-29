@@ -56,4 +56,36 @@
 ![docker](https://img.shields.io/badge/docker-2496ED.svg?style=for-the-badge&logo=docker&logoColor=white")
 
 
+## PR 목록 (이호인)
+
+#### 기본 게시판 기능
+- 게시판 리스트 
+- 상세 페이지
+- 조회 수 
+- 글 등록 
+- 수정, 삭제 
+- 페이징 처리 
+
+
+#### 공부하고 적용해보기
+- HandlerMethodArgumentResolver 사용해보기 https://github.com/boardStudy/BoardStudy/pull/2
+- DB 서버 분리해서 사용하기 https://github.com/boardStudy/BoardStudy/pull/35
+- 파일 첨부 기능 https://github.com/boardStudy/BoardStudy/pull/56
+- 새로운 글 new 표시하기 https://github.com/boardStudy/BoardStudy/pull/66
+- 로그인 체크 인터셉터 사용하기 https://github.com/boardStudy/BoardStudy/pull/67
+- 글 개수 선택 기능 https://github.c om/boardStudy/BoardStudy/pull/72
+- session redis로 관리하기 https://github.com/boardStudy/BoardStudy/pull/83
+- favicon 적용하기 https://github.com/boardStudy/BoardStudy/pull/91
+- xss 방어 코드 작성하기 https://github.com/boardStudy/BoardStudy/pull/92
+- 에러 페이지 작성하기 https://github.com/boardStudy/BoardStudy/pull/96
+- 댓글 구현하기 https://github.com/boardStudy/BoardStudy/pull/102
+- Json xss 방어 따로 해주기 https://github.com/boardStudy/BoardStudy/pull/105
+- 알람 서비스 API 만들어서 호출해보기 https://github.com/boardStudy/BoardStudy/pull/108
+- swagger 사용하기 https://github.com/boardStudy/BoardStudy/pull/111
+- AOP 적용해보기 (메소드 실행 시간 측정) https://github.com/boardStudy/BoardStudy/pull/113
+- @Async 어노테이션 적용하여 편의성 개선하기 https://github.com/boardStudy/BoardStudy/pull/116
+
+#### account_api 분리 작업
+- 로그인 / 로그아웃 https://github.com/boardStudy/account-api/pull/2
+- 회원가입 https://github.com/boardStudy/account-api/pull/5
 

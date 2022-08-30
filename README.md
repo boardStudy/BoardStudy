@@ -73,7 +73,7 @@
 - 파일 첨부 기능 https://github.com/boardStudy/BoardStudy/pull/56
 - 새로운 글 new 표시하기 https://github.com/boardStudy/BoardStudy/pull/66
 - 로그인 체크 인터셉터 사용하기 https://github.com/boardStudy/BoardStudy/pull/67
-- 글 개수 선택 기능 https://github.c om/boardStudy/BoardStudy/pull/72
+- 글 개수 선택 기능 https://github.com/boardStudy/BoardStudy/pull/72
 - session redis로 관리하기 https://github.com/boardStudy/BoardStudy/pull/83
 - favicon 적용하기 https://github.com/boardStudy/BoardStudy/pull/91
 - xss 방어 코드 작성하기 https://github.com/boardStudy/BoardStudy/pull/92

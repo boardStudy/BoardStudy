@@ -10,8 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PrevAndNext {
-    int prev;
-    int next;
-    String prevTitle;
-    String nextTitle;
+    private int prev;
+    private int next;
+    private String prevTitle;
+    private String nextTitle;
 }

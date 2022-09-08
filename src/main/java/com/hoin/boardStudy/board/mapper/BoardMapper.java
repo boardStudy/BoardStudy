@@ -2,6 +2,7 @@ package com.hoin.boardStudy.board.mapper;
 
 import com.hoin.boardStudy.board.dto.Board;
 import com.hoin.boardStudy.board.dto.FileInfo;
+import com.hoin.boardStudy.board.dto.PrevAndNext;
 import com.hoin.boardStudy.user.dto.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -46,4 +47,9 @@ public interface BoardMapper {
     // 작성자 정보 가져오기
     User getWriter(int boardId);
 
+    // 이전 페이지
+    Board getPrevPage(int boardId);
+
+    // 다음 페이지
+    Board getNextPage(int boardId);
 }

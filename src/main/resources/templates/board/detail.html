@@ -55,6 +55,24 @@
         </if>
         <button type="button" class="btn btn-secondary" onclick="location.href='list.do'">목록</button>
 
+        <div class="form-group">
+            <if th:if="${move.getPrev() != 0}">
+                이전 글 : <a th:href="@{/board/detail.do(boardId=${move.getPrev()})} " th:utext="${move.getPrevTitle()}"></a>
+            </if>
+            <if th:if="${move.getPrev() == 0}">
+                이전 글 : <a th:utext="${move.getPrevTitle()}"></a>
+            </if>
+        </div>
+        <div class="form-group">
+            <if th:if="${move.getNext() != 0}">
+                다음 글 : <a th:href="@{/board/detail.do(boardId=${move.getNext()})} " th:utext="${move.getNextTitle()}"></a>
+            </if>
+            <if th:if="${move.getNext() == 0}">
+                다음 글 : <a th:utext="${move.getNextTitle()}"></a>
+            </if>
+        </div>
+
+
         <div class="commentList" id="commentList" name="commentList" style="margin-top: 30px; margin-right: 200px">
         </div>
 

@@ -10,5 +10,6 @@
         <typeAlias alias="modifyRequest" type="com.hoin.boardStudy.board.dto.ModifyRequest"/>
         <typeAlias alias="user" type="com.hoin.boardStudy.user.dto.User"/>
         <typeAlias alias="userAuth" type="com.hoin.boardStudy.user.dto.UserAuth"/>
+        <typeAlias alias="prevAndNext" type="com.hoin.boardStudy.board.dto.PrevAndNext"/>
     </typeAliases>
 </configuration>

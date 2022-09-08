@@ -1,6 +1,7 @@
 package com.hoin.boardStudy.board.service;
 
 import com.hoin.boardStudy.board.dto.BoardSaveRequest;
+import com.hoin.boardStudy.board.dto.PrevAndNext;
 import com.hoin.boardStudy.board.mapper.BoardMapper;
 import com.hoin.boardStudy.board.dto.Board;
 import com.hoin.boardStudy.user.dto.User;
@@ -18,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BoardService {
 
-    private final BoardMapper boardMapper; // RequiredArgsConstructor 사용 (생성자 주입)
+    private final BoardMapper boardMapper;
     private final NewArticleChecker newArticleChecker;
     private final CommentManager commentManager;
 
@@ -53,7 +54,6 @@ public class BoardService {
      */
     @Transactional(readOnly = true)
     public Board getDetail(int boardId) {
-
         return boardMapper.getDetail(boardId);
     }
 
@@ -89,5 +89,31 @@ public class BoardService {
     @Transactional
     public User getWriter(int boardId) {
         return boardMapper.getWriter(boardId);
+    }
+
+    // 페이지 이동
+    @Transactional
+    public PrevAndNext getPageToMove(int boardId) {
+
+        int prev = 0;
+        int next = 0;
+        String prevTitle = "이전 글이 없습니다.";
+        String nextTitle = "다음 글이 없습니다.";
+
+        // 이전 글이 존재할 경우
+        if(boardMapper.getPrevPage(boardId) != null) {
+            prev = boardMapper.getPrevPage(boardId).getBoardId();
+            prevTitle = boardMapper.getPrevPage(boardId).getTitle();
+        }
+
+        // 다음 글이 존재할 경우
+        if(boardMapper.getNextPage(boardId) != null) {
+            next = boardMapper.getNextPage(boardId).getBoardId();
+            nextTitle = boardMapper.getNextPage(boardId).getTitle();
+        }
+
+        PrevAndNext prevAndNext = new PrevAndNext(prev, next, prevTitle, nextTitle);
+
+        return prevAndNext;
     }
 }

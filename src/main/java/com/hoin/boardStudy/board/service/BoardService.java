@@ -95,25 +95,64 @@ public class BoardService {
     @Transactional
     public PrevAndNext getPageToMove(int boardId) {
 
-        int prev = 0;
-        int next = 0;
-        String prevTitle = "이전 글이 없습니다.";
-        String nextTitle = "다음 글이 없습니다.";
-
-        // 이전 글이 존재할 경우
-        if(boardMapper.getPrevPage(boardId) != null) {
-            prev = boardMapper.getPrevPage(boardId).getBoardId();
-            prevTitle = boardMapper.getPrevPage(boardId).getTitle();
-        }
-
-        // 다음 글이 존재할 경우
-        if(boardMapper.getNextPage(boardId) != null) {
-            next = boardMapper.getNextPage(boardId).getBoardId();
-            nextTitle = boardMapper.getNextPage(boardId).getTitle();
-        }
+        int prev = getPrevBoardId(boardId);
+        int next = getNextBoardId(boardId);
+        String prevTitle = getPrevTitle(boardId);
+        String nextTitle = getNextTitle(boardId);
 
         PrevAndNext prevAndNext = new PrevAndNext(prev, next, prevTitle, nextTitle);
 
         return prevAndNext;
     }
+    
+    // 이전 글 게시물 번호
+    @Transactional
+    int getPrevBoardId(int boardId) {
+        int prev = 0;
+
+        if(boardMapper.getPrevPage(boardId) != null) {
+            prev = boardMapper.getPrevPage(boardId).getBoardId();
+        }
+
+        return prev;
+    }
+    
+    // 이전 글 게시물 제목
+    @Transactional
+    String getPrevTitle(int boardId) {
+        String prevTitle = "이전 글이 없습니다.";
+
+        if(boardMapper.getPrevPage(boardId) != null) {
+            prevTitle = boardMapper.getPrevPage(boardId).getTitle();
+        }
+
+        return prevTitle;
+    }
+    
+    // 다음 글 게시물 번호
+    @Transactional
+    int getNextBoardId(int boardId) {
+        int next = 0;
+
+        if(boardMapper.getNextPage(boardId) != null) {
+            next = boardMapper.getNextPage(boardId).getBoardId();
+        }
+
+        return next;
+    }
+    
+    // 다음 글 게시판 제목
+    @Transactional
+    String getNextTitle(int boardId) {
+
+        String nextTitle = "다음 글이 없습니다.";
+
+        if(boardMapper.getNextPage(boardId) != null) {
+            nextTitle = boardMapper.getNextPage(boardId).getTitle();
+        }
+
+        return nextTitle;
+    }
+
+
 }

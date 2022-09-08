@@ -157,7 +157,7 @@
             from TBL_BOARD
             where board_id > ${boardId}
             ORDER BY board_id
-            DESC LIMIT 1
+            LIMIT 1
         ]]>
     </select>
 </mapper>

@@ -66,6 +66,7 @@ public class BoardController {
     public String getDetailPage(@RequestParam int boardId, Model model) {
         model.addAttribute("detail", boardService.getDetail(boardId));
         model.addAttribute("fileInfo", fileManager.getFiles(boardId));
+        model.addAttribute("move", boardService.getPageToMove(boardId));
         viewCountUpdater.increaseViewCount(boardId);
         return "board/detail";
     }

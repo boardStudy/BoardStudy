@@ -1,6 +1,7 @@
 package com.hoin.boardStudy.board.service;
 
 import com.hoin.boardStudy.board.dto.BoardSaveRequest;
+import com.hoin.boardStudy.board.dto.PrevAndNext;
 import com.hoin.boardStudy.board.mapper.BoardMapper;
 import com.hoin.boardStudy.board.dto.Board;
 import com.hoin.boardStudy.user.dto.User;
@@ -18,7 +19,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BoardService {
 
-    private final BoardMapper boardMapper; // RequiredArgsConstructor 사용 (생성자 주입)
+    private static final String NO_PREV = "이전 글이 없습니다.";
+    private static final String NO_NEXT = "다음 글이없습니다.";
+
+    private final BoardMapper boardMapper;
     private final NewArticleChecker newArticleChecker;
     private final CommentManager commentManager;
 
@@ -53,7 +57,6 @@ public class BoardService {
      */
     @Transactional(readOnly = true)
     public Board getDetail(int boardId) {
-
         return boardMapper.getDetail(boardId);
     }
 
@@ -89,5 +92,43 @@ public class BoardService {
     @Transactional
     public User getWriter(int boardId) {
         return boardMapper.getWriter(boardId);
+    }
+
+    // 페이지 이동
+    @Transactional
+    public PrevAndNext getPageToMove(int boardId) {
+
+        int prev = getPrevBoardId(boardId);
+        int next = getNextBoardId(boardId);
+        String prevTitle = getPrevTitle(boardId);
+        String nextTitle = getNextTitle(boardId);
+
+        PrevAndNext prevAndNext = new PrevAndNext(prev, next, prevTitle, nextTitle);
+
+        return prevAndNext;
+    }
+    
+    // 이전 글 게시물 번호
+    private int getPrevBoardId(int boardId) {
+        if(boardMapper.getPrevPage(boardId) != null) return boardMapper.getPrevPage(boardId).getBoardId();
+        return 0;
+    }
+
+    // 이전 글 게시물 제목
+    private String getPrevTitle(int boardId) {
+        if(boardMapper.getPrevPage(boardId) != null) return boardMapper.getPrevPage(boardId).getTitle();
+        return NO_PREV;
+    }
+    
+    // 다음 글 게시물 번호
+    private int getNextBoardId(int boardId) {
+        if(boardMapper.getNextPage(boardId) != null) return boardMapper.getNextPage(boardId).getBoardId();
+        return 0;
+    }
+    
+    // 다음 글 게시판 제목
+    private String getNextTitle(int boardId) {
+        if(boardMapper.getNextPage(boardId) != null) return boardMapper.getNextPage(boardId).getTitle();
+        return NO_NEXT;
     }
 }

@@ -26,7 +26,6 @@
         <result column="path" property="path"/>
     </resultMap>
 
-
     <!--게시판 목록 전체 조회하기-->
     <select id="getBoardList" parameterType="map" resultMap="boardMap">
         SELECT *
@@ -140,4 +139,25 @@
         )
     </select>
 
+    <!-- 이전 페이지 -->
+    <select id="getPrevPage" parameterType="int" resultMap="boardMap">
+        <![CDATA[
+            select board_id, title
+            from TBL_BOARD
+            where board_id < ${boardId}
+            ORDER BY board_id
+            DESC LIMIT 1
+        ]]>
+    </select>
+
+    <!-- 다음 페이지-->
+    <select id="getNextPage" parameterType="int" resultMap="boardMap">
+        <![CDATA[
+            select board_id, title
+            from TBL_BOARD
+            where board_id > ${boardId}
+            ORDER BY board_id
+            LIMIT 1
+        ]]>
+    </select>
 </mapper>

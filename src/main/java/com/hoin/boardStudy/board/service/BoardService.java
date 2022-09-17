@@ -77,7 +77,7 @@ public class BoardService {
                 new Board(
                         board.getBoardId(),
                         writer,
-                        board.getNotice(),
+                        board.getType(),
                         board.getTitle(),
                         board.getContent(),
                         LocalDateTime.now()

@@ -49,13 +49,13 @@ public class BoardController {
         page = pageHandler.getPage();
         pageSize = pageHandler.getPageSize();
 
-        List<Board> notice = boardService.getNewNoticeList();
-
         Map<String, Integer> map = new HashMap();
-        map.put("offset", (page-1) * (pageSize - notice.size()));
-        map.put("pageSize", pageSize - notice.size());
+        map.put("offset", (page-1) * pageSize);
+        map.put("pageSize", pageSize);
 
         List<Board> list = boardService.getBoardList(map);
+        List<Board> notice = boardService.getNewNoticeList();
+
 
         // 게시판 정보, 페이징 정보 view단으로 전달
         model.addAttribute("list", list);

@@ -45,6 +45,12 @@ public class BoardService {
         return list;
     }
 
+    @Transactional(readOnly = true)
+    public List<Board> getNewNoticeList() {
+        List<Board> list = boardMapper.getNewNoticeList();
+        return list;
+    }
+
     public int getTotalCount() {
         return boardMapper.getTotalCount();
     }
@@ -71,6 +77,7 @@ public class BoardService {
                 new Board(
                         board.getBoardId(),
                         writer,
+                        board.getNotice(),
                         board.getTitle(),
                         board.getContent(),
                         LocalDateTime.now()
@@ -131,4 +138,5 @@ public class BoardService {
         if(boardMapper.getNextPage(boardId) != null) return boardMapper.getNextPage(boardId).getTitle();
         return NO_NEXT;
     }
+
 }

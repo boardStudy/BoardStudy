@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class Board {
     private int boardId;
     private String writer;
+    private String notice;
     private String title;
     private String content;
     private int viewCount;
@@ -21,9 +22,10 @@ public class Board {
     private boolean newCheck;
     private int commentCount;
 
-    public Board(int boardId, String writer, String title, String content, LocalDateTime currentTime) {
+    public Board(int boardId, String writer, String notice, String title, String content, LocalDateTime currentTime) {
         this.boardId = boardId;
         this.writer = writer;
+        this.notice = notice;
         this.title = title;
         this.content = content;
         this.updDate = currentTime;

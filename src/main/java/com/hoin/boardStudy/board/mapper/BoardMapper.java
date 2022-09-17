@@ -15,6 +15,9 @@ public interface BoardMapper {
     // 글 전체 목록 조회
     List<Board> getBoardList(Map map);
 
+    // 최신 공지사항 (2개 고정)
+    List<Board> getNewNoticeList();
+
     // 전체 글 개수 조회
     int getTotalCount();
 

@@ -23,7 +23,7 @@ public class BoardService {
     private static final String NO_NEXT = "다음 글이없습니다.";
 
     private final BoardMapper boardMapper;
-    private final NewArticleChecker newArticleChecker;
+    private final DateChecker DateChecker;
     private final CommentManager commentManager;
 
     /**
@@ -36,18 +36,18 @@ public class BoardService {
     public List<Board> getBoardList(Map map) {
         // 리스트
         List<Board> list = boardMapper.getBoardList(map);
-        // new 유무 확인 , 댓글 개수 확인 --> 후에 메소드 분리 필요
-        for(int i = 0; i < list.size(); i ++) {
-            int boardId = list.get(i).getBoardId();
-            list.get(i).setNewCheck(newArticleChecker.isNewArticle(boardId));
-            list.get(i).setCommentCount(commentManager.getCommentCount(boardId));
-        }
+        // 새로운 글 확인
+        checkNewArticle(list, 2);
+        // 댓글 개수 확인
+        checkCommentCount(list);
         return list;
     }
 
+    // 공지사항
     @Transactional(readOnly = true)
     public List<Board> getNewNoticeList() {
         List<Board> list = boardMapper.getNewNoticeList();
+        checkNoticeExpiryPeriod(list, 7);
         return list;
     }
 
@@ -137,6 +137,30 @@ public class BoardService {
     private String getNextTitle(int boardId) {
         if(boardMapper.getNextPage(boardId) != null) return boardMapper.getNextPage(boardId).getTitle();
         return NO_NEXT;
+    }
+
+    // 날짜 체크 (General)
+    private void checkNewArticle(List<Board> list, int expiryPeriod) {
+        for(int i = 0; i < list.size(); i ++) {
+            int boardId = list.get(i).getBoardId();
+            list.get(i).setExpirationOrNot(DateChecker.isNewArticle(boardId, expiryPeriod));
+        }
+    }
+
+    // 날짜 체크 (Notice)
+    private void checkNoticeExpiryPeriod(List<Board> list, int expiryPeriod) {
+        for(int i = 0; i < list.size(); i++) {
+            int boardId = list.get(i).getBoardId();
+            list.get(i).setExpirationOrNot(DateChecker.checkDate(boardId, expiryPeriod));
+        }
+    }
+
+    // 댓글 개수
+    private void checkCommentCount(List<Board> list) {
+        for(int i = 0; i < list.size(); i ++) {
+            int boardId = list.get(i).getBoardId();
+            list.get(i).setCommentCount(commentManager.getCommentCount(boardId));
+        }
     }
 
 }

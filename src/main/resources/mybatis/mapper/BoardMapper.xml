@@ -40,7 +40,7 @@
     <select id="getNewNoticeList" resultMap="boardMap">
         SELECT *
         FROM TBL_BOARD
-        WHERE type = 'NOTICE'
+        WHERE type = 'NOTICE' AND reg_date BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK) AND NOW()
         ORDER BY board_id DESC
     </select>
 

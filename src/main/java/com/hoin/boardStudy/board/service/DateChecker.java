@@ -21,11 +21,4 @@ public class DateChecker {
 
     }
 
-    public boolean checkDate(int boardId, int expiryPeriod) {
-        LocalDateTime regDate = boardMapper.getDetail(boardId).getRegDate();
-        if(LocalDateTime.now().isBefore(regDate.plusDays(expiryPeriod))) return true;
-        return false;
-    }
-
-
 }

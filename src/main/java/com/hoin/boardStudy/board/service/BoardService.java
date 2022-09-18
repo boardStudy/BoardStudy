@@ -47,7 +47,6 @@ public class BoardService {
     @Transactional(readOnly = true)
     public List<Board> getNewNoticeList() {
         List<Board> list = boardMapper.getNewNoticeList();
-        checkNoticeExpiryPeriod(list, 7);
         return list;
     }
 
@@ -144,14 +143,6 @@ public class BoardService {
         for(int i = 0; i < list.size(); i ++) {
             int boardId = list.get(i).getBoardId();
             list.get(i).setExpirationOrNot(DateChecker.isNewArticle(boardId, expiryPeriod));
-        }
-    }
-
-    // 날짜 체크 (Notice)
-    private void checkNoticeExpiryPeriod(List<Board> list, int expiryPeriod) {
-        for(int i = 0; i < list.size(); i++) {
-            int boardId = list.get(i).getBoardId();
-            list.get(i).setExpirationOrNot(DateChecker.checkDate(boardId, expiryPeriod));
         }
     }
 

@@ -49,7 +49,7 @@
            </thead>
 
             <!-- 공지사항-->
-            <tr th:if="${#lists.size(notice)} > 0 and ${notice.expirationOrNot} == true" th:each="notice : ${notice}">
+            <tr th:if="${#lists.size(notice)} > 0" th:each="notice : ${notice}">
                 <th style="color: red" scope="row" th:text="${notice.boardId}"></th>
                 <td>
                     <span style="color: red; font-weight: bold">[공지사항]</span>

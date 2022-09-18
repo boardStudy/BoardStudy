@@ -11,6 +11,7 @@
         <result column="type" property="type"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
+        <result column="commentCount" property="commentCount"/>
         <result column="view_count" property="viewCount"/>
         <result column="reg_date" property="regDate"/>
         <result column="upd_date" property="updDate"/>
@@ -170,4 +171,18 @@
             LIMIT 1
         ]]>
     </select>
+
+    <!-- 댓글 개수 추가 -->
+    <update id="plusCommentCount" parameterType="int">
+        UPDATE TBL_BOARD
+        SET commentCount = commentCount+1
+        WHERE board_id = ${boardId}
+    </update>
+
+    <!-- 댓글 개수 감소 -->
+    <update id="minusCommentCount" parameterType="int">
+        UPDATE TBL_BOARD
+        SET commentCount = commentCount-1
+        WHERE board_id = ${boardId}
+    </update>
 </mapper>

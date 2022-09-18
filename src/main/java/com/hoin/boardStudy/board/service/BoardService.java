@@ -36,13 +36,12 @@ public class BoardService {
     public List<Board> getBoardList(Map map) {
         // 리스트
         List<Board> list = boardMapper.getBoardList(map);
+        int expiryPeriod = 2;
 
         for(Board board : list) {
             int boardId = board.getBoardId();
             // 새 글 확인
-            checkNewArticle(board, boardId,2);
-            // 댓글 개수 확인
-            checkCommentCount(board, boardId);
+            checkNewArticle(board, boardId, expiryPeriod);
         }
 
         return list;

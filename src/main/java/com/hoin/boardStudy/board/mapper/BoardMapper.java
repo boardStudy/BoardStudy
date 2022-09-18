@@ -5,6 +5,7 @@ import com.hoin.boardStudy.board.dto.FileInfo;
 import com.hoin.boardStudy.board.dto.PrevAndNext;
 import com.hoin.boardStudy.user.dto.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -55,4 +56,10 @@ public interface BoardMapper {
 
     // 다음 페이지
     Board getNextPage(int boardId);
+
+    // 댓글 개수 증가
+    void plusCommentCount(int boardId);
+
+    // 댓글 개수 감소
+    void minusCommentCount(int boardId);
 }

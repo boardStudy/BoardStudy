@@ -37,9 +37,8 @@ public class BoardService {
         // 리스트
         List<Board> list = boardMapper.getBoardList(map);
 
-        for(int i = 0; i < list.size(); i ++) {
-            Board board = list.get(i);
-            int boardId = list.get(i).getBoardId();
+        for(Board board : list) {
+            int boardId = board.getBoardId();
             // 새 글 확인
             checkNewArticle(board, boardId,2);
             // 댓글 개수 확인

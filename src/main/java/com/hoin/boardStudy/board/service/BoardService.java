@@ -36,10 +36,16 @@ public class BoardService {
     public List<Board> getBoardList(Map map) {
         // 리스트
         List<Board> list = boardMapper.getBoardList(map);
-        // 새로운 글 확인
-        checkNewArticle(list, 2);
-        // 댓글 개수 확인
-        checkCommentCount(list);
+
+        for(int i = 0; i < list.size(); i ++) {
+            Board board = list.get(i);
+            int boardId = list.get(i).getBoardId();
+            // 새 글 확인
+            checkNewArticle(board, boardId,2);
+            // 댓글 개수 확인
+            checkCommentCount(board, boardId);
+        }
+
         return list;
     }
 
@@ -139,19 +145,13 @@ public class BoardService {
     }
 
     // 날짜 체크 (General)
-    private void checkNewArticle(List<Board> list, int expiryPeriod) {
-        for(int i = 0; i < list.size(); i ++) {
-            int boardId = list.get(i).getBoardId();
-            list.get(i).setExpirationOrNot(DateChecker.isNewArticle(boardId, expiryPeriod));
-        }
+    private void checkNewArticle(Board board, int boardId, int expiryPeriod) {
+        board.setExpirationOrNot(DateChecker.isNewArticle(boardId, expiryPeriod));
     }
 
     // 댓글 개수
-    private void checkCommentCount(List<Board> list) {
-        for(int i = 0; i < list.size(); i ++) {
-            int boardId = list.get(i).getBoardId();
-            list.get(i).setCommentCount(commentManager.getCommentCount(boardId));
-        }
+    private void checkCommentCount(Board board, int boardId) {
+        board.setCommentCount(commentManager.getCommentCount(boardId));
     }
 
 }

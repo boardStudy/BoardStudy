@@ -21,6 +21,7 @@ public class BoardService {
 
     private static final String NO_PREV = "이전 글이 없습니다.";
     private static final String NO_NEXT = "다음 글이없습니다.";
+    private static final int expiryPeriod = 2;
 
     private final BoardMapper boardMapper;
     private final DateChecker DateChecker;
@@ -36,7 +37,6 @@ public class BoardService {
     public List<Board> getBoardList(Map map) {
         // 리스트
         List<Board> list = boardMapper.getBoardList(map);
-        int expiryPeriod = 2;
 
         for(Board board : list) {
             int boardId = board.getBoardId();

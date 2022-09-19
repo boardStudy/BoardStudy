@@ -21,7 +21,7 @@ public class BoardService {
 
     private static final String NO_PREV = "이전 글이 없습니다.";
     private static final String NO_NEXT = "다음 글이없습니다.";
-    private static final int expiryPeriod = 2;
+    private static final int EXPIRY_PERIOD = 2;
 
     private final BoardMapper boardMapper;
     private final DateChecker DateChecker;
@@ -41,7 +41,7 @@ public class BoardService {
         for(Board board : list) {
             int boardId = board.getBoardId();
             // 새 글 확인
-            checkNewArticle(board, boardId, expiryPeriod);
+            checkNewArticle(board, boardId, EXPIRY_PERIOD);
         }
 
         return list;

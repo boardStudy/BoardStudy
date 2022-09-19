@@ -85,6 +85,7 @@
 - AOP 적용해보기 (메소드 실행 시간 측정) https://github.com/boardStudy/BoardStudy/pull/113
 - @Async 어노테이션 적용하여 편의성 개선하기 https://github.com/boardStudy/BoardStudy/pull/116
 - 이전 글, 다음 글 기능 https://github.com/boardStudy/BoardStudy/pull/121
+- 공지사항 기능 https://github.com/boardStudy/BoardStudy/pull/124
 
 #### account_api 분리 작업
 - 로그인 / 로그아웃 https://github.com/boardStudy/account-api/pull/2

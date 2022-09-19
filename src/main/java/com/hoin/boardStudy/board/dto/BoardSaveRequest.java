@@ -17,5 +17,6 @@ public class BoardSaveRequest implements Serializable {
     private String writer; // 작성자
     private String title; // 제목
     private String content; // 내용
+    private BoardType type = BoardType.GENERAL; // 글 종류
     private LocalDateTime currentTime = LocalDateTime.now(); // 현재시간
 }

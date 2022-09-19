@@ -21,9 +21,10 @@ public class BoardService {
 
     private static final String NO_PREV = "이전 글이 없습니다.";
     private static final String NO_NEXT = "다음 글이없습니다.";
+    private static final int EXPIRY_PERIOD = 2;
 
     private final BoardMapper boardMapper;
-    private final NewArticleChecker newArticleChecker;
+    private final DateChecker DateChecker;
     private final CommentManager commentManager;
 
     /**
@@ -36,12 +37,20 @@ public class BoardService {
     public List<Board> getBoardList(Map map) {
         // 리스트
         List<Board> list = boardMapper.getBoardList(map);
-        // new 유무 확인 , 댓글 개수 확인 --> 후에 메소드 분리 필요
-        for(int i = 0; i < list.size(); i ++) {
-            int boardId = list.get(i).getBoardId();
-            list.get(i).setNewCheck(newArticleChecker.isNewArticle(boardId));
-            list.get(i).setCommentCount(commentManager.getCommentCount(boardId));
+
+        for(Board board : list) {
+            int boardId = board.getBoardId();
+            // 새 글 확인
+            checkNewArticle(board, boardId, EXPIRY_PERIOD);
         }
+
+        return list;
+    }
+
+    // 공지사항
+    @Transactional(readOnly = true)
+    public List<Board> getNewNoticeList() {
+        List<Board> list = boardMapper.getNewNoticeList();
         return list;
     }
 
@@ -71,6 +80,7 @@ public class BoardService {
                 new Board(
                         board.getBoardId(),
                         writer,
+                        board.getType(),
                         board.getTitle(),
                         board.getContent(),
                         LocalDateTime.now()
@@ -131,4 +141,15 @@ public class BoardService {
         if(boardMapper.getNextPage(boardId) != null) return boardMapper.getNextPage(boardId).getTitle();
         return NO_NEXT;
     }
+
+    // 날짜 체크 (General)
+    private void checkNewArticle(Board board, int boardId, int expiryPeriod) {
+        board.setExpirationOrNot(DateChecker.isNewArticle(boardId, expiryPeriod));
+    }
+
+    // 댓글 개수
+    private void checkCommentCount(Board board, int boardId) {
+        board.setCommentCount(commentManager.getCommentCount(boardId));
+    }
+
 }

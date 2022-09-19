@@ -8,8 +8,10 @@
     <resultMap id="boardMap" type="board">
         <result column="board_id" property="boardId"/>
         <result column="writer" property="writer"/>
+        <result column="type" property="type"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
+        <result column="commentCount" property="commentCount"/>
         <result column="view_count" property="viewCount"/>
         <result column="reg_date" property="regDate"/>
         <result column="upd_date" property="updDate"/>
@@ -30,8 +32,17 @@
     <select id="getBoardList" parameterType="map" resultMap="boardMap">
         SELECT *
         FROM TBL_BOARD
+        WHERE type = 'GENERAL'
         ORDER BY board_Id DESC
         LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!--공지사항-->
+    <select id="getNewNoticeList" resultMap="boardMap">
+        SELECT *
+        FROM TBL_BOARD
+        WHERE type = 'NOTICE' AND reg_date BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK) AND NOW()
+        ORDER BY board_id DESC
     </select>
 
     <!--게시물 총 개수 조회하기-->
@@ -63,8 +74,8 @@
     <!--글 저장-->
     <insert id="saveBoard" parameterType="board">
         insert into TBL_BOARD
-            (board_id, writer, title, content, reg_date)
-        values (#{boardId},#{writer},#{title},#{content},#{updDate})
+            (board_id, writer, type, title, content, reg_date)
+        values (#{boardId},#{writer}, #{type}, #{title},#{content},#{updDate})
             on duplicate key
         update
             title = #{title},
@@ -160,4 +171,18 @@
             LIMIT 1
         ]]>
     </select>
+
+    <!-- 댓글 개수 추가 -->
+    <update id="plusCommentCount" parameterType="int">
+        UPDATE TBL_BOARD
+        SET commentCount = commentCount+1
+        WHERE board_id = ${boardId}
+    </update>
+
+    <!-- 댓글 개수 감소 -->
+    <update id="minusCommentCount" parameterType="int">
+        UPDATE TBL_BOARD
+        SET commentCount = commentCount-1
+        WHERE board_id = ${boardId}
+    </update>
 </mapper>

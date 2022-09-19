@@ -54,9 +54,12 @@ public class BoardController {
         map.put("pageSize", pageSize);
 
         List<Board> list = boardService.getBoardList(map);
+        List<Board> notice = boardService.getNewNoticeList();
+
 
         // 게시판 정보, 페이징 정보 view단으로 전달
         model.addAttribute("list", list);
+        model.addAttribute("notice", notice);
         model.addAttribute("pageHandler", pageHandler);
         return "board/list";
     }

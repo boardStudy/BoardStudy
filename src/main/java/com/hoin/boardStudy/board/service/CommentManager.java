@@ -52,6 +52,7 @@ public class CommentManager {
                 LocalDateTime.now()
         );
         commentMapper.insertComment(commentRequest);
+        boardMapper.plusCommentCount(comment.getBoardId());
 
     }
 
@@ -91,5 +92,6 @@ public class CommentManager {
         int boardId = comment.getBoardId();
         Integer parentId = comment.getParentId();
         commentMapper.deleteComment(commentId, boardId, parentId);
+        boardMapper.minusCommentCount(comment.getBoardId());
     }
 }

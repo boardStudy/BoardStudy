@@ -47,11 +47,25 @@
                     <th scope="col">조회수</th>
                 </tr>
            </thead>
+
+            <!-- 공지사항-->
+            <tr th:if="${#lists.size(notice)} > 0" th:each="notice : ${notice}">
+                <th style="color: red" scope="row" th:text="${notice.boardId}"></th>
+                <td>
+                    <span style="color: red; font-weight: bold">[공지사항]</span>
+                    <a style="color: red; font-weight: bold" href="/board/detail.do?boardId=" th:attrappend="href=${notice.boardId}" th:utext="${notice.title}+'&nbsp('+${notice.commentCount}+')'"></a>
+                </td>
+                <td style="font-weight: bold" th:text="${notice.writer}"></td>
+                <td style="font-weight: bold" th:text="${#temporals.format(notice.regDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td style="font-weight: bold" th:text="${notice.viewCount}"></td>
+            </tr>
+            <!--공지사항 끝-->
+
             <tr th:if="${#lists.size(list)} > 0" th:each="list : ${list}">
                 <th scope="row" th:text="${list.boardId}"></th>
                 <td>
                     <a href="/board/detail.do?boardId=" th:attrappend="href=${list.boardId}" th:utext="${list.title}+'&nbsp('+${list.commentCount}+')'"></a>
-                    <img src="/images/new.png" alt="new" style="width: 20px; height: 20px" th:if="${list.newCheck} == true">
+                    <img src="/images/new.png" alt="new" style="width: 20px; height: 20px" th:if="${list.expirationOrNot} == true">
                 </td>
                 <td th:text="${list.writer}"></td>
                 <td th:text="${#temporals.format(list.regDate, 'yyyy-MM-dd HH:mm')}"></td>

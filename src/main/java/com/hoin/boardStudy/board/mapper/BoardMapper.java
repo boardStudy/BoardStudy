@@ -62,4 +62,12 @@ public interface BoardMapper {
 
     // 댓글 개수 감소
     void minusCommentCount(int boardId);
+
+    // 읽은 글인지 확인
+    boolean isItRead(@Param("boardId") int boardId,
+                      @Param("userId") String userId);
+
+    // 읽은 글 등록
+    void checkReadArticle(@Param("boardId") int boardId,
+                          @Param("userId") String userId);
 }

@@ -185,4 +185,16 @@
         SET commentCount = commentCount-1
         WHERE board_id = ${boardId}
     </update>
+
+    <!-- 읽은 글인지 확인하기 -->
+    <select id="isItRead" resultType="boolean">
+        SELECT EXISTS (select * from TBL_READ where board_id = ${boardId} AND user_id = #{userId})
+    </select>
+    
+    <!-- 읽은 글 등록하기 -->
+    <insert id="checkReadArticle">
+        insert into TBL_READ
+            (board_id, user_id)
+        values (${boardId}, #{userId})
+    </insert>
 </mapper>

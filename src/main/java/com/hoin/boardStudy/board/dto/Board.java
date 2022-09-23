@@ -19,7 +19,7 @@ public class Board {
     private LocalDateTime regDate;
     private LocalDateTime updDate;
     private LocalDateTime delDate;
-    private boolean expirationOrNot;
+    private boolean newOrNot;
     private int commentCount;
 
     public Board(int boardId, String writer, BoardType type, String title, String content, LocalDateTime currentTime) {

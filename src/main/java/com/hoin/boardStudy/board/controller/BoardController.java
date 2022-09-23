@@ -36,7 +36,7 @@ public class BoardController {
 
     // 전체 글 조회
     @GetMapping("list.do")
-    public String getBoardList(Model model, PageInfo pageInfo) {
+    public String getBoardList(Model model, PageInfo pageInfo, HttpSession session) {
 
         // 등록된 글 총 개수
         int totalCount = boardService.getTotalCount();
@@ -53,21 +53,36 @@ public class BoardController {
         map.put("offset", (page-1) * pageSize);
         map.put("pageSize", pageSize);
 
-        List<Board> list = boardService.getBoardList(map);
+        // 로그인 시
+        if(session != null && session.getAttribute("user") != null) {
+            String userId = getLoginUserId(session);
+            List<Board> list = boardService.getBoardList(map, userId);
+            model.addAttribute("list", list);
+        } else {
+            List<Board> list = boardService.getBoardList(map);
+            model.addAttribute("list", list);
+        }
+
         List<Board> notice = boardService.getNewNoticeList();
 
-
-        // 게시판 정보, 페이징 정보 view단으로 전달
-        model.addAttribute("list", list);
         model.addAttribute("notice", notice);
         model.addAttribute("pageHandler", pageHandler);
+
         return "board/list";
     }
 
     // 상세 페이지
     @GetMapping("detail.do")
-    public String getDetailPage(@RequestParam int boardId, Model model) {
-        model.addAttribute("detail", boardService.getDetail(boardId));
+    public String getDetailPage(@RequestParam int boardId, Model model, HttpSession session) {
+        // 로그인 시
+        if(session != null && session.getAttribute("user") != null) {
+            String userId = getLoginUserId(session);
+            model.addAttribute("detail", boardService.getDetail(boardId, userId));
+        } else {
+            // 비로그인
+            model.addAttribute("detail", boardService.getDetail(boardId));
+        }
+
         model.addAttribute("fileInfo", fileManager.getFiles(boardId));
         model.addAttribute("move", boardService.getPageToMove(boardId));
         viewCountUpdater.increaseViewCount(boardId);
@@ -124,4 +139,9 @@ public class BoardController {
         return "redirect:/board/list.do";
     }
 
+
+    private String getLoginUserId(HttpSession session) {
+        String userId = ((User) session.getAttribute("user")).getUserId();
+        return userId;
+    }
 }

@@ -31,12 +31,12 @@ public class BoardService {
      * 게시판 목록 조회
      * 기능 : 게시판의 모든 글들을 불러온다. (로그인)
      * @return
-     * @param map, userId
+     * @param pagination, userId
      */
     @Transactional(readOnly = true)
-    public List<Board> getBoardList(Map map, String userId) {
+    public List<Board> getBoardList(Map pagination, String userId) {
         // 리스트
-        List<Board> list = boardMapper.getBoardList(map);
+        List<Board> list = boardMapper.getBoardList(pagination);
         for(Board board : list) {
             int boardId = board.getBoardId();
             // 새 글 확인
@@ -49,12 +49,12 @@ public class BoardService {
      * 게시판 목록 조회
      * 기능 : 게시판의 모든 글들을 불러온다. (비로그인)
      * @return
-     * @param map
+     * @param pagination
      */
     @Transactional(readOnly = true)
-    public List<Board> getBoardList(Map map) {
+    public List<Board> getBoardList(Map pagination) {
         // 리스트
-        List<Board> list = boardMapper.getBoardList(map);
+        List<Board> list = boardMapper.getBoardList(pagination);
         for(Board board : list) {
             int boardId = board.getBoardId();
             // 새 글 확인
@@ -82,13 +82,14 @@ public class BoardService {
      */
     @Transactional
     public Board getDetail(int boardId, String userId) {
-        if(!boardMapper.isItRead(boardId, userId)) boardMapper.checkReadArticle(boardId, userId);
+        if(!boardMapper.isRead(boardId, userId)) boardMapper.checkReadArticle(boardId, userId);
         return boardMapper.getDetail(boardId);
     }
 
     /**
      * 글 상세 페이지
      * 기능 : 사용자가 선택한 글 상세 페이지를 불러온다. (비로그인)
+     *
      * @param boardId
      * @return
      */

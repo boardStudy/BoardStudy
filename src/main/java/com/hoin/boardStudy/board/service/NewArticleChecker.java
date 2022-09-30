@@ -37,7 +37,7 @@ public class NewArticleChecker {
 
     // 읽은 글 확인
     private boolean checkRead(int boardId, String userId) {
-        return boardMapper.isItRead(boardId, userId);
+        return boardMapper.isRead(boardId, userId);
     }
 
 }

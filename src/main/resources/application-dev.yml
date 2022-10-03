@@ -1,9 +1,9 @@
 # DB 설정
 spring:
     datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
         password: ${sql-server-password}
-        url: jdbc:mysql://dev.donghyeon.dev:3307/board
+        url: jdbc:log4jdbc:mysql://dev.donghyeon.dev:3307/board
         username: root
 upload:
     path: /apps/board/dev/
@@ -13,3 +13,26 @@ sql-server-password: ${SQL_PASSWORD}
 domain:
     name : board.dev.donghyeon.dev
     alarm : alarm.dev.donghyeon.dev
+
+logging:
+    level:
+        com:
+            zaxxer:
+                hikari: INFO
+        javax:
+            sql:
+                DataSource: OFF
+        jdbc:
+            audit: OFF
+            resultset: OFF
+            resultsettable: INFO  #SQL 결과 데이터 Table을 로그로 남긴다.
+            sqlonly: OFF     #SQL만 로그로 남긴다.
+            sqltiming: INFO    #SQL과 소요시간을 표기한다.
+            connection : OFF  # 커넥션 확인가능
+        org:
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE

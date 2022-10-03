@@ -40,15 +40,16 @@ public class BoardController {
 
         // 글 목록
         List<Board> list = null;
-        if(session.getAttribute("user") != null) list = getListWhenLoggedIn(session, pagination(getProcessedPageInfo(requestedPageInfo)));
-        if(session.getAttribute("user") == null) list = getListWhenNotLoggedIn(pagination(getProcessedPageInfo(requestedPageInfo)));
+        PageHandler processedPageInfo = getProcessedPageInfo(requestedPageInfo);
+        if(session.getAttribute("user") != null) list = getListWhenLoggedIn(session, pagination(processedPageInfo));
+        if(session.getAttribute("user") == null) list = getListWhenNotLoggedIn(pagination(processedPageInfo));
 
         // 공지사항
         List<Board> notice = boardService.getNewNoticeList();
 
         model.addAttribute("list", list);
         model.addAttribute("notice", notice);
-        model.addAttribute("pageHandler", getProcessedPageInfo(requestedPageInfo));
+        model.addAttribute("pageHandler", processedPageInfo);
 
         return "board/list";
     }

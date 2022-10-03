@@ -57,8 +57,8 @@ public class BoardController {
     @GetMapping("detail.do")
     public String getDetailPage(@RequestParam int boardId, Model model, HttpSession session) {
 
-        if(session != null) model.addAttribute("detail", boardService.getDetail(boardId, getLoginUserId(session)));
-        if(session == null) model.addAttribute("detail", boardService.getDetail(boardId));
+        if(session.getAttribute("user") != null) model.addAttribute("detail", boardService.getDetail(boardId, getLoginUserId(session)));
+        if(session.getAttribute("user") == null) model.addAttribute("detail", boardService.getDetail(boardId));
 
         model.addAttribute("fileInfo", fileManager.getFiles(boardId));
         model.addAttribute("move", boardService.getPageToMove(boardId));

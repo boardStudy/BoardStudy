@@ -38,9 +38,8 @@ public class BoardService {
         // 리스트
         List<Board> list = boardMapper.getBoardList(pagination);
         for(Board board : list) {
-            int boardId = board.getBoardId();
             // 새 글 확인
-            if(newArticleChecker.checkNewArticle(boardId, EXPIRY_PERIOD, userId)) board.setNewOrNot(true);
+            if(newArticleChecker.checkNewArticle(board, EXPIRY_PERIOD, userId)) board.setNewOrNot(true);
         }
         return list;
     }
@@ -56,9 +55,8 @@ public class BoardService {
         // 리스트
         List<Board> list = boardMapper.getBoardList(pagination);
         for(Board board : list) {
-            int boardId = board.getBoardId();
             // 새 글 확인
-            if(newArticleChecker.checkNewArticle(boardId, EXPIRY_PERIOD)) board.setNewOrNot(true);
+            if(newArticleChecker.checkNewArticle(board, EXPIRY_PERIOD)) board.setNewOrNot(true);
         }
         return list;
     }

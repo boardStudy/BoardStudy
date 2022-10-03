@@ -24,26 +24,40 @@ public class BoardService {
     private static final int EXPIRY_PERIOD = 2;
 
     private final BoardMapper boardMapper;
-    private final DateChecker DateChecker;
+    private final NewArticleChecker newArticleChecker;
     private final CommentManager commentManager;
 
     /**
      * 게시판 목록 조회
-     * 기능 : 게시판의 모든 글들을 불러온다.
+     * 기능 : 게시판의 모든 글들을 불러온다. (로그인)
      * @return
-     * @param map
+     * @param pagination, userId
      */
     @Transactional(readOnly = true)
-    public List<Board> getBoardList(Map map) {
+    public List<Board> getBoardList(Map pagination, String userId) {
         // 리스트
-        List<Board> list = boardMapper.getBoardList(map);
-
+        List<Board> list = boardMapper.getBoardList(pagination);
         for(Board board : list) {
-            int boardId = board.getBoardId();
             // 새 글 확인
-            checkNewArticle(board, boardId, EXPIRY_PERIOD);
+            if(newArticleChecker.checkNewArticle(board, EXPIRY_PERIOD, userId)) board.setNewOrNot(true);
         }
+        return list;
+    }
 
+    /**
+     * 게시판 목록 조회
+     * 기능 : 게시판의 모든 글들을 불러온다. (비로그인)
+     * @return
+     * @param pagination
+     */
+    @Transactional(readOnly = true)
+    public List<Board> getBoardList(Map pagination) {
+        // 리스트
+        List<Board> list = boardMapper.getBoardList(pagination);
+        for(Board board : list) {
+            // 새 글 확인
+            if(newArticleChecker.checkNewArticle(board, EXPIRY_PERIOD)) board.setNewOrNot(true);
+        }
         return list;
     }
 
@@ -60,11 +74,24 @@ public class BoardService {
 
     /**
      * 글 상세 페이지
-     * 기능 : 사용자가 선택한 글 상세 페이지를 불러온다.
+     * 기능 : 사용자가 선택한 글 상세 페이지를 불러온다. (로그인)
+     * @param boardId, userId
+     * @return
+     */
+    @Transactional
+    public Board getDetail(int boardId, String userId) {
+        if(!boardMapper.isRead(boardId, userId)) boardMapper.checkReadArticle(boardId, userId);
+        return boardMapper.getDetail(boardId);
+    }
+
+    /**
+     * 글 상세 페이지
+     * 기능 : 사용자가 선택한 글 상세 페이지를 불러온다. (비로그인)
+     *
      * @param boardId
      * @return
      */
-    @Transactional(readOnly = true)
+    @Transactional
     public Board getDetail(int boardId) {
         return boardMapper.getDetail(boardId);
     }
@@ -140,11 +167,6 @@ public class BoardService {
     private String getNextTitle(int boardId) {
         if(boardMapper.getNextPage(boardId) != null) return boardMapper.getNextPage(boardId).getTitle();
         return NO_NEXT;
-    }
-
-    // 날짜 체크 (General)
-    private void checkNewArticle(Board board, int boardId, int expiryPeriod) {
-        board.setExpirationOrNot(DateChecker.isNewArticle(boardId, expiryPeriod));
     }
 
     // 댓글 개수

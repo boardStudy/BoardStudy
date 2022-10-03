@@ -35,9 +35,3 @@ spring:
     redis:
       host: dev.donghyeon.dev
       port: 6379
-
-logging:
-    ##    config: classpath:log/logback-${spring.profiles}.xml
-    config: classpath:log/logback.xml
-
-gmail_password : ${MAIL_PASSWORD}

@@ -36,38 +36,31 @@ public class BoardController {
 
     // 전체 글 조회
     @GetMapping("list.do")
-    public String getBoardList(Model model, PageInfo pageInfo) {
+    public String getBoardList(Model model, PageInfo requestedPageInfo, HttpSession session) {
 
-        // 등록된 글 총 개수
-        int totalCount = boardService.getTotalCount();
-        // 총개수, 현재 페이지, 보여줄 글 개수 map으로 전달
-        Integer page = pageInfo.getPage();
-        Integer pageSize = pageInfo.getPageSize();
+        // 글 목록
+        List<Board> list = null;
+        PageHandler processedPageInfo = getProcessedPageInfo(requestedPageInfo);
+        if(session.getAttribute("user") != null) list = getListWhenLoggedIn(session, pagination(processedPageInfo));
+        if(session.getAttribute("user") == null) list = getListWhenNotLoggedIn(pagination(processedPageInfo));
 
-        PageHandler pageHandler = new PageHandler(totalCount, page, pageSize);
-        // 사용자에게 입력받은 값이 아닌 pageHandler 로직에 의해 구해진 page, pageSize 사용
-        page = pageHandler.getPage();
-        pageSize = pageHandler.getPageSize();
-
-        Map<String, Integer> map = new HashMap();
-        map.put("offset", (page-1) * pageSize);
-        map.put("pageSize", pageSize);
-
-        List<Board> list = boardService.getBoardList(map);
+        // 공지사항
         List<Board> notice = boardService.getNewNoticeList();
 
-
-        // 게시판 정보, 페이징 정보 view단으로 전달
         model.addAttribute("list", list);
         model.addAttribute("notice", notice);
-        model.addAttribute("pageHandler", pageHandler);
+        model.addAttribute("pageHandler", processedPageInfo);
+
         return "board/list";
     }
 
     // 상세 페이지
     @GetMapping("detail.do")
-    public String getDetailPage(@RequestParam int boardId, Model model) {
-        model.addAttribute("detail", boardService.getDetail(boardId));
+    public String getDetailPage(@RequestParam int boardId, Model model, HttpSession session) {
+
+        if(session.getAttribute("user") != null) model.addAttribute("detail", boardService.getDetail(boardId, getLoginUserId(session)));
+        if(session.getAttribute("user") == null) model.addAttribute("detail", boardService.getDetail(boardId));
+
         model.addAttribute("fileInfo", fileManager.getFiles(boardId));
         model.addAttribute("move", boardService.getPageToMove(boardId));
         viewCountUpdater.increaseViewCount(boardId);
@@ -123,5 +116,46 @@ public class BoardController {
         
         return "redirect:/board/list.do";
     }
+
+
+    private String getLoginUserId(HttpSession session) {
+        String userId = ((User) session.getAttribute("user")).getUserId();
+        return userId;
+    }
+
+    private List<Board> getListWhenLoggedIn(HttpSession session, Map pagination) {
+            String userId = getLoginUserId(session);
+            List<Board> list = boardService.getBoardList(pagination, userId);
+
+            return list;
+    }
+
+    private List<Board> getListWhenNotLoggedIn(Map pagination) {
+        List<Board> list = boardService.getBoardList(pagination);
+        return list;
+    }
+
+    private PageHandler getProcessedPageInfo(PageInfo requestedPageInfo) {
+        // 등록된 글 총 개수
+        int totalCount = boardService.getTotalCount();
+
+        Integer page = requestedPageInfo.getPage();
+        Integer pageSize = requestedPageInfo.getPageSize();
+
+        PageHandler pageHandler = new PageHandler(totalCount, page, pageSize);
+
+        return pageHandler;
+    }
+
+    private Map<String, Integer> pagination(PageHandler processedPageInfo) {
+        Map<String, Integer> pagination = new HashMap();
+        int page = processedPageInfo.getPage();
+        int pageSize = processedPageInfo.getPageSize();
+        pagination.put("offset", (page-1) * pageSize);
+        pagination.put("pageSize", pageSize);
+
+        return pagination;
+    }
+
 
 }

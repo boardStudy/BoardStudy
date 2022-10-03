@@ -65,7 +65,7 @@
                 <th scope="row" th:text="${list.boardId}"></th>
                 <td>
                     <a href="/board/detail.do?boardId=" th:attrappend="href=${list.boardId}" th:utext="${list.title}+'&nbsp('+${list.commentCount}+')'"></a>
-                    <img src="/images/new.png" alt="new" style="width: 20px; height: 20px" th:if="${list.expirationOrNot} == true">
+                    <img src="/images/new.png" alt="new" style="width: 20px; height: 20px" th:if="${list.newOrNot} == true">
                 </td>
                 <td th:text="${list.writer}"></td>
                 <td th:text="${#temporals.format(list.regDate, 'yyyy-MM-dd HH:mm')}"></td>

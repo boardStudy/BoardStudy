@@ -14,7 +14,7 @@ import java.util.Map;
 public interface BoardMapper {
 
     // 글 전체 목록 조회
-    List<Board> getBoardList(Map map);
+    List<Board> getBoardList(Map pagination);
 
     // 최신 공지사항
     List<Board> getNewNoticeList();
@@ -62,4 +62,12 @@ public interface BoardMapper {
 
     // 댓글 개수 감소
     void minusCommentCount(int boardId);
+
+    // 읽은 글인지 확인
+    boolean isRead(@Param("boardId") int boardId,
+                      @Param("userId") String userId);
+
+    // 읽은 글 등록
+    void checkReadArticle(@Param("boardId") int boardId,
+                          @Param("userId") String userId);
 }

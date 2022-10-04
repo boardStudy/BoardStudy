@@ -86,7 +86,7 @@
 - @Async 어노테이션 적용하여 편의성 개선하기 https://github.com/boardStudy/BoardStudy/pull/116
 - 이전 글, 다음 글 기능 https://github.com/boardStudy/BoardStudy/pull/121
 - 공지사항 기능 https://github.com/boardStudy/BoardStudy/pull/124
-- 읽은 글  https://github.com/boardStudy/BoardStudy/pull/126
+- 읽은 글 처리하기 https://github.com/boardStudy/BoardStudy/pull/126
 
 #### account_api 분리 작업
 - 로그인 / 로그아웃 https://github.com/boardStudy/account-api/pull/2

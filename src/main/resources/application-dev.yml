@@ -2,7 +2,7 @@
 spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        password: ${SQL_PASSWORD}
+        password: ${sql-server-password}
         url: jdbc:mysql://dev.donghyeon.dev:3307/board
         username: root
 upload:

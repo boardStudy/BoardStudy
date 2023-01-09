@@ -1,9 +1,9 @@
 # DB 설정
 spring:
     datasource:
-        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-        password: ${sql-server-password}
-        url: jdbc:log4jdbc:mysql://dev.donghyeon.dev:3307/board
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: ${SQL_PASSWORD}
+        url: jdbc:mysql://dev.donghyeon.dev:3307/board
         username: root
 upload:
     path: /apps/board/dev/

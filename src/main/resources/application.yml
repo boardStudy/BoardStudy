@@ -3,6 +3,8 @@ mybatis:
     mapper-locations: mybatis/mapper/*.xml
     type-aliases-package: com.hoin.boardStudy
     config-location: classpath:mybatis-config.xml
+
+
     
 # 파일 크기 설정
 spring:
@@ -33,5 +35,5 @@ spring:
     session:
       storage-type: redis
     redis:
-      host: dev.donghyeon.dev
+      host: localhost
       port: 6379

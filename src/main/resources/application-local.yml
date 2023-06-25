@@ -3,8 +3,8 @@ spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         password: ${sql-local-server-password}
-        url: jdbc:mysql://localhost:3306/board
-        username: root
+        url: jdbc:mysql://board.cjpejm6zlwuk.ap-northeast-2.rds.amazonaws.com:3306/board
+        username: admin
 # thymeleaf (tomcat 재시동 없이 변경 사항 반영하기)
     thymeleaf:
         cache: false

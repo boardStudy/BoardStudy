@@ -36,9 +36,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.5.4
+        uses: appleboy/ssh-action@master
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: excute deploy.sh
-        run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "${{ secrets.BOARD_DEPOLY_COMMAND }} &"
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            ${{ secrets.DEPLOY }}

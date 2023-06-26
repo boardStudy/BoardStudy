@@ -41,4 +41,4 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: excute deploy.sh
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "${{ secrets.BOARD_DEPOLY_COMMAND }} &"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "${{ secrets.BOARD_DEPOLY_COMMAND }} &"

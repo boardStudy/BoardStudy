@@ -11,8 +11,8 @@ upload:
 sql-server-password: ${SQL_PASSWORD}
 
 domain:
-    name : board.dev.donghyeon.dev
-    alarm : alarm.dev.donghyeon.dev
+    name : localhost:8080
+    alarm : localhost:8081
 
 logging:
     level:

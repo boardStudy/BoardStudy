@@ -46,4 +46,17 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             ${{ secrets.DEPLOY }}
-            exit 0
+      - name: Check Process Status
+        id: check_status
+        run: |
+          if pgrep -f "java -jar board-0.0.1-SNAPSHOT.jar"; then
+            echo "::set-output name=process_status::running"
+          else
+            echo "::set-output name=process_status::failed"
+          fi
+
+      - name: Stop Workflow if Process Completed
+        if: steps.check_status.outputs.process_status == 'running'
+        run: |
+          echo "Application is still running. Stopping workflow."
+          exit 0

@@ -2,9 +2,9 @@
 spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        password: ${sql-server-password}
-        url: jdbc:mysql://dev.donghyeon.dev:3307/board
-        username: root
+        password: ${sql-local-server-password}
+        url: jdbc:mysql://board.cjpejm6zlwuk.ap-northeast-2.rds.amazonaws.com:3306/board
+        username: admin
 upload:
     path: /apps/board/dev/
     

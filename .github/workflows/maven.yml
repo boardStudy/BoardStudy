@@ -37,11 +37,13 @@ jobs:
     steps:
       - name: Setup SSH
         uses: appleboy/ssh-action@master
+        env:
+          SQL_PASSWORD:  ${{ secrets.SQL_PASSWORD }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            export SQL_PASSWORD=${{ secrets.SQL_PASSWORD }}
+            export SQL_PASSWORD=$SQL_PASSWORD
             ${{ secrets.DEPLOY }}

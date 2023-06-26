@@ -35,7 +35,7 @@ jobs:
     needs: build
     runs-on: ubuntu-22.04
     steps:
-      - name: Setup SSH
+      - name: Setup SSH and DEPLOY
         uses: appleboy/ssh-action@master
         env:
           SQL_PASSWORD:  ${{ secrets.SQL_PASSWORD }}
